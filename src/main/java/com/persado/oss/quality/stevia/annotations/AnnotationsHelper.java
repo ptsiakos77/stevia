@@ -66,11 +66,16 @@ public class AnnotationsHelper implements ApplicationContextAware {
 			return new LinkedList<WebController>();
 		};
 	};
-	
-	private static final Map<String, WebController> controllers = new HashMap<String, WebController>();
+
+    private static final ThreadLocal<Map<String, WebController>> controllers = new ThreadLocal<Map<String, WebController>>() {
+        @Override
+        protected Map<String, WebController> initialValue() {
+            return new HashMap<String, WebController>();
+        };
+    };
 
 	public static void disposeControllers() {
-		for (WebController controller : controllers.values()) {
+		for (WebController controller : controllers.get().values()) {
 			LOG.info("Removing {} in SteviaContext.clean - disposeControllers()",controller);
 			try {
 				controller.quit();
@@ -78,7 +83,7 @@ public class AnnotationsHelper implements ApplicationContextAware {
 				LOG.warn("Exception caught calling controller.quit(): \""+wde.getMessage()+"\" additional info: "+wde.getAdditionalInformation());
 			}
 		}
-		controllers.clear();
+		controllers.get().clear();
 		Deque<WebController> cache = controllerStack.get();
 		while (cache.peek() != null) {
 			LOG.warn("test ends while controllers still masked - will clear the masked controller also");
@@ -134,19 +139,19 @@ public class AnnotationsHelper implements ApplicationContextAware {
 		String curControllerKey = currentControllerClass.getCanonicalName();
 		String reqControllerKey = requestedControllerClass.getCanonicalName();
 
-		if (!controllers.containsKey(curControllerKey)) {
-			controllers.put(curControllerKey, currentControllerObj);
+		if (!controllers.get().containsKey(curControllerKey)) {
+			controllers.get().put(curControllerKey, currentControllerObj);
 		}
 		
 		
 		//check if requested controller is different from the currently running
 		if (!curControllerKey.startsWith(reqControllerKey)) {
 			WebController replacer = null;
-			if (controllers.containsKey(reqControllerKey)) { // we have one
-				replacer = controllers.get(reqControllerKey);
+			if (controllers.get().containsKey(reqControllerKey)) { // we have one
+				replacer = controllers.get().get(reqControllerKey);
 			} else {
 				replacer = SteviaWebControllerFactory.getWebController(context, requestedControllerClass);
-				controllers.put(reqControllerKey, replacer);
+				controllers.get().put(reqControllerKey, replacer);
 				LOG.debug("Controller {} not found in cache, created new ", reqControllerKey);
 			}
 			maskStack.push(currentControllerObj);
