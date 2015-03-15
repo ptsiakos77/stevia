@@ -48,6 +48,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -97,7 +98,11 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("opera") == 0) {
                 LOG.info("Debug enabled, using OperaDriver");
                 driver = new OperaDriver();
-            } else {
+            } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("phantomjs") == 0) {
+                LOG.info("Debug enabled, using OperaDriver");
+                driver = new PhantomJSDriver();
+            }
+             else {
                 throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
             }
 
