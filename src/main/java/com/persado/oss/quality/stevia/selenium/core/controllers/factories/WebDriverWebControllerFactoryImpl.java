@@ -41,6 +41,7 @@ import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.SteviaWebControllerFactory;
 import com.persado.oss.quality.stevia.selenium.core.controllers.WebDriverWebController;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -57,6 +58,7 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.StringUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -108,7 +110,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
 
         } else { // debug=off
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-            if (SteviaContext.getParam("useSauceLabs").equals("true")) {
+            if (SteviaContext.getParam("useJenkinsSauceLabs").equals("true")) {
                 LOG.info("Use Remote Web Driver in Sauce Labs");
                 LOG.info("Browser: " + System.getenv("SELENIUM_BROWSER"));
                 LOG.info("Version: " + System.getenv("SELENIUM_VERSION"));
@@ -140,6 +142,12 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     desiredCapabilities = DesiredCapabilities.opera();
                 } else {
                     throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
+                }
+                if(!StringUtils.isEmpty(SteviaContext.getParam("browserVersion"))) {
+                        desiredCapabilities.setVersion(SteviaContext.getParam("browserVersion"));
+                }
+                if(!StringUtils.isEmpty(SteviaContext.getParam("platform"))) {
+                    desiredCapabilities.setPlatform(Platform.valueOf(SteviaContext.getParam("platform")));
                 }
             }
             Augmenter augmenter = new Augmenter(); // adds screenshot capability to a default webdriver.
