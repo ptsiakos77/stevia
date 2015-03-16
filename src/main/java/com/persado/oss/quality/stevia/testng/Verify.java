@@ -39,6 +39,8 @@ package com.persado.oss.quality.stevia.testng;
 
 import java.io.IOException;
 import java.util.List;
+
+import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -246,8 +248,8 @@ public class Verify extends WebComponent {
 	public void elementVisible(String locator) {
 		try {
 			Assert.assertTrue(controller().isComponentVisible(locator));
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
 		} catch (AssertionError e) {
 			error(ELEMENT_LOCATOR + locator + IS_NOT_VISIBLE);
 			throw e;
@@ -263,8 +265,8 @@ public class Verify extends WebComponent {
 	public void elementVisible(String locator,long seconds) {
 		try {
 			Assert.assertTrue(controller().isComponentVisible(locator, seconds));
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
 		} catch (AssertionError e) {
 			error(ELEMENT_LOCATOR + locator + IS_NOT_VISIBLE);
 			throw e;
@@ -281,8 +283,8 @@ public class Verify extends WebComponent {
 			Assert.assertTrue(controller().isComponentNotVisible(locator));
 			info(ELEMENT_LOCATOR + locator + IS_NOT_VISIBLE);
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + IS_VISIBLE);
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + IS_VISIBLE);
 			throw e;
 		}
 	}
@@ -296,11 +298,11 @@ public class Verify extends WebComponent {
 	public void value(String locator, String expectedValue) {
 		try {
 			Assert.assertEquals(controller().getInputValue(locator),expectedValue);
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_WITH_VALUE + expectedValue + "'!");
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_WITH_VALUE + expectedValue + "'!");
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_VALUE + expectedValue + "'!");
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_VALUE + expectedValue + "'!");
 			throw e;
 		}
 	}
@@ -314,11 +316,11 @@ public class Verify extends WebComponent {
 	public void text(String locator, String expectedText) {
 		try {
 			Assert.assertEquals(controller().getText(locator), expectedText);
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_WITH_TEXT+ expectedText + "'!");
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_WITH_TEXT+ expectedText + "'!");
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_TEXT+ expectedText + "'!");
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_TEXT+ expectedText + "'!");
 			throw e;
 		}
 	}
@@ -331,11 +333,11 @@ public class Verify extends WebComponent {
 	 */
 	public void containsText(String locator, String expectedText) {
 		if (controller().getText(locator).contains(expectedText)) {
-			controller().highlight(locator, PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_CONTAINING_TEXT + expectedText + "'!");
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_CONTAINING_TEXT + expectedText + "'!");
 		} else {
-			controller().highlight(locator, FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + NOT_FOUND_CONTAINING_TEXT + expectedText + "'!");
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_CONTAINING_TEXT + expectedText + "'!");
 			throw new AssertionError(ELEMENT_LOCATOR + locator + NOT_FOUND_CONTAINING_TEXT + expectedText + "'!");
 		}
 	}
@@ -348,11 +350,11 @@ public class Verify extends WebComponent {
 	public void editable(String locator) {
 		try {
 			Assert.assertTrue(controller().isComponentEditable(locator));
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_EDITABLE);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_EDITABLE);
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + FOUND_DISABLED);
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + FOUND_DISABLED);
 			throw e;
 		}
 	}
@@ -365,11 +367,11 @@ public class Verify extends WebComponent {
 	public void disabled(String locator) {
 		try {
 			Assert.assertTrue(controller().isComponentDisabled(locator));
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_DISABLED);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_DISABLED);
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + FOUND_EDITABLE);
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + FOUND_EDITABLE);
 			throw e;
 		}
 	}
@@ -382,11 +384,11 @@ public class Verify extends WebComponent {
 	public void selected(String locator) {
 		try {
 			Assert.assertTrue(controller().isComponentSelected(locator));
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_SELECTED);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_SELECTED);
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + NOT_FOUND_SELECTED);
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_SELECTED);
 			throw e;
 		}
 	}
@@ -399,11 +401,11 @@ public class Verify extends WebComponent {
 	public void notSelected(String locator) {
 		try {
 			Assert.assertTrue(controller().isComponentNotSelected(locator));
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + NOT_FOUND_SELECTED);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + NOT_FOUND_SELECTED);
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + FOUND_SELECTED);
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + FOUND_SELECTED);
 			throw e;
 		}
 	}
@@ -419,11 +421,11 @@ public class Verify extends WebComponent {
 	public void tableElementTextUnderHeader(String locator, String elementName, String headerName, String expectedText) {
 		try {
 			Assert.assertEquals(controller().getTableElementTextUnderHeader(locator, elementName,headerName), expectedText);
-			controller().highlight(controller().getTableElementSpecificHeaderLocator(locator, elementName, headerName),PASS_COLOR);
-			info(TABLE_ELEMENT + elementName + FOUND_WITH_TEXT+ expectedText + "' for header '" + headerName + "'!");
-		} catch (AssertionError e) { 
-			controller().highlight(controller().getTableElementSpecificHeaderLocator(locator, elementName, headerName),FAIL_COLOR);
-			error(TABLE_ELEMENT + elementName + NOT_FOUND_WITH_TEXT+ expectedText + "' for header '" + headerName + "'!");
+            highlightPass(controller().getTableElementSpecificHeaderLocator(locator, elementName, headerName));
+            info(TABLE_ELEMENT + elementName + FOUND_WITH_TEXT+ expectedText + "' for header '" + headerName + "'!");
+		} catch (AssertionError e) {
+            highlightFail(controller().getTableElementSpecificHeaderLocator(locator, elementName, headerName));
+            error(TABLE_ELEMENT + elementName + NOT_FOUND_WITH_TEXT+ expectedText + "' for header '" + headerName + "'!");
 			throw e;
 		}
 	}
@@ -439,11 +441,11 @@ public class Verify extends WebComponent {
 	public void tableElementTextForSpecificRowAndColumn(String locator,String row, String column, String expectedText) {
 		try {
 			Assert.assertEquals(controller().getTableElementTextForRowAndColumn(locator, row, column), expectedText);
-			controller().highlight(controller().getTableElementSpecificRowAndColumnLocator(locator, row, column),PASS_COLOR);
-			info("The table element in row '" + row + "' and column '" + column + FOUND_WITH_TEXT + expectedText + "'!");
-		} catch (AssertionError e) {   
-			controller().highlight(controller().getTableElementSpecificRowAndColumnLocator(locator, row, column),FAIL_COLOR);
-			error("The table element in row '" + row + "' and column '" + column + NOT_FOUND_WITH_TEXT + expectedText + "'!");
+            highlightPass(controller().getTableElementSpecificRowAndColumnLocator(locator, row, column));
+            info("The table element in row '" + row + "' and column '" + column + FOUND_WITH_TEXT + expectedText + "'!");
+		} catch (AssertionError e) {
+            highlightFail(controller().getTableElementSpecificRowAndColumnLocator(locator, row, column));
+            error("The table element in row '" + row + "' and column '" + column + NOT_FOUND_WITH_TEXT + expectedText + "'!");
 			throw e;
 		}
 	}
@@ -476,11 +478,11 @@ public class Verify extends WebComponent {
 		for (int i = 0; i < expectedArray.length; i++) {
 			for (int j = 0; j < expectedArray[i].length; j++) {
 				if (expectedArray[i][j].equals(actualArray[i][j])){
-					controller().highlight(controller().getTableElementSpecificRowAndColumnLocator(locator, String.valueOf(i+1), String.valueOf(j+1)),PASS_COLOR);
-				}
+                    highlightPass(controller().getTableElementSpecificRowAndColumnLocator(locator, String.valueOf(i + 1), String.valueOf(j + 1)));
+                }
 	            else{
-	            	controller().highlight(controller().getTableElementSpecificRowAndColumnLocator(locator, String.valueOf(i+1), String.valueOf(j+1)),FAIL_COLOR);
-	                error("The table elements are not equal! EXPECTED VALUE: " + expectedArray[i][j] + " - ACTUAL VALUE: " + actualArray[i][j]);
+                    highlightFail(controller().getTableElementSpecificRowAndColumnLocator(locator, String.valueOf(i+1), String.valueOf(j+1)));
+                    error("The table elements are not equal! EXPECTED VALUE: " + expectedArray[i][j] + " - ACTUAL VALUE: " + actualArray[i][j]);
 	                throw new AssertionError();
 	            }
 			}
@@ -498,12 +500,12 @@ public class Verify extends WebComponent {
 	public void textIsContainedInTableRecordsUnderHeader(String locator,String headerName, String expectedText) {
 		List<String> records = controller().getTableRecordsUnderHeader(locator, headerName);
 		if (records.contains(expectedText)){
-			controller().highlight(controller().getTableElementSpecificHeaderLocator(locator, expectedText, headerName),PASS_COLOR);
-			info("The '" + expectedText + "' was found with in table with locator '" + locator + "' under header '" + headerName +"'");
+            highlightPass(controller().getTableElementSpecificHeaderLocator(locator, expectedText, headerName));
+            info("The '" + expectedText + "' was found with in table with locator '" + locator + "' under header '" + headerName +"'");
             return;
 			}
-		controller().highlight(locator,FAIL_COLOR);
-		error("The '" + expectedText + "' was not found with in table with locator '" + locator + "' under header '" + headerName +"'");
+        highlightFail(locator);
+        error("The '" + expectedText + "' was not found with in table with locator '" + locator + "' under header '" + headerName +"'");
 		throw new AssertionError();
 	}
 	
@@ -517,12 +519,12 @@ public class Verify extends WebComponent {
 	public void textIsNotContainedInTableRecordsUnderHeader(String locator,String headerName, String expectedText) {
 		List<String> records = controller().getTableRecordsUnderHeader(locator, headerName);
 		if (!records.contains(expectedText)){
-			controller().highlight(locator,PASS_COLOR);
-			info("The '" + expectedText + "' was not found not with in table with locator '" + locator + "' under header '" + headerName +"'");
+            highlightPass(locator);
+            info("The '" + expectedText + "' was not found not with in table with locator '" + locator + "' under header '" + headerName +"'");
             return;
 		}
-	    controller().highlight(controller().getTableElementSpecificHeaderLocator(locator, expectedText, headerName),FAIL_COLOR);
-	    error("The '" + expectedText + "' was found with in table with locator '" + locator + "' under header '" + headerName +"'");
+        highlightFail(controller().getTableElementSpecificHeaderLocator(locator, expectedText, headerName));
+        error("The '" + expectedText + "' was found with in table with locator '" + locator + "' under header '" + headerName +"'");
 	    throw new AssertionError();
 	}
 	
@@ -535,11 +537,11 @@ public class Verify extends WebComponent {
 	public void allListOptions(String locator, List<String> expectedOptions){
 		try {
 			Assert.assertEquals(controller().getAllListOptions(locator), expectedOptions);
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_WITH_OPTIONS  + expectedOptions  + "'!");
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_WITH_OPTIONS  + expectedOptions  + "'!");
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_OPTIONS  + expectedOptions  + "'!");
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_OPTIONS  + expectedOptions  + "'!");
 			throw e;
 		}
 	}
@@ -553,11 +555,11 @@ public class Verify extends WebComponent {
 	public void selectedListOptions(String locator,List<String> expectedOptions){
 		try {
 			Assert.assertEquals(controller().getSelectedOptions(locator), expectedOptions);
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_WITH_SELECTED_OPTIONS + expectedOptions + "'!");
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_WITH_SELECTED_OPTIONS + expectedOptions + "'!");
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_SELECTED_OPTIONS + expectedOptions + "'!");
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_SELECTED_OPTIONS + expectedOptions + "'!");
 			throw e;
 		}
 	}
@@ -571,11 +573,11 @@ public class Verify extends WebComponent {
 	public void selectedListOption(String locator, String expectedOption){
 		try {
 			Assert.assertEquals(controller().getSelectedOption(locator), expectedOption);
-			controller().highlight(locator,PASS_COLOR);
-			info(ELEMENT_LOCATOR + locator + FOUND_WITH_SELECTED_OPTION + expectedOption + "'!");
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_WITH_SELECTED_OPTION + expectedOption + "'!");
 		} catch (AssertionError e) {
-			controller().highlight(locator,FAIL_COLOR);
-			error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_SELECTED_OPTION + expectedOption + "'!");
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_SELECTED_OPTION + expectedOption + "'!");
 			throw e;
 		}
 	}
@@ -626,17 +628,17 @@ public class Verify extends WebComponent {
 	public void attributeValue (String locator,String attribute,String desiredValue){
 		try {
 			Assert.assertEquals(controller().getAttributeValue(locator, attribute),desiredValue);
-			controller().highlight(locator,PASS_COLOR);
-			info("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator +  FOUND_WITH_VALUE + desiredValue+ "'!");
+            highlightPass(locator);
+            info("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator +  FOUND_WITH_VALUE + desiredValue+ "'!");
 		}
 		catch(AssertionError e){
-			controller().highlight(locator,FAIL_COLOR);
-			error("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator +  NOT_FOUND_WITH_VALUE + desiredValue+ "'!");
+            highlightFail(locator);
+            error("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator +  NOT_FOUND_WITH_VALUE + desiredValue+ "'!");
 			throw e;
 		}
 	}
-	
-	/**
+
+    /**
 	 * Attribute contains value.
 	 *
 	 * @param locator the locator of the element
@@ -645,16 +647,16 @@ public class Verify extends WebComponent {
 	 */
 	public void attributeContainsValue (String locator,String attribute,String desiredValue){
 		if(	controller().getAttributeValue(locator, attribute).contains(desiredValue)){
-			controller().highlight(locator,PASS_COLOR);
-			info("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + FOUND_CONTAINING_VALUE + desiredValue+ "'!");
+            highlightPass(locator);
+            info("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + FOUND_CONTAINING_VALUE + desiredValue+ "'!");
 		}
 		else{
-			controller().highlight(locator,FAIL_COLOR);
-			error("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + NOT_FOUND_CONTAINING_VALUE + desiredValue+ "'!");
+            highlightFail(locator);
+            error("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + NOT_FOUND_CONTAINING_VALUE + desiredValue+ "'!");
 			throw new AssertionError("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + NOT_FOUND_CONTAINING_VALUE + desiredValue+ "'!");
 		}
 	}
-	
+
     /**
      * Element contained in list.
      *
@@ -701,5 +703,18 @@ public class Verify extends WebComponent {
 			error(NOT_FOUND_ALERT_WITH_MESSAGE + alertText +"'!");
 			throw e;
 		}
+    }
+
+
+
+    private void highlightPass(String locator) {
+        if(SteviaContext.getParam("highlight").equals("true")) {
+            controller().highlight(locator, PASS_COLOR);
+        }
+    }
+
+
+    private void highlightFail(String locator) {
+        controller().highlight(locator,FAIL_COLOR);
     }
 }
