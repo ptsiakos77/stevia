@@ -156,7 +156,9 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener{
 	 * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeChangeValueOf(org.openqa.selenium.WebElement, org.openqa.selenium.WebDriver)
 	 */
 	public void beforeChangeValueOf(WebElement element, WebDriver driver) {
-		((WebDriverWebController)SteviaContext.getWebController()).highlight(element);
+        if(SteviaContext.getParam("highlight").equals("true")){
+            ((WebDriverWebController)SteviaContext.getWebController()).highlight(element);
+        }
 	}
 
 	/* (non-Javadoc)
