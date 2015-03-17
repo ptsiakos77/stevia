@@ -107,12 +107,14 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
 
         } else { // debug=off
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-            if (SteviaContext.getParam("useJenkinsSauceLabs").equals("true")) {
+               if (SteviaContext.getParam("useJenkinsSauceLabs").equals("true")) {
+
                 LOG.info("Use Remote Web Driver in Sauce Labs");
                 LOG.info("Browser: " + System.getenv("SELENIUM_BROWSER"));
                 LOG.info("Version: " + System.getenv("SELENIUM_VERSION"));
                 LOG.info("Operating System: " + System.getenv("SELENIUM_PLATFORM"));
 
+                desiredCapabilities.setCapability("idleTimeout",Integer.parseInt(SteviaContext.getParam("idleTimeout")));
                 desiredCapabilities.setBrowserName(System.getenv("SELENIUM_BROWSER"));
                 desiredCapabilities.setVersion(System.getenv("SELENIUM_VERSION"));
                 desiredCapabilities.setCapability(CapabilityType.PLATFORM, System.getenv("SELENIUM_PLATFORM"));
