@@ -132,10 +132,6 @@ public class AnnotationsHelper implements ApplicationContextAware {
 	private void controllerMask(Class<? extends WebController> requestedControllerClass) {
 		WebController currentControllerObj = SteviaContext.getWebController();
 		Class<? extends WebController> currentControllerClass = currentControllerObj.getClass();
-		
-		Deque<WebController> maskStack = controllerStack.get();
-
-
 		String curControllerKey = currentControllerClass.getCanonicalName();
 		String reqControllerKey = requestedControllerClass.getCanonicalName();
 
@@ -154,7 +150,7 @@ public class AnnotationsHelper implements ApplicationContextAware {
 				controllers.get().put(reqControllerKey, replacer);
 				LOG.debug("Controller {} not found in cache, created new ", reqControllerKey);
 			}
-			maskStack.push(currentControllerObj);
+			controllerStack.get().push(currentControllerObj);
 			SteviaContext.setWebController(replacer);
 		} else {
 			LOG.warn("Controller requested is the currently used one. No masking done!");
