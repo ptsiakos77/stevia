@@ -59,6 +59,8 @@ import org.springframework.util.StringUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
     private static final Logger LOG = LoggerFactory.getLogger(WebDriverWebControllerFactoryImpl.class);
@@ -86,6 +88,12 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("test-type");
+                if(SteviaContext.getParam("chromeExtensions") != null){
+                    List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
+                    for(String path:extensionPaths) {
+                        options.addArguments("load-extension="+path);
+                    }
+                }
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 driver = new ChromeDriver(capabilities);
             } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("iexplorer") == 0) {
