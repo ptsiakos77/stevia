@@ -157,11 +157,6 @@ public class Verify extends WebComponent {
 	public void error(String message) {
 		VERIFY_LOG.error(message);
 		Reporter.log("<p class=\"testOutput\" style=\"color:red; font-size:1em;\">"+ message + "</p>");
-		try {
-			controller().takeScreenShot();
-		} catch (IOException ioe ) {
-			Reporter.log("<p class=\"testOutput\" style=\"color:red; font-size:1em;\">Failed to create screenshot : "+ ioe.getMessage() + "</p>");
-		}
 	}
 
 	/**
