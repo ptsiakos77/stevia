@@ -96,7 +96,18 @@ public class AnnotationsHelper implements ApplicationContextAware {
 		}
 		cache.clear();
 	}
-	
+
+    public static void disposeController(Class<? extends WebController> requestedControllerClass) {
+        try {
+                controllers.get().get(requestedControllerClass.getCanonicalName()).quit();
+            } catch (WebDriverException wde) {
+                LOG.warn("Exception caught calling controller.quit(): \""+wde.getMessage()+"\" additional info: "+wde.getAdditionalInformation());
+
+        }
+        controllers.get().remove(requestedControllerClass.getCanonicalName());
+        controllerStack.get().remove(requestedControllerClass);
+    }
+
 	private ApplicationContext context;
 	
 	
