@@ -70,3 +70,6 @@ To work with the cutting-edge version, don't forget to add the following to your
 
 ### Who is Persado <img alt="Persado" width="75" align="right" src="http://www.persado.com/templates/youandigraphics/images/logo.png">
 Persado programmatically uncovers the language and emotions that make people buy. Its unique technology is powered by Natural Language Processing and advanced statistical algorithms. Working with leading global brands such as American Express, Esurance, McAfee, SurveyMonkey, Verizon Wireless and leading global Mobile Operators, Persado systematically delivers better marketing messages across digital channels. 
+
+-------
+Push to trigger build in codeship
