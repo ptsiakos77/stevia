@@ -88,10 +88,10 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("test-type");
-                if(SteviaContext.getParam("chromeExtensions") != null){
+                if (SteviaContext.getParam("chromeExtensions") != null) {
                     List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
-                    for(String path:extensionPaths) {
-                        options.addArguments("load-extension="+path);
+                    for (String path : extensionPaths) {
+                        options.addArguments("load-extension=" + path);
                     }
                 }
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
@@ -108,21 +108,24 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("phantomjs") == 0) {
                 LOG.info("Debug enabled, using OperaDriver");
                 driver = new PhantomJSDriver();
-            }
-             else {
+            } else {
                 throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
             }
 
         } else { // debug=off
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-               if (SteviaContext.getParam("useJenkinsSauceLabs").equals("true")) {
-
+            if (!StringUtils.isEmpty(System.getProperty("screenResolution"))) {
+                desiredCapabilities.setCapability("screenResolution", System.getProperty("screenResolution"));
+            }
+            if (SteviaContext.getParam("useJenkinsSauceLabs").equals("true")) {
                 LOG.info("Use Remote Web Driver in Sauce Labs");
                 LOG.info("Browser: " + System.getenv("SELENIUM_BROWSER"));
                 LOG.info("Version: " + System.getenv("SELENIUM_VERSION"));
                 LOG.info("Operating System: " + System.getenv("SELENIUM_PLATFORM"));
 
-                desiredCapabilities.setCapability("idleTimeout",Integer.parseInt(SteviaContext.getParam("idleTimeout")));
+                if (!StringUtils.isEmpty(SteviaContext.getParam("idleTimeout"))) {
+                    desiredCapabilities.setCapability("idleTimeout", Integer.parseInt(SteviaContext.getParam("idleTimeout")));
+                }
                 desiredCapabilities.setBrowserName(System.getenv("SELENIUM_BROWSER"));
                 desiredCapabilities.setVersion(System.getenv("SELENIUM_VERSION"));
                 desiredCapabilities.setCapability(CapabilityType.PLATFORM, System.getenv("SELENIUM_PLATFORM"));
@@ -150,10 +153,10 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 } else {
                     throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
                 }
-                if(!StringUtils.isEmpty(SteviaContext.getParam("browserVersion"))) {
-                        desiredCapabilities.setVersion(SteviaContext.getParam("browserVersion"));
+                if (!StringUtils.isEmpty(SteviaContext.getParam("browserVersion"))) {
+                    desiredCapabilities.setVersion(SteviaContext.getParam("browserVersion"));
                 }
-                if(!StringUtils.isEmpty(SteviaContext.getParam("platform"))) {
+                if (!StringUtils.isEmpty(SteviaContext.getParam("platform"))) {
                     desiredCapabilities.setPlatform(Platform.valueOf(SteviaContext.getParam("platform")));
                 }
             }
@@ -161,7 +164,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             try {
                 driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT)
                         + "/wd/hub"), desiredCapabilities));
-                ((RemoteWebDriver)driver).setFileDetector(new LocalFileDetector());
+                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
