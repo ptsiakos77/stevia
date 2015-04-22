@@ -115,6 +115,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
         } else { // debug=off
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             if (!StringUtils.isEmpty(System.getProperty("screenResolution"))) {
+                LOG.info("Set screen resolution to " + System.getProperty("screenResolution"));
                 desiredCapabilities.setCapability("screenResolution", System.getProperty("screenResolution"));
             }
             if (SteviaContext.getParam("useJenkinsSauceLabs").equals("true")) {
