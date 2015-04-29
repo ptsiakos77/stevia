@@ -162,6 +162,15 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     LOG.info("Operating System: " + SteviaContext.getParam("platform"));
                     desiredCapabilities.setPlatform(Platform.valueOf(SteviaContext.getParam("platform")));
                 }
+                if (!StringUtils.isEmpty(SteviaContext.getParam("recordVideo"))) {
+                    String record_video = SteviaContext.getParam("recordVideo");
+                    LOG.info("Set recording video to: " + SteviaContext.getParam("recordVideo"));
+                    if (record_video.equalsIgnoreCase("True")){
+                        desiredCapabilities.setCapability("video", "True");
+                    } else {
+                        desiredCapabilities.setCapability("video", "False");
+                    }
+                }
             }
             Augmenter augmenter = new Augmenter(); // adds screenshot capability to a default webdriver.
             try {
