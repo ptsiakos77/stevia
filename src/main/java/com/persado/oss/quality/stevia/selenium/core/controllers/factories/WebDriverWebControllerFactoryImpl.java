@@ -155,9 +155,11 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
                 }
                 if (!StringUtils.isEmpty(SteviaContext.getParam("browserVersion"))) {
+                    LOG.info("Version: " + SteviaContext.getParam("browserVersion"));
                     desiredCapabilities.setVersion(SteviaContext.getParam("browserVersion"));
                 }
                 if (!StringUtils.isEmpty(SteviaContext.getParam("platform"))) {
+                    LOG.info("Operating System: " + SteviaContext.getParam("platform"));
                     desiredCapabilities.setPlatform(Platform.valueOf(SteviaContext.getParam("platform")));
                 }
             }
