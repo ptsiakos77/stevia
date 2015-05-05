@@ -57,6 +57,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StringUtils;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -91,7 +92,8 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 if (SteviaContext.getParam("chromeExtensions") != null) {
                     List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
                     for (String path : extensionPaths) {
-                        options.addArguments("load-extension=" + path);
+                        LOG.info("Use chrome with extension: " + path);
+                        options.addExtensions(new File(path));
                     }
                 }
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
@@ -141,6 +143,13 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     desiredCapabilities = DesiredCapabilities.chrome();
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("test-type");
+                    if (SteviaContext.getParam("chromeExtensions") != null) {
+                        List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
+                        for (String path : extensionPaths) {
+                            LOG.info("Use chrome with extension: " + path);
+                            options.addExtensions(new File(path));
+                        }
+                    }
                     desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("iexplorer") == 0) {
                     LOG.info("Debug OFF, using a RemoteWebDriver with Internet Explorer capabilities");
