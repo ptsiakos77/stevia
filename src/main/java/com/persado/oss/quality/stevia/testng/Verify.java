@@ -284,6 +284,24 @@ public class Verify extends WebComponent {
 		}
 	}
 
+
+    /**
+     * Check that an Element is visible.
+     *
+     * @param locator the locator of the element
+     * @param seconds the max time in seconds after which element should become visible
+     */
+    public void elementNotVisible(String locator,long seconds) {
+        try {
+            Assert.assertTrue(controller().isComponentVisible(locator, seconds));
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
+        } catch (AssertionError e) {
+            error(ELEMENT_LOCATOR + locator + IS_NOT_VISIBLE);
+            throw e;
+        }
+    }
+
 	/**
 	 * Check the value of an element .
 	 * 
