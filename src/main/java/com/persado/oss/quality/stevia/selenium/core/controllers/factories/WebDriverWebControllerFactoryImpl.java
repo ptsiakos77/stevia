@@ -146,6 +146,12 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     if (SteviaContext.getParam("downloadExtension") != null) {
                         LOG.info("Download workable chrome extension");
                         desiredCapabilities.setCapability("download", SteviaContext.getParam("downloadExtension"));
+                        LOG.info("Wait for 1 minute");
+                        try {
+                            Thread.sleep(60000);
+                        }catch (InterruptedException e){
+
+                        }
                     }
 
                     if (SteviaContext.getParam("chromeExtensions") != null) {
