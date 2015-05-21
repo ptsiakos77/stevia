@@ -293,7 +293,7 @@ public class Verify extends WebComponent {
      */
     public void elementNotVisible(String locator,long seconds) {
         try {
-            Assert.assertTrue(controller().isComponentVisible(locator, seconds));
+            Assert.assertTrue(controller().isComponentNotVisible(locator, seconds));
             highlightPass(locator);
             info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
         } catch (AssertionError e) {
