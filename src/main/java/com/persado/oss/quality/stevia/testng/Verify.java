@@ -295,9 +295,9 @@ public class Verify extends WebComponent {
         try {
             Assert.assertTrue(controller().isComponentNotVisible(locator, seconds));
             highlightPass(locator);
-            info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
+            info(ELEMENT_LOCATOR + locator + IS_NOT_VISIBLE);
         } catch (AssertionError e) {
-            error(ELEMENT_LOCATOR + locator + IS_NOT_VISIBLE);
+            error(ELEMENT_LOCATOR + locator + IS_VISIBLE);
             throw e;
         }
     }
