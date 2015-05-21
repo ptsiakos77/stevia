@@ -286,10 +286,10 @@ public class Verify extends WebComponent {
 
 
     /**
-     * Check that an Element is visible.
+     * Check that an Element is not visible.
      *
      * @param locator the locator of the element
-     * @param seconds the max time in seconds after which element should become visible
+     * @param seconds the max time in seconds after which element should become invisible
      */
     public void elementNotVisible(String locator,long seconds) {
         try {
