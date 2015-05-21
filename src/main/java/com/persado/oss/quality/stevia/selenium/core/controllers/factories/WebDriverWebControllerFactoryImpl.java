@@ -143,6 +143,11 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     desiredCapabilities = DesiredCapabilities.chrome();
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("test-type");
+                    if (SteviaContext.getParam("downloadExtension") != null) {
+                        LOG.info("Download workable chrome extension");
+                        desiredCapabilities.setCapability("download", SteviaContext.getParam("downloadExtension"));
+                    }
+
                     if (SteviaContext.getParam("chromeExtensions") != null) {
                         List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
                         for (String path : extensionPaths) {
