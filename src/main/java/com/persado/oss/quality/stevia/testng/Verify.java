@@ -488,6 +488,7 @@ public class Verify extends WebComponent {
 	 */
 	public void tableElements(String locator,String[][] expectedArray){
 		String[][] actualArray = controller().getTableElements2DArray(locator);
+        Assert.assertEquals(actualArray.length,expectedArray.length,"The arrays have not the same length");
 		for (int i = 0; i < expectedArray.length; i++) {
 			for (int j = 0; j < expectedArray[i].length; j++) {
 				if (expectedArray[i][j].equals(actualArray[i][j])){
