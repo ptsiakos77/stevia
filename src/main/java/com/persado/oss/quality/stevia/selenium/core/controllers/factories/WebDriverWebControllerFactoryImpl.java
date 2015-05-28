@@ -194,8 +194,12 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             }
             Augmenter augmenter = new Augmenter(); // adds screenshot capability to a default webdriver.
             try {
-                driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT)
-                        + "/wd/hub"), desiredCapabilities));
+                if(!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT))) {
+                    driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT)
+                            + "/wd/hub"), desiredCapabilities));
+                }else{
+                    driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + "/wd/hub"), desiredCapabilities));
+                }
                 ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {
                 throw new IllegalArgumentException(e.getMessage(), e);
