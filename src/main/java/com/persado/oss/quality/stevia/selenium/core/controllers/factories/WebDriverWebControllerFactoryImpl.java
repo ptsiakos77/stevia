@@ -49,7 +49,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.*;
 import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
@@ -107,9 +106,6 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("opera") == 0) {
                 LOG.info("Debug enabled, using OperaDriver");
                 driver = new OperaDriver();
-            } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("phantomjs") == 0) {
-                LOG.info("Debug enabled, using OperaDriver");
-                driver = new PhantomJSDriver();
             } else {
                 throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
             }
@@ -174,7 +170,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 if (!StringUtils.isEmpty(SteviaContext.getParam("recordVideo"))) {
                     String record_video = SteviaContext.getParam("recordVideo");
                     LOG.info("Set recording video to: " + SteviaContext.getParam("recordVideo"));
-                    if (record_video.equalsIgnoreCase("True")){
+                    if (record_video.equalsIgnoreCase("True")) {
                         desiredCapabilities.setCapability("video", "True");
                     } else {
                         desiredCapabilities.setCapability("video", "False");
