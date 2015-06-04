@@ -143,20 +143,14 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     desiredCapabilities = DesiredCapabilities.chrome();
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("test-type");
-                    if (SteviaContext.getParam("downloadExtension") != null) {
-                        LOG.info("Download workable chrome extension");
-                        desiredCapabilities.setCapability("download", SteviaContext.getParam("downloadExtension"));
-                        LOG.info("Wait for 1 minute");
-                        try {
-                            Thread.sleep(60000);
-                        }catch (InterruptedException e){
-
-                        }
-                    }
-
                     if (SteviaContext.getParam("chromeExtensions") != null) {
                         List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
                         for (String path : extensionPaths) {
+                            try {
+                                LOG.info("Current path is:" + Runtime.getRuntime().exec("ls -al"));
+                            }catch(Exception e){
+                                LOG.error(e.getMessage());
+                            }
                             LOG.info("Use chrome with extension: " + path);
                             options.addExtensions(new File(path));
                         }
@@ -194,12 +188,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             }
             Augmenter augmenter = new Augmenter(); // adds screenshot capability to a default webdriver.
             try {
-                if(!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT))) {
-                    driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT)
-                            + "/wd/hub"), desiredCapabilities));
-                }else{
-                    driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + "/wd/hub"), desiredCapabilities));
-                }
+                driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + "/wd/hub"), desiredCapabilities));
                 ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {
                 throw new IllegalArgumentException(e.getMessage(), e);
