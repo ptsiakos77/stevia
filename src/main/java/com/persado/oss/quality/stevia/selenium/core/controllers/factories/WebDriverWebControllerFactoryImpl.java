@@ -146,11 +146,6 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     if (SteviaContext.getParam("chromeExtensions") != null) {
                         List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
                         for (String path : extensionPaths) {
-                            try {
-                                LOG.info("Current path is:" + Runtime.getRuntime().exec("ls -al"));
-                            }catch(Exception e){
-                                LOG.error(e.getMessage());
-                            }
                             LOG.info("Use chrome with extension: " + path);
                             options.addExtensions(new File(path));
                         }
