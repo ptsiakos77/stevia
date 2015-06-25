@@ -670,6 +670,26 @@ public class Verify extends WebComponent {
 		}
 	}
 
+	/**
+	 * Attribute does not contain value.
+	 *
+	 * @param locator the locator of the element
+	 * @param attribute the attribute of the element under examination
+	 * @param desiredValue the desired value not to be contained in attribute
+	 */
+	public void attributeDoesNotContainValue (String locator,String attribute,String desiredValue){
+		if(!controller().getAttributeValue(locator, attribute).contains(desiredValue)){
+			highlightPass(locator);
+			info("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + NOT_FOUND_CONTAINING_VALUE + desiredValue+ "'!");
+		}
+		else{
+			highlightFail(locator);
+			error("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + FOUND_CONTAINING_VALUE + desiredValue+ "'!");
+			throw new AssertionError("The '" + attribute + ELEMENT_LOCATOR_ATTRIBUTE + locator + FOUND_CONTAINING_VALUE + desiredValue+ "'!");
+		}
+	}
+
+
     /**
      * Element contained in list.
      *
