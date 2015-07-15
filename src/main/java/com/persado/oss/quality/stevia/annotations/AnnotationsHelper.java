@@ -108,6 +108,10 @@ public class AnnotationsHelper implements ApplicationContextAware {
         controllerStack.get().remove(requestedControllerClass);
     }
 
+	public Map<String,WebController> getControllers() {
+		return controllers.get();
+	}
+
 	private ApplicationContext context;
 	
 	
