@@ -192,4 +192,19 @@ public abstract class WebControllerBase implements WebController {
 		return tableData;
 	}
 
+	@Override
+	public void waitForNewWindow(int windowsBefore, long waitSeconds) {
+		long startTime = System.currentTimeMillis();
+		while (getWindowHandles().size() == windowsBefore && System.currentTimeMillis() - startTime <= waitSeconds * 1000) {
+			try {
+				Thread.sleep(500);
+			}catch (Exception e){
+
+			}
+		}
+		if (getWindowHandles().size() == windowsBefore) {
+			WEB_CONTROLLER_BASE_LOG.warn("No new window appeared within " + waitSeconds + " seconds");
+		}
+	}
+
 }

@@ -39,13 +39,15 @@ package com.persado.oss.quality.stevia.selenium.core;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
+import java.util.Set;
+
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import com.persado.oss.quality.stevia.network.http.HttpCookie;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
-
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 // TODO: Auto-generated Javadoc
@@ -931,5 +933,139 @@ public interface WebController {
 	 * @return the page source
 	 */
 	String getPageSource() ;
-	
+
+
+	/**
+	 * Wait for a page to be fully loaded
+	 *
+	 * @param waitSeconds the maximum number of seconds to wait until the page is fully loaded
+	 */
+	void waitForPageToLoad(long waitSeconds);
+
+
+	/**
+	 * Press element and wait for AJAX call to complete
+	 *
+	 * @param locator the element locator
+	 */
+	void pressAndWaitForAjaxComplete(String locator);
+
+
+	/**
+	 * Press link and wait for AJAX call to complete
+	 *
+	 * @param linkName
+	 */
+	void pressLinkNameAndWaitForAjaxComplete(String linkName);
+
+
+	/**
+	 * Press Element using javascript code
+	 *
+	 * @param locator the element locator
+	 */
+	void pressElementWithJS(String locator);
+
+
+	/**
+	 * Write inside an input field using javascript code
+	 *
+	 * @param locator the element locator
+	 * @param text the desired text
+	 */
+	void inputWithJS(String locator, String text);
+
+
+	/**
+	 * Scrolls to top of a page
+	 */
+	void scrollToTop();
+
+
+	/**
+	 * Scrolls to page bottom
+	 */
+	void scrollToBottom();
+
+
+	/**
+	 * Open a new window in a specific url
+	 *
+	 * @param url
+	 */
+	void openNewWindow(String url);
+
+
+	/**
+	 * Open a new window
+	 */
+	void openNewWindow();
+
+
+	/**
+	 * Set a window size ( width and height )
+	 *
+	 * @param dim dimension that defines the window width and height
+	 */
+	void setWindowSize(Dimension dim);
+
+
+	/**
+	 * Select frame by it's id
+	 *
+	 * @param frameId the frame id
+	 */
+	void switchToFrame(String frameId);
+
+	/**
+	 *
+	 * Get all open windows id's
+	 *
+	 * @return a set containing the window id's
+	 */
+	Set<String> getWindowHandles();
+
+	/**
+	 * Get the current window id
+	 *
+	 * @return the id
+	 */
+	String getWindowHandle();
+
+	/**
+	 * Switch to a window
+	 *
+	 * @param windowHandle the id of the desired window
+	 */
+	void switchToWindow(String windowHandle);
+
+	/**
+	 * Switch to the web element that is currently active
+	 *
+	 */
+	void switchToActiveElement();
+
+	/**
+	 * Select frame by it's index
+	 *
+	 * @param index the frame index
+	 */
+	void selectFrame(int index);
+
+	/**
+	 * Fet the current window title
+	 *
+	 * @return the widow title
+	 */
+	String getTitle();
+
+	/**
+	 * Wait for a new window to appear within a max number of seconds
+	 *
+	 * @param windowsBefore the number of windows before
+	 * @param waitSeconds the maximum number to wait until the new window appears
+	 */
+	void waitForNewWindow(int windowsBefore, long waitSeconds);
+
+
 }
