@@ -1068,4 +1068,12 @@ public interface WebController {
 	void waitForNewWindow(int windowsBefore, long waitSeconds);
 
 
+	/**
+	 * Press an element that spawns a new window and switch to it
+	 *
+	 * @param locator the element locator
+	 */
+	void pressAndSwitchToNewWindow(String locator);
+
+
 }

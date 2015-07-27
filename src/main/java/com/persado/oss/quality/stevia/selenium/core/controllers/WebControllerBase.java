@@ -41,6 +41,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Reporter;
@@ -206,5 +208,15 @@ public abstract class WebControllerBase implements WebController {
 			WEB_CONTROLLER_BASE_LOG.warn("No new window appeared within " + waitSeconds + " seconds");
 		}
 	}
+
+
+	@Override
+	public void pressAndSwitchToNewWindow(String locator) {
+		int windowsBefore = getWindowHandles().size();
+		press(locator);
+		waitForNewWindow(windowsBefore, SteviaContext.getWaitForNewWindow());
+		switchToLatestWindow();
+	}
+
 
 }

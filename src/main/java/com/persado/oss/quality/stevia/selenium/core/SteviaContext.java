@@ -89,6 +89,7 @@ public class SteviaContext {
         private int waitForPageToLoad = 120;
         private int waitForAjaxComplete = 120000;
         private int waitForElement = 10;
+        private int waitForWindow = 10;
         private int waitForElementInvisibility = 1;
         private ApplicationContext context;
 
@@ -149,6 +150,14 @@ public class SteviaContext {
 
         public void setWaitForElementInvisibility(int waitForElementInvisibility) {
             this.waitForElementInvisibility = waitForElementInvisibility;
+        }
+
+        public int getWaitForWindow() {
+            return waitForWindow;
+        }
+
+        public void setWaitForWindow(int waitForWindow) {
+            this.waitForWindow = waitForWindow;
         }
 
         public ApplicationContext getContext() {
@@ -324,6 +333,13 @@ public class SteviaContext {
         innerContext.get().setWaitForElementInvisibility(waitForElementInvisibility);
     }
 
+    public static void setWaitForNewWindow(int waitForNewWindow) {
+         innerContext.get().setWaitForWindow(waitForNewWindow);
+    }
+
+    public static int getWaitForNewWindow() {
+        return  innerContext.get().getWaitForWindow();
+    }
 
     public static void attachSpringContext(ApplicationContext applicationContext) {
         innerContext.get().setContext(applicationContext);

@@ -785,4 +785,9 @@ class VoidController implements WebController {
         // TODO Auto-generated method stub
     }
 
+    @Override
+    public void pressAndSwitchToNewWindow(String locator) {
+        // TODO Auto-generated method stub
+    }
+
 }
