@@ -298,6 +298,9 @@ public class SteviaContext {
     public static void clean() {
         innerContext.get().clear();
         innerContext.remove();
+        try {
+            Thread.sleep(5000);
+        }catch (InterruptedException e){}
     }
 
 
