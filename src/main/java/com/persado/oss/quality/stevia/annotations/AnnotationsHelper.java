@@ -76,11 +76,13 @@ public class AnnotationsHelper implements ApplicationContextAware {
 
 	public static void disposeControllers() {
 		for (WebController controller : controllers.get().values()) {
-			LOG.info("Removing {} in SteviaContext.clean - disposeControllers()",controller);
+			LOG.info("Removing {} in SteviaContext.clean - disposeControllers()", controller);
 			try {
 				controller.quit();
 			} catch (WebDriverException wde) {
 				LOG.warn("Exception caught calling controller.quit(): \""+wde.getMessage()+"\" additional info: "+wde.getAdditionalInformation());
+			}finally {
+				controller=null;
 			}
 		}
 		controllers.get().clear();
@@ -92,6 +94,8 @@ public class AnnotationsHelper implements ApplicationContextAware {
 				controller.quit();
 			} catch (WebDriverException wde) {
 				LOG.warn("Exception caught calling controller.quit(): \""+wde.getMessage()+"\" additional info: "+wde.getAdditionalInformation());
+			}finally {
+				controller=null;
 			}
 		}
 		cache.clear();
