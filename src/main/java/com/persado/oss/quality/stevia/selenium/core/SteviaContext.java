@@ -118,6 +118,12 @@ public class SteviaContext {
             Thread.currentThread().setName("Stevia - Inactive");
             LOG.info("Context closed, controller shutdown");
             AnnotationsHelper.disposeControllers();
+
+            try {
+                Thread.sleep(3000);
+            }catch (InterruptedException e){
+                LOG.error(e.getMessage());
+            }
         }
 
         public int getWaitForPageToLoad() {
