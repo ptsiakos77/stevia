@@ -298,7 +298,6 @@ public class SteviaContext {
     public static void clean() {
         innerContext.get().clear();
         innerContext.remove();
-        innerContext = null;
         System.gc();
     }
 
