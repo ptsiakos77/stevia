@@ -119,7 +119,7 @@ public class SteviaContext {
             LOG.info("Context closed, controller shutdown");
             AnnotationsHelper.disposeControllers();
 
-            System.gc();
+            System.runFinalization();
         }
 
         public int getWaitForPageToLoad() {
