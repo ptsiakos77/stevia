@@ -41,6 +41,7 @@ import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.SteviaWebControllerFactory;
 import com.persado.oss.quality.stevia.selenium.core.controllers.WebDriverWebController;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -61,6 +62,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
     private static final Logger LOG = LoggerFactory.getLogger(WebDriverWebControllerFactoryImpl.class);
@@ -177,15 +182,24 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     }
                 }
             }
-            Augmenter augmenter = new Augmenter(); // adds screenshot capability to a default webdriver.
+
+            final DesiredCapabilities wdCapabilities = desiredCapabilities;
+            final String wdHost = SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST);
+
+            CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(()-> getRemoteWebDriver(wdHost,wdCapabilities));
+
             try {
-                driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + "/wd/hub"), desiredCapabilities));
-                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-            } catch (MalformedURLException e) {
-                throw new IllegalArgumentException(e.getMessage(), e);
+                wd.get(5, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                LOG.error(e.getMessage());
+            } catch (ExecutionException e) {
+                LOG.error(e.getMessage());
+            } catch (TimeoutException e) {
+                throw new RuntimeException("Timeout of 5 minutes reached waiting for a hub node to receive the request");
             }
 
         }
+        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
 
         if (SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL) != null) {
             driver.get(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL));
@@ -201,6 +215,17 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
     @Override
     public String getBeanName() {
         return "webDriverController";
+    }
+
+    private WebDriver getRemoteWebDriver(String rcHost, DesiredCapabilities desiredCapabilities) {
+        WebDriver driver;
+        Augmenter augmenter = new Augmenter(); // adds screenshot capability to a default webdriver.
+        try {
+            driver = augmenter.augment(new RemoteWebDriver(new URL("http://" + rcHost + "/wd/hub"), desiredCapabilities));
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
+        }
+        return driver;
     }
 
 }
