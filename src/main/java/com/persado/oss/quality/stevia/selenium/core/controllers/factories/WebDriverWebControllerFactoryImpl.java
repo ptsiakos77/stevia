@@ -189,7 +189,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(()-> getRemoteWebDriver(wdHost,wdCapabilities));
 
             try {
-                wd.get(5, TimeUnit.MINUTES);
+                driver = wd.get(5, TimeUnit.MINUTES);
             } catch (InterruptedException e) {
                 LOG.error(e.getMessage());
             } catch (ExecutionException e) {
