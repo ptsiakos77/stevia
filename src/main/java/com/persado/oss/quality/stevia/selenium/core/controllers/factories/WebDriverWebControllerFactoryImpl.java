@@ -197,9 +197,8 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             } catch (TimeoutException e) {
                 throw new RuntimeException("Timeout of 5 minutes reached waiting for a hub node to receive the request");
             }
-
+            ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
         }
-        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
 
         if (SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL) != null) {
             driver.get(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL));
