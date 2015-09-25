@@ -41,7 +41,6 @@ import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.SteviaWebControllerFactory;
 import com.persado.oss.quality.stevia.selenium.core.controllers.WebDriverWebController;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -186,16 +185,16 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             final DesiredCapabilities wdCapabilities = desiredCapabilities;
             final String wdHost = SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST);
 
-            CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(()-> getRemoteWebDriver(wdHost,wdCapabilities));
+            CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(() -> getRemoteWebDriver(wdHost, wdCapabilities));
 
             try {
-                driver = wd.get(5, TimeUnit.MINUTES);
+                driver = wd.get(Integer.valueOf(SteviaContext.getParam("nodeTimeout")), TimeUnit.MINUTES);
             } catch (InterruptedException e) {
                 LOG.error(e.getMessage());
             } catch (ExecutionException e) {
                 LOG.error(e.getMessage());
             } catch (TimeoutException e) {
-                throw new RuntimeException("Timeout of 5 minutes reached waiting for a hub node to receive the request");
+                throw new RuntimeException("Timeout of " + Integer.valueOf(SteviaContext.getParam("nodeTimeout")) + " minutes reached waiting for a hub node to receive the request");
             }
             ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
         }
