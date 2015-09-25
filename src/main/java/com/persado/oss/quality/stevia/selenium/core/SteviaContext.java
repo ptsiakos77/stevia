@@ -300,8 +300,8 @@ public class SteviaContext {
         innerContext.remove();
         System.gc();
         try {
-            LOG.info("Wait for 10 seconds");
-            Thread.sleep(10000);
+            LOG.info("Wait for 5 seconds");
+            Thread.sleep(5000);
         }catch (InterruptedException e){
             LOG.error(e.getMessage());
         }
