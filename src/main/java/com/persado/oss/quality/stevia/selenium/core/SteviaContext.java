@@ -296,13 +296,6 @@ public class SteviaContext {
     public static void clean() {
         innerContext.get().clear();
         innerContext.remove();
-        System.gc();
-        try {
-            LOG.info("Wait for 5 seconds");
-            Thread.sleep(5000);
-        }catch (InterruptedException e){
-            LOG.error(e.getMessage());
-        }
     }
 
 
