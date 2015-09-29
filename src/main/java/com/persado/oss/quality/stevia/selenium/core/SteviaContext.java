@@ -99,6 +99,7 @@ public class SteviaContext {
          * Clear context.
          */
         public void clear() {
+            AnnotationsHelper.disposeControllers();
             if (controller != null) {
                 try {
                     controller.quit();
@@ -114,10 +115,7 @@ public class SteviaContext {
             }
             context = null;
             state = null;
-
-            Thread.currentThread().setName("Stevia - Inactive");
             LOG.info("Context closed, controller shutdown");
-            AnnotationsHelper.disposeControllers();
         }
 
         public int getWaitForPageToLoad() {

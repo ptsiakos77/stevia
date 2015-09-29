@@ -80,10 +80,9 @@ public class AnnotationsHelper implements ApplicationContextAware {
 			try {
 				controller.quit();
 			} catch (WebDriverException wde) {
-				LOG.warn("Exception caught calling controller.quit(): \""+wde.getMessage()+"\" additional info: "+wde.getAdditionalInformation());
-			}finally {
-				controller=null;
+				LOG.warn("Exception caught calling controller.quit(): \"" + wde.getMessage() + "\" additional info: " + wde.getAdditionalInformation());
 			}
+
 		}
 		controllers.get().clear();
 		Deque<WebController> cache = controllerStack.get();
@@ -94,8 +93,6 @@ public class AnnotationsHelper implements ApplicationContextAware {
 				controller.quit();
 			} catch (WebDriverException wde) {
 				LOG.warn("Exception caught calling controller.quit(): \""+wde.getMessage()+"\" additional info: "+wde.getAdditionalInformation());
-			}finally {
-				controller=null;
 			}
 		}
 		cache.clear();
