@@ -1789,4 +1789,22 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     public String getTitle() {
         return selenium.getTitle();
     }
+
+    @Override
+    @Deprecated
+    public void tap(String locator) {
+
+    }
+
+    @Override
+    @Deprecated
+    public void tap(int x, int y) {
+
+    }
+
+    @Override
+    @Deprecated
+    public void tapWithJS(String locator) {
+
+    }
 }

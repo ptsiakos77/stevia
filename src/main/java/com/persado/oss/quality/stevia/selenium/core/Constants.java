@@ -81,6 +81,24 @@ public interface Constants {
 	
 	public static final String TRUE = "true";
 
-	
-	
+	/** The parameter that determines the mobile platform IOS or Android **/
+	public static final String MOBILE_PLATFORM_NAME = "mobilePlatformName";
+
+	/** The parameter that determines the mobile platfor version **/
+	public static final String MOBILE_PLATFORM_VERSION = "mobilePlatformVersion";
+
+	/** The parameter that determined the mobile device name **/
+	public static final String MOBILE_DEVICE_NAME = "mobileDeviceName";
+
+	/** The parameter that determines the path to mobile application **/
+	public static final String MOBILE_APP = "mobileApp";
+
+	/** The parameter that determines the mobile application package **/
+	public static final String MOBILE_APP_PACKAGE = "mobileAppPackage";
+
+	/** The parameter that determined the mobile application activity **/
+	public static final String MOBILE_APP_ACTIVITY = "mobileAppActivity";
+
+
+
 }

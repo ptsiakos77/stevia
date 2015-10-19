@@ -1075,5 +1075,27 @@ public interface WebController {
 	 */
 	void pressAndSwitchToNewWindow(String locator);
 
+	/**
+	 * Perform tap event on a Web element identified by locator
+	 * @param locator
+	 */
+	void tap(String locator);
+
+
+	/**
+	 * Perform tap on x,y coordinates
+	 * @param x
+	 * @param y
+	 */
+	void tap(int x,int y);
+
+
+	/**
+	 * Perform tap triggering javascript tap event. Locator must be a css locator
+	 * @param locator
+	 */
+	void tapWithJS(String locator);
+
+
 
 }

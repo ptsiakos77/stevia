@@ -42,13 +42,13 @@ import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import com.persado.oss.quality.stevia.selenium.core.controllers.webdriverapi.ByExtended;
-import com.persado.oss.quality.stevia.selenium.listeners.ReportingWebDriverEventListener;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -70,17 +70,17 @@ import java.util.Set;
 /**
  * The Class WebDriverMethods.
  */
-public class WebDriverWebController extends WebControllerBase implements WebController {
+public class AppiumWebController extends WebControllerBase implements WebController {
 
     /**
      * The Constant LOG.
      */
-    private static final Logger WEBDRIVER_LOG = LoggerFactory.getLogger(WebDriverWebController.class);
+    private static final Logger WEBDRIVER_LOG = LoggerFactory.getLogger(AppiumWebController.class);
 
     /**
      * The driver.
      */
-    private WebDriver driver;
+    private AppiumDriver driver;
 
     /**
      * The Constant TO_MILLIS.
@@ -122,7 +122,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      *
      * @return the driver
      */
-    public WebDriver getDriver() {
+    public AppiumDriver getDriver() {
         return driver;
     }
 
@@ -131,7 +131,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      *
      * @param driver the new driver
      */
-    public void setDriver(WebDriver driver) {
+    public void setDriver(AppiumDriver driver) {
         this.driver = driver;
     }
 
@@ -145,27 +145,6 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         return new WebDriverBackedSelenium(driver, baseUrl);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
-     * enableActionsLogging()
-     */
-    @Override
-    public void enableActionsLogging() {
-        this.setDriver(new EventFiringWebDriver(driver).register(new ReportingWebDriverEventListener()));
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
-     * disableActionsLogging()
-     */
-    @Override
-    public void disableActionsLogging() {
-        this.setDriver(new EventFiringWebDriver(driver).unregister(new ReportingWebDriverEventListener()));
-    }
 
     /*
      * (non-Javadoc)
@@ -201,7 +180,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
 	/*
      * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.persado.oss.quality.stevia.selenium.core.WebController#waitForElement
 	 * (org.openqa.selenium.String)
@@ -301,8 +280,8 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     }
 
 	/*
-	 * (non-Javadoc)
-	 * 
+     * (non-Javadoc)
+	 *
 	 * @see
 	 * com.persado.oss.quality.stevia.selenium.core.WebController#waitForElement
 	 * (java.lang.String)
@@ -1258,12 +1237,22 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         return driver.getCurrentUrl();
     }
 
+    @Override
+    public void enableActionsLogging() {
+
+    }
+
+    @Override
+    public void disableActionsLogging() {
+
+    }
+
     /*
-     * (non-Javadoc)
-     *
-     * @see
-     * com.persado.oss.quality.stevia.selenium.core.WebController#close()
-     */
+         * (non-Javadoc)
+         *
+         * @see
+         * com.persado.oss.quality.stevia.selenium.core.WebController#close()
+         */
     @Override
     public void close() {
         driver.close();
@@ -1741,21 +1730,22 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     }
 
     @Override
-    @Deprecated
     public void tap(String locator) {
-
+        new TouchAction(driver).tap(waitForElement(locator)).perform();
     }
 
     @Override
-    @Deprecated
     public void tap(int x, int y) {
-
+        new TouchAction(driver).tap(x,y).perform();
     }
 
     @Override
-    @Deprecated
     public void tapWithJS(String locator) {
-
+        if (SteviaContext.getParam("highlight").equals("true")) {
+            highlight(locator);
+        }
+        executeJavascript("$(\"" + locator.substring(4) + "\").trigger('tap')");
     }
+
 
 }
