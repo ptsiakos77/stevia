@@ -1655,7 +1655,9 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         if (SteviaContext.getParam("highlight").equals("true")) {
             highlight(locator);
         }
-        executeJavascript("$(\"" + locator.substring(4) + "\").click()");
+        if (isComponentEditable(locator)) {
+            executeJavascript("$(\"" + locator.substring(4) + "\").click()");
+        }
         waitForAjaxComplete(SteviaContext.getWaitForAjaxComplete());
     }
 
@@ -1744,7 +1746,9 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         if (SteviaContext.getParam("highlight").equals("true")) {
             highlight(locator);
         }
-        executeJavascript("$(\"" + locator.substring(4) + "\").trigger('tap')");
+        if (isComponentEditable(locator)) {
+            executeJavascript("$(\"" + locator.substring(4) + "\").trigger('tap')");
+        }
     }
 
 
