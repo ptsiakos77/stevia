@@ -45,6 +45,7 @@ import com.persado.oss.quality.stevia.selenium.core.controllers.webdriverapi.ByE
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -116,6 +117,17 @@ public class AppiumWebController extends WebControllerBase implements WebControl
      * The Constant ID.
      */
     private static final String ID = "id";
+
+    /**
+     * The Constant TAG.
+     */
+    private static final String TAG = "tag";
+
+    /**
+     * The Constant CLASS.
+     */
+    private static final String CLASS = "class";
+
 
     /**
      * Gets the driver.
@@ -204,19 +216,23 @@ public class AppiumWebController extends WebControllerBase implements WebControl
      */
     public By determineLocator(String locator) {
         if (locator.startsWith(XPATH)) {
-            return By.xpath(findLocatorSubstring(locator));
+            return MobileBy.xpath(findLocatorSubstring(locator));
         } else if (locator.startsWith("//")) {
-            return By.xpath(locator);
+            return MobileBy.xpath(locator);
         } else if (locator.startsWith(CSS)) {
             return ByExtended.cssSelector(findLocatorSubstring(locator));
         } else if (locator.startsWith(NAME)) {
-            return By.name(findLocatorSubstring(locator));
+            return MobileBy.name(findLocatorSubstring(locator));
         } else if (locator.startsWith(LINK)) {
-            return By.linkText(findLocatorSubstring(locator));
+            return MobileBy.linkText(findLocatorSubstring(locator));
         } else if (locator.startsWith(ID)) {
-            return By.id(findLocatorSubstring(locator));
+            return MobileBy.id(findLocatorSubstring(locator));
+        } else if (locator.startsWith(TAG)) {
+            return MobileBy.tagName(findLocatorSubstring(locator));
+        } else if (locator.startsWith(CLASS)) {
+            return MobileBy.className(findLocatorSubstring(locator));
         } else {
-            return By.id(locator);
+            return MobileBy.id(locator);
         }
     }
 
@@ -1738,7 +1754,7 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void tap(int x, int y) {
-        new TouchAction(driver).tap(x,y).perform();
+        new TouchAction(driver).tap(x, y).perform();
     }
 
     @Override
