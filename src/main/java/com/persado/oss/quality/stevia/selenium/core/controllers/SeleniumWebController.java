@@ -900,6 +900,17 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
         selenium.open(url);
     }
 
+    @Override
+    public void navigateBack() {
+        selenium.goBack();
+    }
+
+    @Override
+    @Deprecated
+    public void navigateForward() {
+
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -1745,7 +1756,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
 
     @Override
     public void setWindowSize(Dimension dim) {
-        executeJavascript("window.resizeTo("+dim.getWidth()+","+dim.getHeight()+")");
+        executeJavascript("window.resizeTo(" + dim.getWidth() + "," + dim.getHeight() + ")");
     }
 
     @Override
@@ -1756,7 +1767,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     @Override
     public Set<String> getWindowHandles() {
         Set<String> windowHandles = new HashSet<String>();
-        for(String id:selenium.getAllWindowIds()){
+        for (String id : selenium.getAllWindowIds()) {
             windowHandles.add(id);
         }
         return windowHandles;
@@ -1765,7 +1776,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     @Override
     @Deprecated
     public String getWindowHandle() {
-         return null;
+        return null;
     }
 
     @Override

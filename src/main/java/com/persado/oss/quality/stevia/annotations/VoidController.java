@@ -476,7 +476,16 @@ class VoidController implements WebController {
     @Override
     public void navigate(String url) {
         // TODO Auto-generated method stub
+    }
 
+    @Override
+    public void navigateBack() {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void navigateForward() {
+        // TODO Auto-generated method stub
     }
 
     @Override

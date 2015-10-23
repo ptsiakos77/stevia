@@ -640,8 +640,19 @@ public interface WebController {
 	 * @param url the url you want to navigate to
 	 */
 	void navigate(String url);
-	
-	
+
+	/**
+	 * Navigate back
+	 */
+	void navigateBack();
+
+
+	/**
+	 * Navigate forward
+	 */
+	void navigateForward();
+
+
 	/**
 	 * Refresh. Simulates the refresh button of the browser
 	 */

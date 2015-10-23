@@ -1247,6 +1247,16 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         driver.navigate().to(url);
     }
 
+    @Override
+    public void navigateBack() {
+        driver.navigate().back();
+    }
+
+    @Override
+    public void navigateForward() {
+        driver.navigate().forward();
+    }
+
     /*
      * (non-Javadoc)
      *
