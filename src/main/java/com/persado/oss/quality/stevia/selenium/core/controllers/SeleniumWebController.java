@@ -1744,6 +1744,11 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     }
 
     @Override
+    public void scrollTo(int x, int y) {
+        executeJavascript("window.scrollTo(" + x + "," + y + ")");
+    }
+
+    @Override
     public void openNewWindow(String url) {
         selenium.open(url);
 

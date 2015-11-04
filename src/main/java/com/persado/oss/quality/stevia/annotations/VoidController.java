@@ -737,6 +737,11 @@ class VoidController implements WebController {
     }
 
     @Override
+    public void scrollTo(int x, int y) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
     public void openNewWindow(String url) {
         // TODO Auto-generated method stub
     }

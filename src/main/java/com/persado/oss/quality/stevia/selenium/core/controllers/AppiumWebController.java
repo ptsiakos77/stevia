@@ -1708,6 +1708,11 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     }
 
     @Override
+    public void scrollTo(int x, int y) {
+
+    }
+
+    @Override
     public void openNewWindow(String url) {
         executeJavascript("window.open(arguments[0], '_blank', 'height=1500,width=1500')", url);
     }

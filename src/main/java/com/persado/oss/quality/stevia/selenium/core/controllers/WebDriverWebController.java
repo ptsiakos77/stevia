@@ -301,7 +301,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     }
 
 	/*
-	 * (non-Javadoc)
+     * (non-Javadoc)
 	 * 
 	 * @see
 	 * com.persado.oss.quality.stevia.selenium.core.WebController#waitForElement
@@ -1700,6 +1700,11 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     @Override
     public void scrollToBottom() {
         executeJavascript("$('body').scrollTop($(document).height())");
+    }
+
+    @Override
+    public void scrollTo(int x, int y) {
+        executeJavascript("window.scrollTo(" + x + "," + y + ")");
     }
 
     @Override
