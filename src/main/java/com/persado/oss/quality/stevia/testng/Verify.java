@@ -129,6 +129,10 @@ public class Verify extends WebComponent {
 
     private static final String TABLE_ELEMENT = "The table element '";
 
+    private static final String HAS_ATTRIBUTE = "' has the attribute '";
+
+    private static final String HAS_NOT_ATTRIBUTE = "' has not the attribute '";
+
 
     /**
      * Instantiates a new verify.
@@ -650,6 +654,42 @@ public class Verify extends WebComponent {
             info("The '" + obj1 + IS_NOT_EQUAL + obj2 + "'!");
         } catch (AssertionError e) {
             error("The '" + obj1 + IS_EQUAL + obj2 + "'!");
+            throw e;
+        }
+    }
+
+    /**
+     * Verify that the element has the given attribute
+     *
+     * @param locator
+     * @param attribute
+     */
+    public void hasAttribute(String locator, String attribute) {
+        try {
+            Assert.assertNotNull(controller().getAttributeValue(locator, attribute));
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + HAS_ATTRIBUTE + attribute);
+        } catch (AssertionError e) {
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + HAS_NOT_ATTRIBUTE + attribute);
+            throw e;
+        }
+    }
+
+    /**
+     * Verify that the element has the given attribute
+     *
+     * @param locator
+     * @param attribute
+     */
+    public void hasNotAttribute(String locator, String attribute) {
+        try {
+            Assert.assertNull(controller().getAttributeValue(locator, attribute));
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + HAS_NOT_ATTRIBUTE + attribute);
+        } catch (AssertionError e) {
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + HAS_ATTRIBUTE + attribute);
             throw e;
         }
     }
