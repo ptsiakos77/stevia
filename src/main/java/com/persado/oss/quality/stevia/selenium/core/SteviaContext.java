@@ -87,7 +87,7 @@ public class SteviaContext {
         private Map<String, String> paramsRegistry;
 
         private int waitForPageToLoad = 120;
-        private int waitForAjaxComplete = 120000;
+        private int waitForAjaxComplete = 20000;
         private int waitForElement = 10;
         private int waitForWindow = 10;
         private int waitForElementInvisibility = 1;
