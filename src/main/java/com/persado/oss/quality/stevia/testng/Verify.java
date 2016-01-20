@@ -805,6 +805,8 @@ public class Verify extends WebComponent {
 
 
     private void highlightFail(String locator) {
-        controller().highlight(locator, FAIL_COLOR);
+        if (SteviaContext.getParam("highlight").equals("true")) {
+            controller().highlight(locator, FAIL_COLOR);
+        }
     }
 }
