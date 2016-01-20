@@ -79,6 +79,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_ACTIVITY))) {
             capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_ACTIVITY));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW))) {
+            capabilities.setCapability(SteviaWebControllerFactory.AUTO_WEB_VIEW, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW));
+        }
 
         if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("Android") == 0) {
             try {
