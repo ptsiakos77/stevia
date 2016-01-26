@@ -113,6 +113,8 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
             }
         }
 
+        LOG.info("Appium Desired capabilities {}", new Object[]{capabilities});
+
         if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("Android") == 0) {
             try {
                 driver = new AndroidDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
