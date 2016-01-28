@@ -99,6 +99,9 @@ public interface Constants {
 	/** The parameter that determined the mobile application activity **/
 	public static final String MOBILE_APP_ACTIVITY = "mobileAppActivity";
 
+	/** The parameter that determined the mobile application activity **/
+	public static final String MOBILE_APP_WAIT_ACTIVITY = "mobileAppWaitActivity";
+
 	/** The parameter that determined the auto web view activity **/
 	public static final String AUTO_WEB_VIEW = "autoWebview";
 
