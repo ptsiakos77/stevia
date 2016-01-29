@@ -76,25 +76,40 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_WAIT_ACTIVITY))) {
             capabilities.setCapability(MobileCapabilityType.APP_WAIT_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_WAIT_ACTIVITY));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME))) {
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_VERSION))) {
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_VERSION));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.BROWSER))) {
+            capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, SteviaContext.getParam(SteviaWebControllerFactory.BROWSER));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP))) {
+            capabilities.setCapability(MobileCapabilityType.APP, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW))) {
+            capabilities.setCapability(SteviaWebControllerFactory.AUTO_WEB_VIEW, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW));
+        }
 
-        if (SteviaContext.getParam("debugging").equals("true")) {
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME))) {
-                capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME));
+        //Appium parameters
+        if (SteviaContext.getParam("cloudService").equalsIgnoreCase("SauceLabs")) {
+            if (!StringUtils.isEmpty(SteviaContext.getParam("username"))) {
+                capabilities.setCapability("username", SteviaContext.getParam("username"));
             }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_VERSION))) {
-                capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_VERSION));
+            if (!StringUtils.isEmpty(SteviaContext.getParam("access"))) {
+                capabilities.setCapability("access-key", SteviaContext.getParam("access-key"));
             }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.BROWSER))) {
-                capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, SteviaContext.getParam(SteviaWebControllerFactory.BROWSER));
+            if (!StringUtils.isEmpty(SteviaContext.getParam("deviceType"))) {
+                capabilities.setCapability("deviceType", SteviaContext.getParam("deviceType"));
             }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP))) {
-                capabilities.setCapability(MobileCapabilityType.APP, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP));
+            if (!StringUtils.isEmpty(SteviaContext.getParam("appiumVersion"))) {
+                capabilities.setCapability("appiumVersion", SteviaContext.getParam("appiumVersion"));
             }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW))) {
-                capabilities.setCapability(SteviaWebControllerFactory.AUTO_WEB_VIEW, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW));
-            }
-        } else {
-            //Remote run using Testdroid
+        }
+
+        //TestDroid parameters
+        if (SteviaContext.getParam("cloudService").equalsIgnoreCase("Testdroid")) {
             if (!StringUtils.isEmpty(SteviaContext.getParam("testdroid_username"))) {
                 capabilities.setCapability("testdroid_username", SteviaContext.getParam("testdroid_username"));
             }
@@ -130,7 +145,6 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
         }
-
         if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("iOS") == 0) {
             try {
                 driver = new IOSDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
@@ -138,11 +152,15 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
         }
+
         driver.setFileDetector(new LocalFileDetector());
 
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL))) {
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL)))
+
+        {
             driver.get(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL));
         }
+
         appiumController.setDriver(driver);
         return appiumController;
     }
