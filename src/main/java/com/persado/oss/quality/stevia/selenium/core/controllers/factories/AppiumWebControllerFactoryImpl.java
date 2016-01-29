@@ -97,7 +97,7 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
             if (!StringUtils.isEmpty(SteviaContext.getParam("username"))) {
                 capabilities.setCapability("username", SteviaContext.getParam("username"));
             }
-            if (!StringUtils.isEmpty(SteviaContext.getParam("access"))) {
+            if (!StringUtils.isEmpty(SteviaContext.getParam("access-key"))) {
                 capabilities.setCapability("access-key", SteviaContext.getParam("access-key"));
             }
             if (!StringUtils.isEmpty(SteviaContext.getParam("deviceType"))) {
