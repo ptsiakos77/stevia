@@ -977,6 +977,7 @@ public interface WebController {
 
     /**
      * Scroll to point identified by x,y coordinates
+     *
      * @param x
      * @param y
      */
@@ -1092,5 +1093,17 @@ public interface WebController {
      */
     void tapWithJS(String locator);
 
+
+    /**
+     * Scroll to an element which contains the given text.
+     * @param text
+     */
+    void scrollTo(String text);
+
+    /**
+     * Scroll to an element with the given text.
+     * @param text
+     */
+    void scrollToExact(String text);
 
 }

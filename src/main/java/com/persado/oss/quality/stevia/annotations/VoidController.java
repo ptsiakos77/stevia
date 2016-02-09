@@ -818,4 +818,14 @@ class VoidController implements WebController {
     public void tapWithJS(String locator) {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public void scrollTo(String text) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void scrollToExact(String text) {
+        // TODO Auto-generated method stub
+    }
 }

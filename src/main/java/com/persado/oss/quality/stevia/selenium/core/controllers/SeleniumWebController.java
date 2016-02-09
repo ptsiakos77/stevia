@@ -1823,4 +1823,16 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     public void tapWithJS(String locator) {
 
     }
+
+    @Override
+    @Deprecated
+    public void scrollTo(String text) {
+
+    }
+
+    @Override
+    @Deprecated
+    public void scrollToExact(String text) {
+
+    }
 }

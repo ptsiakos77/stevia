@@ -1782,5 +1782,15 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         }
     }
 
+    @Override
+    public void scrollTo(String text){
+        driver.scrollTo(text);
+    }
+
+    @Override
+    public void scrollToExact(String text){
+        driver.scrollToExact(text);
+    }
+
 
 }

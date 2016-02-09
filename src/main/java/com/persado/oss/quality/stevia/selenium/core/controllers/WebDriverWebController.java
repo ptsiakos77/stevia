@@ -1775,4 +1775,16 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     }
 
+    @Override
+    @Deprecated
+    public void scrollTo(String text) {
+
+    }
+
+    @Override
+    @Deprecated
+    public void scrollToExact(String text) {
+
+    }
+
 }
