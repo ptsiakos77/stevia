@@ -161,7 +161,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                     LOG.info("Debug OFF, using a RemoteWebDriver with Opera capabilities");
                     desiredCapabilities = DesiredCapabilities.opera();
                 } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("phantomjs") == 0) {
-                    LOG.info("Debug OFF, using a RemoteWebDriver with Opera capabilities");
+                    LOG.info("Debug OFF, using phantomjs driver");
                     desiredCapabilities = DesiredCapabilities.phantomjs();
                 } else {
                     throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
