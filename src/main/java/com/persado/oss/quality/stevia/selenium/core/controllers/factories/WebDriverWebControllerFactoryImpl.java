@@ -160,7 +160,12 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("opera") == 0) {
                     LOG.info("Debug OFF, using a RemoteWebDriver with Opera capabilities");
                     desiredCapabilities = DesiredCapabilities.opera();
-                } else {
+                }
+                else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("phantomjs") == 0) {
+                    LOG.info("Debug OFF, using a RemoteWebDriver with Opera capabilities");
+                    desiredCapabilities = DesiredCapabilities.phantomjs();
+                }
+                else {
                     throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
                 }
                 if (!StringUtils.isEmpty(SteviaContext.getParam("browserVersion"))) {
