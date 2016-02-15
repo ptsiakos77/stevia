@@ -1106,4 +1106,14 @@ public interface WebController {
      */
     void scrollToExact(String text);
 
+    /**
+     * Perform swipe action
+     * @param startx
+     * @param starty
+     * @param endx
+     * @param endy
+     * @param duration
+     */
+    void swipe(int startx, int starty, int endx, int endy, int duration);
+
 }

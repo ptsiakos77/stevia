@@ -1835,4 +1835,9 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     public void scrollToExact(String text) {
 
     }
+
+    @Override
+    @Deprecated
+    public void swipe(int startx, int starty, int endx, int endy, int duration){
+    }
 }

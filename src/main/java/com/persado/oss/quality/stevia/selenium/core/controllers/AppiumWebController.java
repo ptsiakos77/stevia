@@ -1792,5 +1792,11 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         driver.scrollToExact(text);
     }
 
+    @Override
+    public void swipe(int startx, int starty, int endx, int endy, int duration){
+        driver.swipe(startx,starty,endx,endy,duration);
+    }
+
+
 
 }

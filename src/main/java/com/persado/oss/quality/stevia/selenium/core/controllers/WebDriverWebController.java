@@ -1787,4 +1787,9 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     }
 
+    @Override
+    @Deprecated
+    public void swipe(int startx, int starty, int endx, int endy, int duration){
+    }
+
 }

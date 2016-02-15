@@ -828,4 +828,9 @@ class VoidController implements WebController {
     public void scrollToExact(String text) {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public void swipe(int startx, int starty, int endx, int endy, int duration){
+        // TODO Auto-generated method stub
+    }
 }
