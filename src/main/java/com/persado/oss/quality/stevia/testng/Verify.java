@@ -500,6 +500,7 @@ public class Verify extends WebComponent {
     public void tableElements(String locator, String[][] expectedArray) {
         String[][] actualArray = controller().getTableElements2DArray(locator);
         Assert.assertEquals(actualArray.length, expectedArray.length, "The arrays have not the same length");
+        boolean errorFound = false;
         for (int i = 0; i < expectedArray.length; i++) {
             for (int j = 0; j < expectedArray[i].length; j++) {
                 if (expectedArray[i][j].equals(actualArray[i][j])) {
@@ -507,9 +508,12 @@ public class Verify extends WebComponent {
                 } else {
                     highlightFail(controller().getTableElementSpecificRowAndColumnLocator(locator, String.valueOf(i + 1), String.valueOf(j + 1)));
                     error("The table elements are not equal! EXPECTED VALUE: " + expectedArray[i][j] + " - ACTUAL VALUE: " + actualArray[i][j]);
-                    throw new AssertionError();
+                    errorFound = true;
                 }
             }
+        }
+        if(errorFound){
+            throw new AssertionError("The table elements are not equal");
         }
         info("The table elements are equal");
     }
