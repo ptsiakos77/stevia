@@ -507,12 +507,12 @@ public class Verify extends WebComponent {
                     highlightPass(controller().getTableElementSpecificRowAndColumnLocator(locator, String.valueOf(i + 1), String.valueOf(j + 1)));
                 } else {
                     highlightFail(controller().getTableElementSpecificRowAndColumnLocator(locator, String.valueOf(i + 1), String.valueOf(j + 1)));
-                    error("The table elements are not equal! EXPECTED VALUE: " + expectedArray[i][j] + " - ACTUAL VALUE: " + actualArray[i][j]);
+                    error("The table elements for row " + (i + 1) + " and column " + (j + 1) + " are not equal! EXPECTED VALUE: " + expectedArray[i][j] + " - ACTUAL VALUE: " + actualArray[i][j]);
                     errorFound = true;
                 }
             }
         }
-        if(errorFound){
+        if (errorFound) {
             throw new AssertionError("The table elements are not equal");
         }
         info("The table elements are equal");
