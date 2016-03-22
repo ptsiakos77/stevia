@@ -803,11 +803,6 @@ public class Verify extends WebComponent {
 
     private void highlightPass(String locator) {
         if (SteviaContext.getParam("highlight").equals("true")) {
-            try {
-                controller().mouseOver(locator);
-            }catch (Exception e){
-                VERIFY_LOG.error(e.getMessage());
-            }
             controller().highlight(locator, PASS_COLOR);
         }
     }
@@ -815,11 +810,6 @@ public class Verify extends WebComponent {
 
     private void highlightFail(String locator) {
         if (SteviaContext.getParam("highlight").equals("true")) {
-            try {
-                controller().mouseOver(locator);
-            }catch (Exception e){
-                VERIFY_LOG.error(e.getMessage());
-            }
             controller().highlight(locator, FAIL_COLOR);
         }
     }
