@@ -533,7 +533,7 @@ public class Verify extends WebComponent {
             }
             info("The table records under header '" + headerName + "' are correct");
         } catch (AssertionError e) {
-            error("The table records under header '" + headerName + "' are correct");
+            error("The table records under header '" + headerName + "' are not correct");
             throw e;
         }
     }
