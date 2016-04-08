@@ -518,6 +518,27 @@ public class Verify extends WebComponent {
         info("The table elements are equal");
     }
 
+
+    /**
+     * @param locator
+     * @param headerName
+     * @param tableRecords
+     */
+    public void allTableRecordsUnderHeader(String locator, String headerName, List<String> tableRecords) {
+        List<String> actualRecords = controller().getTableRecordsUnderHeader(locator, headerName);
+        try {
+            Assert.assertEquals(actualRecords, tableRecords);
+            for (String element : tableRecords) {
+                highlightPass(controller().getTableElementSpecificHeaderLocator(locator, element, headerName));
+            }
+            info("The table records under header '" + headerName + "' are correct");
+        } catch (AssertionError e) {
+            error("The table records under header '" + headerName + "' are correct");
+            throw e;
+        }
+    }
+
+
     /**
      * Text is contained in table, in a column with a specific header.
      *
