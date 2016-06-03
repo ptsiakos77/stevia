@@ -38,6 +38,7 @@ package com.persado.oss.quality.stevia.spring;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -111,7 +112,16 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
 	@BeforeSuite(alwaysRun = true)
 	protected final void configureSuiteSettings(ITestContext testContext) throws Exception {	
 		Map<String,String> parameters = testContext.getSuite().getXmlSuite().getAllParameters();
-		
+
+		//Overwrite a parameter if it is provided as command line arguent
+		Iterator<String> paramNames = parameters.keySet().iterator();
+		while (paramNames.hasNext()) {
+			String pName = paramNames.next();
+			if (System.getProperty(pName) != null) {
+				parameters.put(pName, System.getProperty(pName));
+			}
+		}
+
 		//if the suite needs RC server, we start it here 
 		if (parameters.get("driverType").compareTo("webdriver") != 0 && parameters.get("debugging").compareTo(TRUE)==0 && !isRCStarted){
 			startRCServer();
