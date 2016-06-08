@@ -396,8 +396,12 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     @Override
     public void pressAndClickOkInAlert(String locator) {
         press(locator);
+        try {
+            Thread.sleep(THREAD_SLEEP);
+        } catch (InterruptedException e) {
+            error(e.getMessage());
+        }
         clickOkInAlert();
-
     }
 
     /*
@@ -420,6 +424,11 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     @Override
     public void pressAndClickCancelInAlert(String locator) {
         press(locator);
+        try {
+            Thread.sleep(THREAD_SLEEP);
+        } catch (InterruptedException e) {
+            error(e.getMessage());
+        }
         clickCancelInAlert();
     }
 
