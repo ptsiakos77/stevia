@@ -350,6 +350,24 @@ public class Verify extends WebComponent {
     }
 
     /**
+     * Check trimmed text in an element.
+     *
+     * @param locator      the locator of the element
+     * @param expectedText the expected text
+     */
+    public void trimmedText(String locator, String expectedText) {
+        try {
+            Assert.assertEquals(controller().getText(locator).trim(), expectedText);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_WITH_TEXT + expectedText + "'!");
+        } catch (AssertionError e) {
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_TEXT + expectedText + "'!");
+            throw e;
+        }
+    }
+
+    /**
      * Check that an element contains a specific text.
      *
      * @param locator      the locator of the element
