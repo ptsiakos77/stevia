@@ -43,6 +43,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.ITestContext;
@@ -71,214 +73,14 @@ import com.persado.oss.quality.stevia.selenium.listeners.TestListener;
  * configuration parameters.
  */
 @ContextConfiguration(locations = { "classpath:META-INF/spring/stevia-boot-context.xml" })
-@Listeners({ControllerMaskingListener.class, ConditionsListener.class})
-public class SteviaTestBase extends AbstractTestNGSpringContextTests implements Constants {
+public class SteviaTestBase implements Constants {
 
-	/** The Constant STEVIA_TEST_BASE_LOG. */
-	private static final Logger STEVIA_TEST_BASE_LOG = LoggerFactory.getLogger(SteviaTestBase.class);
-	
-	/** The selenium server. */
-	private static Object[] seleniumServer;
-	
-	/** Determined if RC server is started programmatically. */
-	private static boolean isRCStarted = false; 
+    /**
+     * suite-global output directory.
+     */
+    private static String suiteOutputDir;
 
-	/** suite-global output directory. */
-	private static String suiteOutputDir;
-
-	
-	
-	/**
-	 * Extends the TestNG method to prepare the Spring contexts for parallel tests.
-	 * As seen at {@link http://goo.gl/g8QT2}
-	 *
-	 * @throws Exception the exception
-	 */
-	@BeforeSuite(alwaysRun = true)
-	@BeforeClass(alwaysRun = true)
-	@BeforeTest(alwaysRun = true)
-	@Override
-	protected final void springTestContextPrepareTestInstance() throws Exception {
-		super.springTestContextPrepareTestInstance();
-	} 
-	
-	
-	/**
-	 * Start rc server.
-	 *
-	 * @param testContext the test context
-	 * @throws Exception the exception
-	 */
-	@BeforeSuite(alwaysRun = true)
-	protected final void configureSuiteSettings(ITestContext testContext) throws Exception {	
-		Map<String,String> parameters = testContext.getSuite().getXmlSuite().getAllParameters();
-
-		//Overwrite a parameter if it is provided as command line arguent
-		Iterator<String> paramNames = parameters.keySet().iterator();
-		while (paramNames.hasNext()) {
-			String pName = paramNames.next();
-			if (System.getProperty(pName) != null) {
-				parameters.put(pName, System.getProperty(pName));
-			}
-		}
-
-		//if the suite needs RC server, we start it here 
-		if (parameters.get("driverType").compareTo("webdriver") != 0 && parameters.get("debugging").compareTo(TRUE)==0 && !isRCStarted){
-			startRCServer();
-		}
-		setSuiteOutputDir(testContext.getSuite().getOutputDirectory());
-		
-		//stevia context init
-
-		STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-		STEVIA_TEST_BASE_LOG.warn("*** SUITE initialisation phase START                                              ***");
-		STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-		
-		boolean initContext = true; 
-		if (parameters.get("suite.init.context") != null && parameters.get("suite.init.context").startsWith("false")) {
-			initContext = false;
-			STEVIA_TEST_BASE_LOG.info("suite initialisation via suiteInitialisation() override will not use a Stevia Context");
-		}
-		
-		if (initContext) {
-			initializeStevia(parameters);
-		}
-		// user code
-		suiteInitialisation(testContext);
-		if (initContext) {
-			//stevia context clean
-			SteviaContext.clean();
-		}
-		STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-		STEVIA_TEST_BASE_LOG.warn("*** SUITE initialisation phase END                                                ***");
-		STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-	}
-
-	/**
-	 * Suite-Level initialisation callback; this method should be overrriden to
-	 * allow suite-level configuration to happen - preferrably at the Base class
-	 * of the tests (overriden versions of this method will be called from the
-	 * class extending this Base, at Suite initialisation, best place for this
-	 * method to be overriden is at the class extending this Base class).
-	 * 
-	 * @param context
-	 *            test context
-	 */
-	protected void suiteInitialisation(ITestContext context) {
-		STEVIA_TEST_BASE_LOG.warn("***************************************************************************************");
-		STEVIA_TEST_BASE_LOG.warn("*** suiteInitialisation() not overriden. Check your code and javadoc of method      ***");
-		STEVIA_TEST_BASE_LOG.warn("*** NOTE: suiteInitialisation() by default has a SteviaContext to work with.        ***");
-		STEVIA_TEST_BASE_LOG.warn("***       If you don't want this (one extra browser to start/stop) define           ***"); 
-		STEVIA_TEST_BASE_LOG.warn("***       parameter 'suite.init.context' with value 'false'                         ***");
-		STEVIA_TEST_BASE_LOG.warn("***************************************************************************************");
-	}
-
-	/**
-	 * Before test.
-	 *
-	 * @param testContext the test context
-	 * @throws Exception the exception
-	 */
-	@BeforeTest(alwaysRun = true)
-	protected final void contextInitBeforeTest(ITestContext testContext) throws Exception {
-		
-		Map<String,String> parameters = testContext.getCurrentXmlTest().getParameters();
-		
-		// we check here **again** if the test needs the RC server and start it.
-		if (parameters.get("driverType").compareTo("webdriver") != 0 && parameters.get("debugging").compareTo(TRUE)==0 && !isRCStarted){
-			startRCServer();
-		}
-		String parallelSetup = testContext.getSuite().getParallel();
-		if (parallelSetup == null || parallelSetup.isEmpty() || parallelSetup.equalsIgnoreCase("false") || parallelSetup.equalsIgnoreCase("tests")) {
-
-			STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-			STEVIA_TEST_BASE_LOG.warn("*** Driver initialisation phase, current parallel level is @BeforeTest            ***");
-			STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-			
-			initializeStevia(parameters);
-		}
-	}
-	
-	/**
-	 * Before class.
-	 *
-	 * @param testContext the test context
-	 * @throws Exception the exception
-	 */
-	@BeforeClass(alwaysRun = true)
-	protected final void contextInitBeforeClass(ITestContext testContext) throws Exception {
-		
-		Map<String,String> parameters = testContext.getSuite().getXmlSuite().getAllParameters();
-		
-		if (testContext.getSuite().getParallel().equalsIgnoreCase("classes")) {
-
-			STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-			STEVIA_TEST_BASE_LOG.warn("*** Driver initialisation phase, current parallel level is @BeforeClass**************");
-			STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
-			
-			initializeStevia(parameters);
-		}
-	}
-	
-	/**
-	 * Before method.
-	 *
-	 * @param testContext the test context
-	 * @throws Exception the exception
-	 */
-	@BeforeMethod(alwaysRun = true)
-	protected final void contextInitBeforeMethod(ITestContext testContext) throws Exception {
-		Map<String,String> parameters = testContext.getSuite().getXmlSuite().getAllParameters();
-		
-		if (testContext.getSuite().getParallel().equalsIgnoreCase("methods")) {
-
-			STEVIA_TEST_BASE_LOG.warn("***************************************************************************************");
-			STEVIA_TEST_BASE_LOG.warn("*** Driver initialisation phase, current parallel level is @BeforeMethod[PANICMODE] ***");
-			STEVIA_TEST_BASE_LOG.warn("***************************************************************************************");
-			
-			initializeStevia(parameters);
-		}
-	}
-	
-	/**
-	 * Clean context on class.
-	 *
-	 * @param testContext the test context
-	 */
-	@AfterClass(alwaysRun = true)
-	protected final void cleanContextOnClass(ITestContext testContext) {
-		if (testContext.getSuite().getParallel().equalsIgnoreCase("classes")) {
-			SteviaContext.clean();
-		}
-	}
-	
-	/**
-	 * Clean context on test.
-	 *
-	 * @param testContext the test context
-	 */
-	@AfterTest(alwaysRun = true)
-	protected final void cleanContextOnTest(ITestContext testContext) {
-		String parallelSetup = testContext.getSuite().getParallel();
-		if (parallelSetup == null || parallelSetup.isEmpty()
-				|| parallelSetup.equalsIgnoreCase("false")
-				|| parallelSetup.equalsIgnoreCase("tests")) {
-			SteviaContext.clean();
-		}
-	}
-	
-	/**
-	 * Clean context on method.
-	 *
-	 * @param testContext the test context
-	 */
-	@AfterMethod(alwaysRun = true)
-	protected final void cleanContextOnMethod(ITestContext testContext) {
-		if (testContext.getSuite().getParallel().equalsIgnoreCase("methods")) {
-			SteviaContext.clean();
-		}
-	}
-	
+	protected ApplicationContext applicationContext;
 
 	/**
 	 * Initialize driver.
@@ -286,9 +88,9 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
 	 * @param params
 	 * @throws Exception
 	 */
-	protected final void initializeStevia(Map<String,String> params) throws Exception {
+	protected void initializeStevia(Map<String,String> params) throws Exception {
 		if (applicationContext == null) {
-			super.springTestContextPrepareTestInstance();
+			applicationContext = new ClassPathXmlApplicationContext("META-INF/spring/stevia-boot-context.xml");
 		}
 
 		SteviaContext.registerParameters(SteviaContextSupport.getParameters( params ));
@@ -302,93 +104,23 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
 		
 	}
 
-
-	
-	/**
-	 * Stop RC server if it's running.
-	 */
-	@AfterSuite(alwaysRun = true)
-	private void stopRCServer() {		
-		if (isRCStarted) {
-			
-			Object server = seleniumServer[0];
-			Method stopMethod = (Method) seleniumServer[1];
-			try {
-				stopMethod.invoke(server);
-			} catch (Exception e) {
-				
-				STEVIA_TEST_BASE_LOG.warn("Failed to shutdown the Selenium Server",e);
-			}
-
-		}
-	}
-
-	/**
-	 * Start RC server programmatic.
-	 *
-	 * @throws Exception the exception
-	 */
-	private void startRCServer() throws Exception{
-		STEVIA_TEST_BASE_LOG.info("Selenium RC mode run in local enviroment; First start Selenium RC Server");
-		
-		if(seleniumServerInClassPath()) {
-			seleniumServerLoadAndStart();
-		} else {
-			STEVIA_TEST_BASE_LOG.error("Selenium server is not in the classpath, please modify and retry");
-		}
-		/*RemoteControlConfiguration rc = new RemoteControlConfiguration();	
-		seleniumServer = new SeleniumServer(rc);
-		seleniumServer.start();
-		isRCStarted=true;*/
-	}
-	
-
-	@SuppressWarnings({"rawtypes","unchecked"})
-	private void seleniumServerLoadAndStart() {
-		try {
-			Class seleniumServerClazz = Class.forName("org.openqa.selenium.server.SeleniumServer");
-			Class remoteControlConfigurationClazz = Class.forName("org.openqa.selenium.server.RemoteControlConfiguration");
-			Object remoteControlConf = remoteControlConfigurationClazz.newInstance();
-			Constructor constructor = seleniumServerClazz.getConstructor(remoteControlConfigurationClazz);
-			constructor.setAccessible(true);
-			Object seleniumServerObj = constructor.newInstance(remoteControlConf);
-			Method startMethod = seleniumServerClazz.getMethod("start");
-			startMethod.invoke(seleniumServerObj);
-			SteviaTestBase.seleniumServer = new Object [] {seleniumServerObj, seleniumServerClazz.getMethod("stop")};
-			isRCStarted=true;
-		} catch (Exception e) {
-			STEVIA_TEST_BASE_LOG.error("Selenium Server cannot be started, the class path does not contain it. Modify your pom.xml to include it",e);
-		}
-	}
+    /**
+     * Gets the suite output dir.
+     *
+     * @return the suite output dir
+     */
+    public static String getSuiteOutputDir() {
+        return suiteOutputDir;
+    }
 
 
-	private boolean seleniumServerInClassPath() {
-		try {
-			Class.forName("org.openqa.selenium.server.SeleniumServer");
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-	}
-
-
-	/**
-	 * Gets the suite output dir.
-	 *
-	 * @return the suite output dir
-	 */
-	public static String getSuiteOutputDir() {
-		return suiteOutputDir;
-	}
-
-
-	/**
-	 * Sets the suite output dir.
-	 *
-	 * @param suiteOutputDir the new suite output dir
-	 */
-	public final static void setSuiteOutputDir(String suiteOutputDir) {
-		SteviaTestBase.suiteOutputDir = suiteOutputDir;
-	}
+    /**
+     * Sets the suite output dir.
+     *
+     * @param suiteOutputDir the new suite output dir
+     */
+    public final static void setSuiteOutputDir(String suiteOutputDir) {
+        SteviaTestBase.suiteOutputDir = suiteOutputDir;
+    }
 
 }
