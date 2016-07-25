@@ -177,7 +177,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
             final DesiredCapabilities wdCapabilities = desiredCapabilities;
             final String wdHost = SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT);
 
-            if (SteviaContext.getParam("threadCount").equals("1")) {
+            if (SteviaContext.getParam("threadCount") != null && SteviaContext.getParam("threadCount").equals("1")) {
                 CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(() -> getRemoteWebDriver(wdHost, wdCapabilities));
 
                 try {
