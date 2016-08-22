@@ -43,6 +43,7 @@ import com.persado.oss.quality.stevia.selenium.core.controllers.SteviaWebControl
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -68,13 +69,13 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_NAME));
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_PACKAGE))) {
-            capabilities.setCapability(MobileCapabilityType.APP_PACKAGE, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_PACKAGE));
+            capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_PACKAGE));
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_ACTIVITY))) {
-            capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_ACTIVITY));
+            capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_ACTIVITY));
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_WAIT_ACTIVITY))) {
-            capabilities.setCapability(MobileCapabilityType.APP_WAIT_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_WAIT_ACTIVITY));
+            capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_WAIT_ACTIVITY));
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME))) {
             capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME));
