@@ -148,6 +148,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         }
         if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("iOS") == 0) {
             try {
+                if (!StringUtils.isEmpty(SteviaContext.getParam("automationName"))) {
+                    capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam("automationName"));
+                }
                 driver = new IOSDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
             } catch (MalformedURLException e) {
                 throw new IllegalArgumentException(e.getMessage(), e);
