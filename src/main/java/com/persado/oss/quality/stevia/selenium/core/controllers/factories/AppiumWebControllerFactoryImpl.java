@@ -92,6 +92,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW))) {
             capabilities.setCapability(SteviaWebControllerFactory.AUTO_WEB_VIEW, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT))) {
+            capabilities.setCapability(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT, SteviaContext.getParam(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT));
+        }
 
         //Appium parameters
         if (SteviaContext.getParam("cloudService").equalsIgnoreCase("SauceLabs")) {

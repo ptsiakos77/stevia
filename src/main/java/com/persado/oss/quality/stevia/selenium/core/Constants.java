@@ -111,5 +111,7 @@ public interface Constants {
 	/** The parameter that determined the mobile automation name **/
 	public static final String MOBILE_AUTOMATION_NAME = "automationName";
 
+	/** The parameter that determined the new command timeout **/
+	public static final String NEW_COMMAND_TIMEOUT = "newCommandTimeout";
 
 }
