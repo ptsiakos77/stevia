@@ -118,6 +118,12 @@ public class AppiumWebController extends WebControllerBase implements WebControl
      */
     private static final String ID = "id";
 
+
+    /**
+     * The Constant accessibility id.
+     */
+    private static final String ACC_ID = "acc";
+
     /**
      * The Constant TAG.
      */
@@ -231,6 +237,8 @@ public class AppiumWebController extends WebControllerBase implements WebControl
             return MobileBy.tagName(findLocatorSubstring(locator));
         } else if (locator.startsWith(CLASS)) {
             return MobileBy.className(findLocatorSubstring(locator));
+        } else if (locator.startsWith(ACC_ID)) {
+            return MobileBy.AccessibilityId(findLocatorSubstring(locator));
         } else {
             return MobileBy.id(locator);
         }
