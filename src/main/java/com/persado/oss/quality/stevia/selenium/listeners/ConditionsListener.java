@@ -70,17 +70,9 @@ public class ConditionsListener extends ListenerCommon implements IInvokedMethod
 	}
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
-		int failed = findFailed(context);
-		if (failed > 0) {
-			LOG.error("Preconditions execution will not proceed. {} Configurations have failed",failed);
-			return;
-		}
-		
-		
 		Method rmethod = method.getTestMethod().getConstructorOrMethod().getMethod();
 		Object proxy = proxifyObject(method);
-		
-		
+
 		if (rmethod.getAnnotation(Test.class) != null) {
 			if (rmethod.getAnnotation(Preconditions.class) != null) {
 				LOG.warn("Method or Class of {} wants preconditions to be checked", rmethod.getName());
@@ -104,13 +96,7 @@ public class ConditionsListener extends ListenerCommon implements IInvokedMethod
 
 	@Override
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
-		int failed = findFailed(context);
-		if (failed > 0) {
-			LOG.error("Preconditions execution will not proceed. {} Configurations have failed",failed);
-			return;
-		}
-		
-		
+
 		Method rmethod = method.getTestMethod().getConstructorOrMethod().getMethod();
 		Object proxy = proxifyObject(method);
 
