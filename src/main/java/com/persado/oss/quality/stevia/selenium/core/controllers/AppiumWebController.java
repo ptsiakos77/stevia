@@ -1788,6 +1788,7 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         if (isComponentEditable(locator)) {
             executeJavascript("$(\"" + locator.substring(4) + "\").trigger('tap')");
         }
+        waitForAjaxComplete(SteviaContext.getWaitForAjaxComplete());
     }
 
     @Override
