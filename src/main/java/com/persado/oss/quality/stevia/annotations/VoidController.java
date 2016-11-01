@@ -815,7 +815,7 @@ class VoidController implements WebController {
     }
 
     @Override
-    public void tapWithJS(String locator) {
+    public void tapWithJS(String locator, boolean waitForAjax) {
         // TODO Auto-generated method stub
     }
 
@@ -830,7 +830,7 @@ class VoidController implements WebController {
     }
 
     @Override
-    public void swipe(int startx, int starty, int endx, int endy, int duration){
+    public void swipe(int startx, int starty, int endx, int endy, int duration) {
         // TODO Auto-generated method stub
     }
 }

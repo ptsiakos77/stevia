@@ -1781,31 +1781,32 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     }
 
     @Override
-    public void tapWithJS(String locator) {
+    public void tapWithJS(String locator, boolean waitForAjax) {
         if (SteviaContext.getParam("highlight").equals("true")) {
             highlight(locator);
         }
         if (isComponentEditable(locator)) {
             executeJavascript("$(\"" + locator.substring(4) + "\").trigger('tap')");
         }
-        waitForAjaxComplete(SteviaContext.getWaitForAjaxComplete());
+        if (waitForAjax) {
+            waitForAjaxComplete(SteviaContext.getWaitForAjaxComplete());
+        }
     }
 
     @Override
     @Deprecated
-    public void scrollTo(String text){
+    public void scrollTo(String text) {
     }
 
     @Override
     @Deprecated
-    public void scrollToExact(String text){
+    public void scrollToExact(String text) {
     }
 
     @Override
-    public void swipe(int startx, int starty, int endx, int endy, int duration){
-        driver.swipe(startx,starty,endx,endy,duration);
+    public void swipe(int startx, int starty, int endx, int endy, int duration) {
+        driver.swipe(startx, starty, endx, endy, duration);
     }
-
 
 
 }

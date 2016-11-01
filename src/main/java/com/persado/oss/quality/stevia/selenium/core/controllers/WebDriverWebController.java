@@ -226,7 +226,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     public By determineLocator(String locator) {
         if (locator.startsWith(XPATH)) {
             return By.xpath(findLocatorSubstring(locator));
-        } else if ((locator.startsWith("//"))||(locator.startsWith("(//"))) {
+        } else if ((locator.startsWith("//")) || (locator.startsWith("(//"))) {
             return By.xpath(locator);
         } else if (locator.startsWith(CSS)) {
             return ByExtended.cssSelector(findLocatorSubstring(locator));
@@ -1780,7 +1780,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     @Override
     @Deprecated
-    public void tapWithJS(String locator) {
+    public void tapWithJS(String locator, boolean waitForAjax) {
 
     }
 
@@ -1798,7 +1798,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     @Override
     @Deprecated
-    public void swipe(int startx, int starty, int endx, int endy, int duration){
+    public void swipe(int startx, int starty, int endx, int endy, int duration) {
     }
 
 }

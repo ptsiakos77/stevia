@@ -1820,7 +1820,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
 
     @Override
     @Deprecated
-    public void tapWithJS(String locator) {
+    public void tapWithJS(String locator,boolean waitForAjax) {
 
     }
 

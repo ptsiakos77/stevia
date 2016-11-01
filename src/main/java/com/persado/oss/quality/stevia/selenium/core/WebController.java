@@ -1091,7 +1091,7 @@ public interface WebController {
      *
      * @param locator
      */
-    void tapWithJS(String locator);
+    void tapWithJS(String locator, boolean waitForAjax);
 
 
     /**
