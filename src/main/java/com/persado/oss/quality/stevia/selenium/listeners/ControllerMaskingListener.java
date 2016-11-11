@@ -75,6 +75,7 @@ public class ControllerMaskingListener extends ListenerCommon implements IInvoke
                 AnnotationsHelper p = SteviaContext.getSpringContext().getBean(AnnotationsHelper.class);
                 try {
                     p.maskExistingController(rmethod);
+                    SteviaContext.getParams().put("mainWindowHandle",SteviaContext.getWebController().getWindowHandle());
                 } catch (Throwable e) {
                     throw new IllegalStateException("failed to replace controller", e);
                 }
@@ -90,6 +91,7 @@ public class ControllerMaskingListener extends ListenerCommon implements IInvoke
             AnnotationsHelper p = SteviaContext.getSpringContext().getBean(AnnotationsHelper.class);
             try {
                 p.controllerUnmask();
+                SteviaContext.getParams().put("mainWindowHandle",SteviaContext.getWebController().getWindowHandle());
             } catch (Throwable e) {
                 throw new IllegalStateException("failed to replace masked controller", e);
             }
