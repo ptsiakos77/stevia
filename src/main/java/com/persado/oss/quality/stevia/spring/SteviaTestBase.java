@@ -64,6 +64,7 @@ import com.persado.oss.quality.stevia.selenium.core.controllers.SteviaWebControl
 import com.persado.oss.quality.stevia.selenium.listeners.ConditionsListener;
 import com.persado.oss.quality.stevia.selenium.listeners.ControllerMaskingListener;
 import com.persado.oss.quality.stevia.selenium.listeners.TestListener;
+import org.testng.xml.XmlSuite;
 
 /**
  * The base class that is responsible for initializing Stevia contexts on start and shutting down on
@@ -183,6 +184,7 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
 	protected final void contextInitBeforeTest(ITestContext testContext) throws Exception {
 		
 		Map<String,String> parameters = testContext.getCurrentXmlTest().getParameters();
+		testContext.getCurrentXmlTest().setParallel(XmlSuite.ParallelMode.getValidParallel(parameters.get("parallelSetup")));
 		
 		// we check here **again** if the test needs the RC server and start it.
 		if (parameters.get("driverType").compareTo("webdriver") != 0 && parameters.get("debugging").compareTo(TRUE)==0 && !isRCStarted){
