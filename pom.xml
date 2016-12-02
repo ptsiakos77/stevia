@@ -3,13 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.persado.oss.quality.stevia</groupId>
 	<artifactId>stevia-core</artifactId>
-	<version>0.9.6-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
 
 	<name>Stevia QA Framework - Core</name>
 	<description>Stevia is a QA Framework unifying the Selenium-RC and Webdriver APIs under
@@ -55,29 +50,17 @@
 			</roles>
 		</developer>
 	</developers>
-	<issueManagement>
-		<system>GitHub</system>
-		<url>https://github.com/persado/stevia/issues</url>
-	</issueManagement>
-	<scm>
-		<url>https://github.com/persado/stevia</url>
-		<connection>scm:git:git@github.com:persado/stevia.git</connection>
-		<developerConnection>scm:git:git@github.com:persado/stevia.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
-	<!-- -->
+
 	<distributionManagement>
 		<repository>
-			<id>sonatype-nexus-releases</id>
-			<name>OSS Sonatype Release Staging Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<id>aws-release</id>
+			<name>AWS Release Repository</name>
+			<url>s3://workable-private-repo/release</url>
 		</repository>
-
 		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>OSS Sonatype Snapshot Repository</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<uniqueVersion>false</uniqueVersion>
+			<id>aws-snapshot</id>
+			<name>AWS Snapshot Repository</name>
+			<url>s3://workable-private-repo/snapshot</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -194,6 +177,14 @@
 				</executions>
 			</plugin>
 		</plugins>
+
+		<extensions>
+			<extension>
+				<groupId>org.springframework.build</groupId>
+				<artifactId>aws-maven</artifactId>
+				<version>5.0.0.RELEASE</version>
+			</extension>
+		</extensions>
 	</build>
 
 	<dependencies>
