@@ -13,8 +13,6 @@
 	and other artifacts. By design both drivers play under Selenium Grid and support extended 
 	reporting functionality via ReportNG, including remote screenshots.</description>
 
-	<!--Test comment-->
-
 	<url>http://www.persado.com</url>
 	<inceptionYear>2013</inceptionYear>
 	<licenses>
