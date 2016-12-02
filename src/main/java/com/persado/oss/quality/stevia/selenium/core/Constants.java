@@ -114,4 +114,11 @@ public interface Constants {
 	/** The parameter that determined the new command timeout **/
 	public static final String NEW_COMMAND_TIMEOUT = "newCommandTimeout";
 
+	/** The parameter that determined the real device logger **/
+	public static final String REAL_DEVICE_LOGGER = "realDeviceLogger";
+
+	/** The parameter that determined the new command timeout **/
+	public static final String XCODE_CONFIG_FILE = "xcodeConfigFile";
+
+
 }

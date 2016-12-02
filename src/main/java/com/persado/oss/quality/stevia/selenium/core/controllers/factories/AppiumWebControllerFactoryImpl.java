@@ -44,6 +44,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -152,11 +153,19 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         }
         if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("iOS") == 0) {
             try {
+                if (SteviaContext.getParam("runOnRealDevice").equals("true")) {
+                    if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.REAL_DEVICE_LOGGER))) {
+                        capabilities.setCapability(SteviaWebControllerFactory.REAL_DEVICE_LOGGER, SteviaContext.getParam(SteviaWebControllerFactory.REAL_DEVICE_LOGGER));
+                    }
+                    if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE))) {
+                        capabilities.setCapability(SteviaWebControllerFactory.XCODE_CONFIG_FILE, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE));
+                    }
+                }
                 if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME))) {
                     capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME));
                 }
                 if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID))) {
-                    capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID));
+                    capabilities.setCapability(SteviaWebControllerFactory.MOBILE_DEVICE_UUID, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID));
                 }
                 driver = new IOSDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
             } catch (MalformedURLException e) {
