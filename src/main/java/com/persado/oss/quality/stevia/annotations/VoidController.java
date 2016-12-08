@@ -112,6 +112,16 @@ class VoidController implements WebController {
     }
 
     @Override
+    public void waitForElementToStopMoving(String locator, long waitSeconds) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void waitForElementToStopMoving(String locator) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
     public List<WebElement> findElements(String locator) {
         // TODO Auto-generated method stub
         return null;

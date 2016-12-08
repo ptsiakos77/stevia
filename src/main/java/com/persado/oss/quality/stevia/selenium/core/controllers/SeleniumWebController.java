@@ -286,6 +286,18 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
 
     }
 
+    @Override
+    @Deprecated
+    public void waitForElementToStopMoving(String locator, long waitSeconds) {
+        
+    }
+
+    @Override
+    @Deprecated
+    public void waitForElementToStopMoving(String locator) {
+
+    }
+
     /*
      * (non-Javadoc)
      *

@@ -130,7 +130,22 @@ public interface WebController {
      * @return the web element
      */
     WebElement waitForElementPresence(String locator, long waitSeconds);
-
+    
+    /**
+     * Wait for element to stop moving.
+     *
+     * @param locator     the locator
+     * @param waitSeconds time to wait in seconds, for element to to stop moving
+     */
+    void waitForElementToStopMoving(String locator, long waitSeconds);
+    
+    /**
+     * Wait for element to stop moving.
+     *
+     * @param locator the element locator
+     */
+    void waitForElementToStopMoving(String locator);
+    
     /**
      * Find elements.
      *

@@ -38,6 +38,7 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
 
 
 import com.persado.oss.quality.stevia.network.http.HttpCookie;
+import com.persado.oss.quality.stevia.selenium.core.CustomExpectedCondition;
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
@@ -314,6 +315,18 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     public WebElement waitForElementPresence(String locator, long waitSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, waitSeconds, THREAD_SLEEP);
         return wait.until(ExpectedConditions.presenceOfElementLocated(determineLocator(locator)));
+    }
+
+    @Override
+    public void waitForElementToStopMoving(String locator, long waitSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, waitSeconds);
+        WebElement element = waitForElement(locator);
+        wait.until(CustomExpectedCondition.elementHasStoppedMoving(element));
+    }
+
+    @Override
+    public void waitForElementToStopMoving(String locator) {
+        waitForElementToStopMoving(locator,SteviaContext.getWaitForElement());
     }
 
     /*

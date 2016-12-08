@@ -38,6 +38,7 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
 
 
 import com.persado.oss.quality.stevia.network.http.HttpCookie;
+import com.persado.oss.quality.stevia.selenium.core.CustomExpectedCondition;
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
@@ -287,7 +288,6 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     public void waitForElementInvisibility(String locator, long waitSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, waitSeconds);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(determineLocator(locator)));
-
     }
 
     /*
@@ -313,6 +313,32 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         return wait.until(ExpectedConditions.presenceOfElementLocated(determineLocator(locator)));
     }
 
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * waitForElementInvisibility(java.lang.String)
+     */  
+    @Override
+    public void waitForElementToStopMoving(String locator) {
+        waitForElementToStopMoving(locator, SteviaContext.getWaitForElement());
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * waitForElementInvisibility(java.lang.String, long)
+     */
+    @Override
+    public void waitForElementToStopMoving(String locator, long waitSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, waitSeconds);
+        WebElement element = waitForElement(locator);
+        wait.until(CustomExpectedCondition.elementHasStoppedMoving(element));
+    }
+    
+    
     /*
      * (non-Javadoc)
      *
