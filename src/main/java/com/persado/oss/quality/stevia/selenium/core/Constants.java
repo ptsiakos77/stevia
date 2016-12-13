@@ -117,8 +117,15 @@ public interface Constants {
 	/** The parameter that determined the real device logger **/
 	public static final String REAL_DEVICE_LOGGER = "realDeviceLogger";
 
-	/** The parameter that determined the new command timeout **/
+	/** The parameter that determined the new config file for WebDriverAgent **/
 	public static final String XCODE_CONFIG_FILE = "xcodeConfigFile";
+
+	/** The parameter that determined if prebuilt WebDriverAgent will be used **/
+	public static final String USE_PREBUILT_WDA = "usePrebuiltWDA";
+
+	/** The WebDriverAgent local port **/
+	public static final String WDA_LOCAL_PORT = "wdaLocalPort";
+
 
 
 }

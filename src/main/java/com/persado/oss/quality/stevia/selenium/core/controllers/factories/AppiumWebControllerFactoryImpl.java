@@ -44,7 +44,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -52,7 +51,6 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -95,6 +93,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT))) {
             capabilities.setCapability(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT, SteviaContext.getParam(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME))) {
+            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME));
         }
 
         //Appium parameters
@@ -143,6 +144,7 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
 
         LOG.info("Appium Desired capabilities {}", new Object[]{capabilities});
 
+
         if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("Android") == 0) {
             capabilities.setCapability(AndroidMobileCapabilityType.RECREATE_CHROME_DRIVER_SESSIONS, true);
             try {
@@ -160,9 +162,15 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
                     if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE))) {
                         capabilities.setCapability(SteviaWebControllerFactory.XCODE_CONFIG_FILE, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE));
                     }
-                }
-                if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME))) {
-                    capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME));
+                    if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA))) {
+                        capabilities.setCapability(SteviaWebControllerFactory.USE_PREBUILT_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA));
+                    }
+                    if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA))) {
+                        capabilities.setCapability(SteviaWebControllerFactory.USE_PREBUILT_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA));
+                    }
+                    if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT))) {
+                        capabilities.setCapability(SteviaWebControllerFactory.WDA_LOCAL_PORT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT));
+                    }
                 }
                 if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID))) {
                     capabilities.setCapability(SteviaWebControllerFactory.MOBILE_DEVICE_UUID, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID));
@@ -172,7 +180,6 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
         }
-
         driver.setFileDetector(new LocalFileDetector());
 
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL)))
