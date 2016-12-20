@@ -326,7 +326,7 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void waitForElementToStopMoving(String locator) {
-        waitForElementToStopMoving(locator,SteviaContext.getWaitForElement());
+        waitForElementToStopMoving(locator, SteviaContext.getWaitForElement());
     }
 
     /*
@@ -1789,8 +1789,18 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     }
 
     @Override
+    public void tap(int fingers, String locator, int duration) {
+        driver.tap(fingers, waitForElement(locator), duration);
+    }
+
+    @Override
     public void tap(int x, int y) {
         new TouchAction(driver).tap(x, y).perform();
+    }
+
+    @Override
+    public void tap(int fingers, int x, int y, int duration) {
+        driver.tap(fingers, x, y, duration);
     }
 
     @Override

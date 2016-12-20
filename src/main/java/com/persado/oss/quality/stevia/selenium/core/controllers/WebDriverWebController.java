@@ -1800,7 +1800,19 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     @Override
     @Deprecated
+    public void tap(int fingers, String locator, int duration) {
+
+    }
+
+    @Override
+    @Deprecated
     public void tap(int x, int y) {
+
+    }
+
+    @Override
+    @Deprecated
+    public void tap(int fingers, int x, int y, int duration) {
 
     }
 

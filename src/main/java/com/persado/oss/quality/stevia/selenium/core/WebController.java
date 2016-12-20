@@ -1093,12 +1093,32 @@ public interface WebController {
 
 
     /**
+     * Perform tap event on a Web element identified by locator
+     *
+     * @param fingers
+     * @param locator
+     * @param duration
+     */
+    void tap(int fingers,String locator,int duration);
+
+
+    /**
      * Perform tap on x,y coordinates
      *
      * @param x
      * @param y
      */
     void tap(int x, int y);
+
+    /**
+     * Perform tap on x,y coordinates
+     *
+     * @param fingers
+     * @param x
+     * @param y
+     */
+    void tap(int fingers,int x, int y,int duration);
+
 
 
     /**
