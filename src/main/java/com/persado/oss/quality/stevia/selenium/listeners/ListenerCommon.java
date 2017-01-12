@@ -92,7 +92,7 @@ public class ListenerCommon {
 				}
 			});	
 		} catch (Exception e) {
-			LOG.error("Proxy creation failed, using non-proxyed original object, reason = "+e.getMessage());
+//			LOG.error("Proxy creation failed, using non-proxyed original object, reason = "+e.getMessage());
 			proxy = instance;
 		}
 		return proxy;
