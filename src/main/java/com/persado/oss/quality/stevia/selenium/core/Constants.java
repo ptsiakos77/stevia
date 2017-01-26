@@ -126,6 +126,10 @@ public interface Constants {
 	/** The WebDriverAgent local port **/
 	public static final String WDA_LOCAL_PORT = "wdaLocalPort";
 
+	/** The adb local port **/
+	public static final String ADB_PORT = "adbPort";
 
+	/** The uiautomator 2 local port **/
+	public static final String UIAUTOMATOR2_PORT = "systemPort";
 
 }

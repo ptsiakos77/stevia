@@ -51,6 +51,7 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -147,6 +148,12 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
 
         if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("Android") == 0) {
             capabilities.setCapability(AndroidMobileCapabilityType.RECREATE_CHROME_DRIVER_SESSIONS, true);
+            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.ADB_PORT))) {
+                capabilities.setCapability(AndroidMobileCapabilityType.ADB_PORT, SteviaContext.getParam(SteviaWebControllerFactory.ADB_PORT));
+            }
+            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.UIAUTOMATOR2_PORT))) {
+                capabilities.setCapability(SteviaWebControllerFactory.UIAUTOMATOR2_PORT, SteviaContext.getParam(SteviaWebControllerFactory.UIAUTOMATOR2_PORT));
+            }
             try {
                 driver = new AndroidDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
             } catch (MalformedURLException e) {
