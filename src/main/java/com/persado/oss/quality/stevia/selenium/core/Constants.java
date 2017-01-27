@@ -106,7 +106,7 @@ public interface Constants {
 	public static final String AUTO_WEB_VIEW = "autoWebview";
 
 	/** The parameter that determined the mobile device UUID **/
-	public static final String MOBILE_DEVICE_UUID = "udid";
+	public static final String MOBILE_DEVICE_UUID = "mobileDeviceUUID";
 
 	/** The parameter that determined the mobile automation name **/
 	public static final String MOBILE_AUTOMATION_NAME = "automationName";

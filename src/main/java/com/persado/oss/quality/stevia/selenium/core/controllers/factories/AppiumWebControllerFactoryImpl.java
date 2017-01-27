@@ -180,7 +180,7 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
                     }
                 }
                 if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID))) {
-                    capabilities.setCapability(SteviaWebControllerFactory.MOBILE_DEVICE_UUID, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID));
+                    capabilities.setCapability(MobileCapabilityType.UDID, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID));
                 }
                 driver = new IOSDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
             } catch (MalformedURLException e) {
