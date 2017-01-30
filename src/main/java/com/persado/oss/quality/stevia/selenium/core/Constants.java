@@ -132,4 +132,7 @@ public interface Constants {
 	/** The uiautomator 2 local port **/
 	public static final String UIAUTOMATOR2_PORT = "systemPort";
 
+	/** The no rest flag **/
+	public static final String NO_RESET = "noReset";
+
 }
