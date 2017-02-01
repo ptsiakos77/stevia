@@ -91,6 +91,7 @@ public class SteviaContext {
         private int waitForElement = 10;
         private int waitForWindow = 10;
         private int waitForElementInvisibility = 1;
+
         private ApplicationContext context;
 
         private TestState state;
@@ -148,6 +149,14 @@ public class SteviaContext {
 
         public void setWaitForElementInvisibility(int waitForElementInvisibility) {
             this.waitForElementInvisibility = waitForElementInvisibility;
+        }
+
+        public String getTargetHostUrl() {
+            return getParam("targetHostUrl");
+        }
+
+        public String getTargetHostUrlDomain() {
+            return getParam("targetHostUrl").split("\\.+")[1];
         }
 
         public int getWaitForWindow() {
@@ -326,17 +335,25 @@ public class SteviaContext {
     public static int getWaitForElementInvisibility() {
         return innerContext.get().getWaitForElementInvisibility();
     }
-
+    
     public static void setWaitForElementInvisibility(int waitForElementInvisibility) {
         innerContext.get().setWaitForElementInvisibility(waitForElementInvisibility);
     }
 
     public static void setWaitForNewWindow(int waitForNewWindow) {
-         innerContext.get().setWaitForWindow(waitForNewWindow);
+        innerContext.get().setWaitForWindow(waitForNewWindow);
+    }
+    
+    public static String getTargetHostUrl() {
+        return innerContext.get().getTargetHostUrl();
+    }
+
+    public static String getTargetHostUrlDomain() {
+        return innerContext.get().getTargetHostUrlDomain();
     }
 
     public static int getWaitForNewWindow() {
-        return  innerContext.get().getWaitForWindow();
+        return innerContext.get().getWaitForWindow();
     }
 
     public static void attachSpringContext(ApplicationContext applicationContext) {
