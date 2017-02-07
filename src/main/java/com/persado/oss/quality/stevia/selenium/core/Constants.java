@@ -138,4 +138,7 @@ public interface Constants {
 	/** The WebDriverAgent connection timeout **/
 	public static final String WDA_CONNECTION_TIMEOUT = "wdaConnectionTimeout";
 
+	/** If true, forces uninstall of any existing WebDriverAgent app on device. **/
+	public static final String USE_NEW_WDA = "useNewWDA";
+
 }

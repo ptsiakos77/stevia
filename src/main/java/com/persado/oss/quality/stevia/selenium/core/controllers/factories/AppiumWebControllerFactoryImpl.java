@@ -124,6 +124,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
             if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT))) {
                 capabilities.setCapability(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT));
             }
+            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA))) {
+                capabilities.setCapability(SteviaWebControllerFactory.USE_NEW_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA));
+            }
         }
 
     }
