@@ -121,6 +121,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
             if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT))) {
                 capabilities.setCapability(SteviaWebControllerFactory.WDA_LOCAL_PORT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT));
             }
+            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT))) {
+                capabilities.setCapability(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT));
+            }
         }
 
     }

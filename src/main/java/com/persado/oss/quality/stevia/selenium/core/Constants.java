@@ -135,4 +135,7 @@ public interface Constants {
 	/** The no rest flag **/
 	public static final String NO_RESET = "noReset";
 
+	/** The WebDriverAgent connection timeout **/
+	public static final String WDA_CONNECTION_TIMEOUT = "wdaConnectionTimeout";
+
 }
