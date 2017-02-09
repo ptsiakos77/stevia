@@ -112,23 +112,19 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
             if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE))) {
                 capabilities.setCapability(SteviaWebControllerFactory.XCODE_CONFIG_FILE, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE));
             }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA))) {
-                capabilities.setCapability(SteviaWebControllerFactory.USE_PREBUILT_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA));
-            }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA))) {
-                capabilities.setCapability(SteviaWebControllerFactory.USE_PREBUILT_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA));
-            }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT))) {
-                capabilities.setCapability(SteviaWebControllerFactory.WDA_LOCAL_PORT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT));
-            }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT))) {
-                capabilities.setCapability(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT));
-            }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA))) {
-                capabilities.setCapability(SteviaWebControllerFactory.USE_NEW_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA));
-            }
         }
-
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA))) {
+            capabilities.setCapability(SteviaWebControllerFactory.USE_PREBUILT_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT))) {
+            capabilities.setCapability(SteviaWebControllerFactory.WDA_LOCAL_PORT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT))) {
+            capabilities.setCapability(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA))) {
+            capabilities.setCapability(SteviaWebControllerFactory.USE_NEW_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA));
+        }
     }
 
 
