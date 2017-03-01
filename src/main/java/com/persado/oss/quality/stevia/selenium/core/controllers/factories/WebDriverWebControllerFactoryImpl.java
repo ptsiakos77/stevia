@@ -79,31 +79,9 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
         if (SteviaContext.getParam(SteviaWebControllerFactory.DEBUGGING).compareTo(SteviaWebControllerFactory.TRUE) == 0) { // debug=on
             if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER) == null || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("firefox") == 0
                     || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).isEmpty()) {
-                String profileToUse = SteviaContext.getParam(SteviaWebControllerFactory.PROFILE);
-                if (profileToUse == null || profileToUse.isEmpty()) {
-                    LOG.info("Debug enabled, using Firefox Driver");
-                    driver = new FirefoxDriver();
-                } else {
-                    LOG.info("Debug enabled, using a local Firefox profile {} with FirefoxDriver", profileToUse);
-                    ProfilesIni allProfiles = new ProfilesIni();
-                    FirefoxProfile ffProfile = allProfiles.getProfile(profileToUse);
-                    driver = new FirefoxDriver(ffProfile);
-                }
+                driver = setUpFirefoxDriver();
             } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("chrome") == 0) {
-                LOG.info("Debug enabled, using ChromeDriver");
-                // possible fix for https://code.google.com/p/chromedriver/issues/detail?id=799
-                DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("test-type");
-                if (SteviaContext.getParam("chromeExtensions") != null) {
-                    List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
-                    for (String path : extensionPaths) {
-                        LOG.info("Use chrome with extension: " + path);
-                        options.addExtensions(new File(path));
-                    }
-                }
-                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-                driver = new ChromeDriver(capabilities);
+                driver = setUpChromeDriver();
             } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("iexplorer") == 0) {
                 LOG.info("Debug enabled, using InternetExplorerDriver");
                 driver = new InternetExplorerDriver();
@@ -176,21 +154,13 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
 
             final DesiredCapabilities wdCapabilities = desiredCapabilities;
             final String wdHost = SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT);
-
-            if (SteviaContext.getParam("threadCount") != null && SteviaContext.getParam("threadCount").equals("1")) {
-                CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(() -> getRemoteWebDriver(wdHost, wdCapabilities));
-
-                try {
-                    driver = wd.get(Integer.valueOf(SteviaContext.getParam("nodeTimeout")), TimeUnit.MINUTES);
-                } catch (InterruptedException e) {
-                    LOG.error(e.getMessage());
-                } catch (ExecutionException e) {
-                    LOG.error(e.getMessage());
-                } catch (TimeoutException e) {
-                    throw new RuntimeException("Timeout of " + Integer.valueOf(SteviaContext.getParam("nodeTimeout")) + " minutes reached waiting for a hub node to receive the request");
-                }
-            } else {
-                driver = getRemoteWebDriver(wdHost, wdCapabilities);
+            CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(() -> getRemoteWebDriver(wdHost, wdCapabilities));
+            try {
+                driver = wd.get(Integer.valueOf(SteviaContext.getParam("nodeTimeout")), TimeUnit.MINUTES);
+            } catch (InterruptedException | ExecutionException e) {
+                LOG.error(e.getMessage());
+            } catch (TimeoutException e) {
+                throw new RuntimeException("Timeout of " + Integer.valueOf(SteviaContext.getParam("nodeTimeout")) + " minutes reached waiting for a hub node to receive the request");
             }
             ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
         }
@@ -222,4 +192,48 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
         return driver;
     }
 
+    private WebDriver setUpFirefoxDriver() {
+        WebDriver driver;
+        String profileToUse = SteviaContext.getParam(SteviaWebControllerFactory.PROFILE);
+        if (profileToUse == null || profileToUse.isEmpty()) {
+            LOG.info("Debug enabled, using Firefox Driver");
+            driver = new FirefoxDriver();
+        } else {
+            LOG.info("Debug enabled, using a local Firefox profile {} with FirefoxDriver", profileToUse);
+            ProfilesIni allProfiles = new ProfilesIni();
+            FirefoxProfile ffProfile = allProfiles.getProfile(profileToUse);
+            driver = new FirefoxDriver(ffProfile);
+        }
+        return driver;
+    }
+
+    private WebDriver setUpChromeDriver() {
+        WebDriver driver = null;
+        LOG.info("Debug enabled, using ChromeDriver");
+        // possible fix for https://code.google.com/p/chromedriver/issues/detail?id=799
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("test-type");
+        if (SteviaContext.getParam("chromeExtensions") != null) {
+            List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
+            for (String path : extensionPaths) {
+                LOG.info("Use chrome with extension: " + path);
+                options.addExtensions(new File(path));
+            }
+        }
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(() -> getChromeDriver(capabilities));
+        try {
+            driver = wd.get(Integer.valueOf(SteviaContext.getParam("nodeTimeout")), TimeUnit.MINUTES);
+        } catch (InterruptedException | ExecutionException e) {
+            LOG.error(e.getMessage());
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Timeout of " + Integer.valueOf(SteviaContext.getParam("nodeTimeout")) + " minutes reached waiting for a local chrome to come up");
+        }
+        return driver;
+    }
+
+    private WebDriver getChromeDriver(DesiredCapabilities desiredCapabilities) {
+        return new ChromeDriver(desiredCapabilities);
+    }
 }
