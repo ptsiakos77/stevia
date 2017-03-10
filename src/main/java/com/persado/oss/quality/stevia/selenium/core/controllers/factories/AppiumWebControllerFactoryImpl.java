@@ -125,6 +125,12 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA))) {
             capabilities.setCapability(SteviaWebControllerFactory.USE_NEW_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_ORG_ID))) {
+            capabilities.setCapability(SteviaWebControllerFactory.XCODE_ORG_ID, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_ORG_ID));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_SIGNING_ID))) {
+            capabilities.setCapability(SteviaWebControllerFactory.XCODE_SIGNING_ID, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_SIGNING_ID));
+        }
     }
 
 

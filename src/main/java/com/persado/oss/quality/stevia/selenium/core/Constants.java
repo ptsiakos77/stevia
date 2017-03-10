@@ -141,4 +141,11 @@ public interface Constants {
 	/** If true, forces uninstall of any existing WebDriverAgent app on device. **/
 	public static final String USE_NEW_WDA = "useNewWDA";
 
+	/** The Apple developer team identifier string **/
+	public static final String XCODE_ORG_ID = "xcodeOrgId";
+
+	/** A string representing a signing certificate, defaulting to
+	 "iPhone Developer" **/
+	public static final String XCODE_SIGNING_ID = "xcodeSigningId";
+
 }
