@@ -350,6 +350,24 @@ public class Verify extends WebComponent {
     }
 
     /**
+     * Check text in an element based on presence (not visibility) of the element
+     *
+     * @param locator      the locator of the element
+     * @param expectedText the expected text
+     */
+    public void textPresenceBased(String locator, String expectedText) {
+        try {
+            Assert.assertEquals(controller().waitForElementPresence(locator).getText(), expectedText);
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + FOUND_WITH_TEXT + expectedText + "'!");
+        } catch (AssertionError e) {
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_TEXT + expectedText + "'!");
+            throw e;
+        }
+    }
+
+    /**
      * Check trimmed text in an element.
      *
      * @param locator      the locator of the element
