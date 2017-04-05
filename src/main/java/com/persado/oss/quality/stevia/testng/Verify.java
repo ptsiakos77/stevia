@@ -452,6 +452,21 @@ public class Verify extends WebComponent {
             throw e;
         }
     }
+    
+    /**
+     * Check that an element (check box, radio button etc) is selected.
+     *
+     * @param locator the locator of the element
+     */
+    public void selectedAndPresent(String locator) {
+        try {
+            Assert.assertTrue(controller().waitForElementPresence(locator).isSelected());
+            info(ELEMENT_LOCATOR + locator + FOUND_SELECTED);
+        } catch (AssertionError e) {
+            error(ELEMENT_LOCATOR + locator + NOT_FOUND_SELECTED);
+            throw e;
+        }
+    }
 
     /**
      * Check that a check box, field, radio button is not selected.
