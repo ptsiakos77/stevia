@@ -1836,5 +1836,10 @@ public class AppiumWebController extends WebControllerBase implements WebControl
        return parent.findElement(determineLocator(childLocator));
     }
 
+    @Override
+    public List<WebElement> findAllChildElements(WebElement parent, String childLocator) {
+        return  parent.findElements(determineLocator(childLocator));
+    }
+
 
 }

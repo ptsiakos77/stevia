@@ -39,6 +39,7 @@ package com.persado.oss.quality.stevia.testng;
 
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebComponent;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,7 @@ public class Verify extends WebComponent {
 
     private static final String ELEMENT_LOCATOR = "The element with locator '";
 
-    private static final String DESIRED_ELEMENT = "The desired element '";
+    private static final String DESIRED_ELEMENT = "The desired element";
 
     private static final String TEXT = "The text '";
 
@@ -299,6 +300,22 @@ public class Verify extends WebComponent {
     }
 
     /**
+     * Check that an Element is visible.
+     *
+     * @param parent       the parent element
+     * @param childLocator the child locator
+     */
+    public void elementVisible(WebElement parent, String childLocator) {
+        try {
+            Assert.assertTrue(controller().findChildElement(parent, childLocator).isDisplayed());
+            info("Child element with locator '" + childLocator + IS_VISIBLE);
+        } catch (AssertionError | NoSuchElementException e) {
+            info("Child element with locator '" + childLocator + IS_NOT_VISIBLE);
+            throw e;
+        }
+    }
+
+    /**
      * Check that an Element is not visible.
      *
      * @param locator the locator of the element
@@ -313,6 +330,23 @@ public class Verify extends WebComponent {
             throw e;
         }
     }
+
+    /**
+     * Check that an Element is not visible.
+     *
+     * @param parent       the parent element
+     * @param childLocator the child locator
+     */
+    public void elementNotVisible(WebElement parent, String childLocator) {
+        try {
+            Assert.assertTrue(controller().findAllChildElements(parent,childLocator).size() == 0 || !controller().findChildElement(parent,childLocator).isDisplayed());
+            info("Child element with locator '" + childLocator + IS_NOT_VISIBLE);
+        } catch (AssertionError e) {
+            info("Child element with locator '" + childLocator + IS_VISIBLE);
+            throw e;
+        }
+    }
+
 
     /**
      * Check that an Element is not visible.
@@ -501,7 +535,7 @@ public class Verify extends WebComponent {
             throw e;
         }
     }
-    
+
     /**
      * Check that an element (check box, radio button etc) is selected.
      *

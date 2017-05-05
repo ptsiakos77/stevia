@@ -1870,4 +1870,10 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     public WebElement findChildElement(WebElement parent, String childLocator) {
         return null;
     }
+
+    @Override
+    @Deprecated
+    public List<WebElement> findAllChildElements(WebElement parent, String childLocator) {
+        return null;
+    }
 }

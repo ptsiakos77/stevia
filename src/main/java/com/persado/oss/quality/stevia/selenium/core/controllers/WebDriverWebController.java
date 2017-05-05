@@ -1844,4 +1844,9 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         return parent.findElement(determineLocator(childLocator));
     }
 
+    @Override
+    public List<WebElement> findAllChildElements(WebElement parent, String childLocator) {
+        return parent.findElements(determineLocator(childLocator));
+    }
+
 }

@@ -858,4 +858,9 @@ class VoidController implements WebController {
     public WebElement findChildElement(WebElement parent, String childLocator) {
         return null;
     }
+
+    @Override
+    public List<WebElement> findAllChildElements(WebElement parent, String childLocator) {
+        return null;
+    }
 }

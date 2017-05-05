@@ -1159,4 +1159,12 @@ public interface WebController {
      */
     WebElement findChildElement(WebElement parent,String childLocator);
 
+    /**
+     * Finds all elements based on childLocator that is child element of parent
+     * @param parent
+     * @param childLocator
+     * @return
+     */
+    List<WebElement> findAllChildElements(WebElement parent,String childLocator);
+
 }
