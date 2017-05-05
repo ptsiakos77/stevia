@@ -39,6 +39,7 @@ package com.persado.oss.quality.stevia.testng;
 
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebComponent;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -66,6 +67,8 @@ public class Verify extends WebComponent {
      *****************************************************/
 
     private static final String ELEMENT_LOCATOR = "The element with locator '";
+
+    private static final String DESIRED_ELEMENT = "The desired element '";
 
     private static final String TEXT = "The text '";
 
@@ -281,6 +284,21 @@ public class Verify extends WebComponent {
     }
 
     /**
+     * Check that an Element is visible.
+     *
+     * @param element the desired element
+     */
+    public void elementVisible(WebElement element) {
+        try {
+            Assert.assertTrue(element.isDisplayed());
+            info(DESIRED_ELEMENT + IS_VISIBLE);
+        } catch (AssertionError e) {
+            error(DESIRED_ELEMENT + IS_NOT_VISIBLE);
+            throw e;
+        }
+    }
+
+    /**
      * Check that an Element is not visible.
      *
      * @param locator the locator of the element
@@ -292,6 +310,21 @@ public class Verify extends WebComponent {
         } catch (AssertionError e) {
             highlightFail(locator);
             error(ELEMENT_LOCATOR + locator + IS_VISIBLE);
+            throw e;
+        }
+    }
+
+    /**
+     * Check that an Element is not visible.
+     *
+     * @param element the desired element
+     */
+    public void elementNotVisible(WebElement element) {
+        try {
+            Assert.assertFalse(element.isDisplayed());
+            info(DESIRED_ELEMENT + IS_NOT_VISIBLE);
+        } catch (AssertionError e) {
+            error(DESIRED_ELEMENT + IS_VISIBLE);
             throw e;
         }
     }
@@ -363,6 +396,22 @@ public class Verify extends WebComponent {
         } catch (AssertionError e) {
             highlightFail(locator);
             error(ELEMENT_LOCATOR + locator + NOT_FOUND_WITH_TEXT + expectedText + "'!");
+            throw e;
+        }
+    }
+
+    /**
+     * Check text in an element.
+     *
+     * @param element      the web element
+     * @param expectedText the expected text
+     */
+    public void text(WebElement element, String expectedText) {
+        try {
+            Assert.assertEquals(element.getText(), expectedText);
+            info(DESIRED_ELEMENT + FOUND_WITH_TEXT + expectedText + "'!");
+        } catch (AssertionError e) {
+            error(DESIRED_ELEMENT + NOT_FOUND_WITH_TEXT + expectedText + "'!");
             throw e;
         }
     }
@@ -789,6 +838,25 @@ public class Verify extends WebComponent {
             throw e;
         }
     }
+
+
+    /**
+     * Attribute value.
+     *
+     * @param element      the desired element
+     * @param attribute    the attribute of the element under examination
+     * @param desiredValue the desired value that the attribute must have
+     */
+    public void attributeValue(WebElement element, String attribute, String desiredValue) {
+        try {
+            Assert.assertEquals(element.getAttribute(attribute), desiredValue);
+            info(DESIRED_ELEMENT + attribute + FOUND_WITH_VALUE + desiredValue + "'!");
+        } catch (AssertionError e) {
+            info(DESIRED_ELEMENT + attribute + NOT_FOUND_WITH_VALUE + desiredValue + "'!");
+            throw e;
+        }
+    }
+
 
     /**
      * Attribute contains value.

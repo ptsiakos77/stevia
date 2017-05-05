@@ -1151,4 +1151,12 @@ public interface WebController {
      */
     void swipe(int startx, int starty, int endx, int endy, int duration);
 
+    /**
+     * Finds an element based on childLocator that is child element of parent
+     * @param parent
+     * @param childLocator
+     * @return
+     */
+    WebElement findChildElement(WebElement parent,String childLocator);
+
 }

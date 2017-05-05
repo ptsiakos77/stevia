@@ -1864,4 +1864,10 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     @Deprecated
     public void swipe(int startx, int starty, int endx, int endy, int duration){
     }
+
+    @Override
+    @Deprecated
+    public WebElement findChildElement(WebElement parent, String childLocator) {
+        return null;
+    }
 }

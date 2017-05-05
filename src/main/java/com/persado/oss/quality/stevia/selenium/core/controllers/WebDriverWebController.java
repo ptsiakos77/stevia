@@ -1839,4 +1839,9 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     public void swipe(int startx, int starty, int endx, int endy, int duration) {
     }
 
+    @Override
+    public WebElement findChildElement(WebElement parent, String childLocator) {
+        return parent.findElement(determineLocator(childLocator));
+    }
+
 }

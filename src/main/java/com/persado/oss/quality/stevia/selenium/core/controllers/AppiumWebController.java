@@ -1831,5 +1831,10 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         driver.swipe(startx, starty, endx, endy, duration);
     }
 
+    @Override
+    public WebElement findChildElement(WebElement parent, String childLocator) {
+       return parent.findElement(determineLocator(childLocator));
+    }
+
 
 }

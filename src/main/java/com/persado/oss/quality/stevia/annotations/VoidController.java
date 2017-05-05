@@ -853,4 +853,9 @@ class VoidController implements WebController {
     public void swipe(int startx, int starty, int endx, int endy, int duration) {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public WebElement findChildElement(WebElement parent, String childLocator) {
+        return null;
+    }
 }
