@@ -310,7 +310,7 @@ public class Verify extends WebComponent {
             Assert.assertTrue(controller().findChildElement(parent, childLocator).isDisplayed());
             info("Child element with locator '" + childLocator + IS_VISIBLE);
         } catch (AssertionError | NoSuchElementException e) {
-            info("Child element with locator '" + childLocator + IS_NOT_VISIBLE);
+            error("Child element with locator '" + childLocator + IS_NOT_VISIBLE);
             throw e;
         }
     }
@@ -342,7 +342,7 @@ public class Verify extends WebComponent {
             Assert.assertTrue(controller().findAllChildElements(parent,childLocator).size() == 0 || !controller().findChildElement(parent,childLocator).isDisplayed());
             info("Child element with locator '" + childLocator + IS_NOT_VISIBLE);
         } catch (AssertionError e) {
-            info("Child element with locator '" + childLocator + IS_VISIBLE);
+            error("Child element with locator '" + childLocator + IS_VISIBLE);
             throw e;
         }
     }
