@@ -144,8 +144,16 @@ public interface Constants {
 	/** The Apple developer team identifier string **/
 	public static final String XCODE_ORG_ID = "xcodeOrgId";
 
-	/** A string representing a signing certificate, defaulting to
-	 "iPhone Developer" **/
+	/** A string representing a signing certificate, defaulting to "iPhone Developer" **/
 	public static final String XCODE_SIGNING_ID = "xcodeSigningId";
+
+	/** Whether to show any logs captured from a device in the appium logs" **/
+	public static final String SHOW_IOS_LOGS = "showIOSLog";
+
+	/** Accept all iOS alerts automatically if they pop up. This includes privacy access permission alerts (e.g., location, contacts, photos). Default is false. Does not work on XCUITest-based tests. **/
+	public static final String AUTO_ACCEPT_ALERTS = "autoAcceptAlerts";
+
+	/** Dismiss all iOS alerts automatically if they pop up. This includes privacy access permission alerts (e.g., location, contacts, photos). Default is false. Does not work on XCUITest-based tests. **/
+	public static final String AUTO_DISMISS_ALERTS = "autoDismissAlerts";
 
 }

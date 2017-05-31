@@ -44,6 +44,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -130,6 +131,15 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_SIGNING_ID))) {
             capabilities.setCapability(SteviaWebControllerFactory.XCODE_SIGNING_ID, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_SIGNING_ID));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.SHOW_IOS_LOGS))) {
+            capabilities.setCapability(IOSMobileCapabilityType.SHOW_IOS_LOG, SteviaContext.getParam(SteviaWebControllerFactory.SHOW_IOS_LOGS));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_ACCEPT_ALERTS))) {
+            capabilities.setCapability(IOSMobileCapabilityType.AUTO_ACCEPT_ALERTS, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_ACCEPT_ALERTS));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_DISMISS_ALERTS))) {
+            capabilities.setCapability(IOSMobileCapabilityType.AUTO_DISMISS_ALERTS, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_DISMISS_ALERTS));
         }
     }
 
