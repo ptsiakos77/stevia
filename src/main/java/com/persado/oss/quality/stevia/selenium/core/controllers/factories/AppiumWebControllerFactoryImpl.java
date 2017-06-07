@@ -95,8 +95,7 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         }
         driver.setFileDetector(new LocalFileDetector());
 
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL)))
-
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL)) && !StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.BROWSER)))
         {
             driver.get(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL));
         }
