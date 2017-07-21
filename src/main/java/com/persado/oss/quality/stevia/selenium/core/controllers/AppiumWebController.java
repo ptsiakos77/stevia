@@ -36,15 +36,11 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
  * #L%
  */
 
-
-import com.persado.oss.quality.stevia.network.http.HttpCookie;
 import com.persado.oss.quality.stevia.selenium.core.CustomExpectedCondition;
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import com.persado.oss.quality.stevia.selenium.core.controllers.webdriverapi.ByExtended;
-import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
@@ -58,7 +54,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -135,6 +130,16 @@ public class AppiumWebController extends WebControllerBase implements WebControl
      */
     private static final String CLASS = "class";
 
+    /**
+     * The ios class chain.
+     */
+    private static final String CLASS_CHAIN = "chain";
+
+    /**
+     * The android uiautomator.
+     */
+    private static final String UI_AUTO = "uiauto";
+
 
     /**
      * Gets the driver.
@@ -153,17 +158,6 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     public void setDriver(AppiumDriver driver) {
         this.driver = driver;
     }
-
-    /**
-     * Gets the selenium instance.
-     *
-     * @param baseUrl the base url
-     * @return the selenium instance
-     */
-    public Selenium getSeleniumInstance(String baseUrl) {
-        return new WebDriverBackedSelenium(driver, baseUrl);
-    }
-
 
     /*
      * (non-Javadoc)
@@ -240,6 +234,10 @@ public class AppiumWebController extends WebControllerBase implements WebControl
             return MobileBy.className(findLocatorSubstring(locator));
         } else if (locator.startsWith(ACC_ID)) {
             return MobileBy.AccessibilityId(findLocatorSubstring(locator));
+        } else if (locator.startsWith(CLASS_CHAIN)) {
+            return MobileBy.iOSClassChain(findLocatorSubstring(locator));
+        } else if (locator.startsWith(UI_AUTO)) {
+            return MobileBy.AndroidUIAutomator(findLocatorSubstring(locator));
         } else {
             return MobileBy.id(locator);
         }
@@ -1284,16 +1282,6 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         return driver.getCurrentUrl();
     }
 
-    @Override
-    public void enableActionsLogging() {
-
-    }
-
-    @Override
-    public void disableActionsLogging() {
-
-    }
-
     /*
          * (non-Javadoc)
          *
@@ -1652,28 +1640,6 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         return waitForElement(locator).findElements(By.cssSelector("tbody tr:nth-child(1) td")).size();
     }
 
-    /* (non-Javadoc)
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#getCookieByName(java.lang.String)
-     */
-    @Override
-    public HttpCookie getCookieByName(String name) {
-        return new HttpCookie(name, driver.manage().getCookieNamed(name).getValue());
-    }
-
-    /* (non-Javadoc)
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#getAllCookies()
-     */
-    @Override
-    public List<HttpCookie> getAllCookies() {
-        List<HttpCookie> allCookies = new ArrayList<HttpCookie>();
-        Iterator<Cookie> it = driver.manage().getCookies().iterator();
-        while (it.hasNext()) {
-            Cookie c = it.next();
-            allCookies.add(new HttpCookie(c.getName(), c.getValue()));
-        }
-        return allCookies;
-    }
-
     @Override
     public void waitForPageToLoad(long waitSeconds) {
         ExpectedCondition<Boolean> pageLoadCondition = new
@@ -1838,12 +1804,12 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public WebElement findChildElement(WebElement parent, String childLocator) {
-       return parent.findElement(determineLocator(childLocator));
+        return parent.findElement(determineLocator(childLocator));
     }
 
     @Override
     public List<WebElement> findAllChildElements(WebElement parent, String childLocator) {
-        return  parent.findElements(determineLocator(childLocator));
+        return parent.findElements(determineLocator(childLocator));
     }
 
 
