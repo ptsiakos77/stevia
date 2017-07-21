@@ -37,19 +37,14 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
          */
 
 
-import com.persado.oss.quality.stevia.network.http.HttpCookie;
 import com.persado.oss.quality.stevia.selenium.core.CustomExpectedCondition;
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import com.persado.oss.quality.stevia.selenium.core.controllers.webdriverapi.ByExtended;
-import com.persado.oss.quality.stevia.selenium.listeners.ReportingWebDriverEventListener;
-import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -134,38 +129,6 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     public void setDriver(WebDriver driver) {
         this.driver = driver;
-    }
-
-    /**
-     * Gets the selenium instance.
-     *
-     * @param baseUrl the base url
-     * @return the selenium instance
-     */
-    public Selenium getSeleniumInstance(String baseUrl) {
-        return new WebDriverBackedSelenium(driver, baseUrl);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
-     * enableActionsLogging()
-     */
-    @Override
-    public void enableActionsLogging() {
-        this.setDriver(new EventFiringWebDriver(driver).register(new ReportingWebDriverEventListener()));
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
-     * disableActionsLogging()
-     */
-    @Override
-    public void disableActionsLogging() {
-        this.setDriver(new EventFiringWebDriver(driver).unregister(new ReportingWebDriverEventListener()));
     }
 
     /*
@@ -1697,28 +1660,6 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     @Override
     public int getNumberOfTotalColumns(String locator) {
         return waitForElement(locator).findElements(By.cssSelector("tbody tr:nth-child(1) td")).size();
-    }
-
-    /* (non-Javadoc)
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#getCookieByName(java.lang.String)
-     */
-    @Override
-    public HttpCookie getCookieByName(String name) {
-        return new HttpCookie(name, driver.manage().getCookieNamed(name).getValue());
-    }
-
-    /* (non-Javadoc)
-     * @see com.persado.oss.quality.stevia.selenium.core.WebController#getAllCookies()
-     */
-    @Override
-    public List<HttpCookie> getAllCookies() {
-        List<HttpCookie> allCookies = new ArrayList<HttpCookie>();
-        Iterator<Cookie> it = driver.manage().getCookies().iterator();
-        while (it.hasNext()) {
-            Cookie c = it.next();
-            allCookies.add(new HttpCookie(c.getName(), c.getValue()));
-        }
-        return allCookies;
     }
 
     @Override

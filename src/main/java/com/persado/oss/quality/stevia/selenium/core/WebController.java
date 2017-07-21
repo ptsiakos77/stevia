@@ -36,19 +36,15 @@ package com.persado.oss.quality.stevia.selenium.core;
  * #L%
  */
 
-import com.persado.oss.quality.stevia.network.http.HttpCookie;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 
 // TODO: Auto-generated Javadoc
 
@@ -815,23 +811,6 @@ public interface WebController {
      */
     String getAttributeValue(String locator, String attribute);
 
-
-    /**
-     * Gets the cookie by name.
-     *
-     * @param name the name
-     * @return an HttpCookie
-     */
-    HttpCookie getCookieByName(String name);
-
-
-    /**
-     * Gets the all cookies.
-     *
-     * @return the all cookies
-     */
-    List<HttpCookie> getAllCookies();
-
     /**
      * Drag and drop.
      *
@@ -1128,7 +1107,7 @@ public interface WebController {
      * @param locator
      * @param duration
      */
-    void tap(int fingers,String locator,int duration);
+    void tap(int fingers, String locator, int duration);
 
 
     /**
@@ -1146,8 +1125,7 @@ public interface WebController {
      * @param x
      * @param y
      */
-    void tap(int fingers,int x, int y,int duration);
-
+    void tap(int fingers, int x, int y, int duration);
 
 
     /**
@@ -1160,18 +1138,21 @@ public interface WebController {
 
     /**
      * Scroll to an element which contains the given text.
+     *
      * @param text
      */
     void scrollTo(String text);
 
     /**
      * Scroll to an element with the given text.
+     *
      * @param text
      */
     void scrollToExact(String text);
 
     /**
      * Perform swipe action
+     *
      * @param startx
      * @param starty
      * @param endx
@@ -1182,18 +1163,20 @@ public interface WebController {
 
     /**
      * Finds an element based on childLocator that is child element of parent
+     *
      * @param parent
      * @param childLocator
      * @return
      */
-    WebElement findChildElement(WebElement parent,String childLocator);
+    WebElement findChildElement(WebElement parent, String childLocator);
 
     /**
      * Finds all elements based on childLocator that is child element of parent
+     *
      * @param parent
      * @param childLocator
      * @return
      */
-    List<WebElement> findAllChildElements(WebElement parent,String childLocator);
+    List<WebElement> findAllChildElements(WebElement parent, String childLocator);
 
 }

@@ -58,7 +58,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StringUtils;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -73,28 +72,16 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
     private static final Logger LOG = LoggerFactory.getLogger(WebDriverWebControllerFactoryImpl.class);
 
     @Override
+    public String getBeanName() {
+        return "webDriverController";
+    }
+
+    @Override
     public WebController initialize(ApplicationContext context, WebController controller) {
         WebDriverWebController wdController = (WebDriverWebController) controller;
-        WebDriver driver = null;
+        WebDriver driver;
         if (SteviaContext.getParam(SteviaWebControllerFactory.DEBUGGING).compareTo(SteviaWebControllerFactory.TRUE) == 0) { // debug=on
-            if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER) == null || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("firefox") == 0
-                    || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).isEmpty()) {
-                driver = setUpFirefoxDriver();
-            } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("chrome") == 0) {
-                driver = setUpChromeDriver();
-            } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("iexplorer") == 0) {
-                LOG.info("Debug enabled, using InternetExplorerDriver");
-                driver = new InternetExplorerDriver();
-            } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("safari") == 0) {
-                LOG.info("Debug enabled, using SafariDriver");
-                driver = new SafariDriver();
-            } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("opera") == 0) {
-                LOG.info("Debug enabled, using OperaDriver");
-                driver = new OperaDriver();
-            } else {
-                throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
-            }
-
+            driver = localSetup();
         } else { // debug=off
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             if (!StringUtils.isEmpty(SteviaContext.getParam("screenResolution"))) {
@@ -176,22 +163,115 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 throw new RuntimeException("Timeout of " + Integer.valueOf(SteviaContext.getParam("nodeTimeout")) + " minutes reached waiting for a hub node to receive the request");
             }
             ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+            DesiredCapabilities desiredCapabilities = setupBrowserCapabilities();
+            gridLasticSetup(desiredCapabilities);
+            driver = remoteSetup(desiredCapabilities);
         }
-
         if (SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL) != null) {
             driver.get(SteviaContext.getParam(SteviaWebControllerFactory.TARGET_HOST_URL));
         }
-        // driver.manage().window().maximize();
         wdController.setDriver(driver);
-        if (SteviaContext.getParam(SteviaWebControllerFactory.ACTIONS_LOGGING).compareTo(SteviaWebControllerFactory.TRUE) == 0) {
-            wdController.enableActionsLogging();
-        }
         return wdController;
     }
 
-    @Override
-    public String getBeanName() {
-        return "webDriverController";
+    private WebDriver remoteSetup(DesiredCapabilities desiredCapabilities) {
+        WebDriver driver = null;
+        final DesiredCapabilities wdCapabilities = desiredCapabilities;
+        final String wdHost = SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT);
+        CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(() -> getRemoteWebDriver(wdHost, wdCapabilities));
+        try {
+            driver = wd.get(Integer.valueOf(SteviaContext.getParam("nodeTimeout")), TimeUnit.MINUTES);
+        } catch (InterruptedException | ExecutionException e) {
+            LOG.error(e.getMessage());
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Timeout of " + Integer.valueOf(SteviaContext.getParam("nodeTimeout")) + " minutes reached waiting for a hub node to receive the request");
+        }
+        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+        return driver;
+    }
+
+    private void gridLasticSetup(DesiredCapabilities desiredCapabilities) {
+        if (!StringUtils.isEmpty(SteviaContext.getParam("browserVersion"))) {
+            LOG.info("Version: " + SteviaContext.getParam("browserVersion"));
+            desiredCapabilities.setVersion(SteviaContext.getParam("browserVersion"));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam("platform"))) {
+            LOG.info("Operating System: " + SteviaContext.getParam("platform"));
+            desiredCapabilities.setPlatform(Platform.valueOf(SteviaContext.getParam("platform")));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam("recordVideo"))) {
+            String record_video = SteviaContext.getParam("recordVideo");
+            LOG.info("Set recording video to: " + SteviaContext.getParam("recordVideo"));
+            if (record_video.equalsIgnoreCase("True")) {
+                desiredCapabilities.setCapability("video", "True");
+            } else {
+                desiredCapabilities.setCapability("video", "False");
+            }
+        }
+    }
+
+    private DesiredCapabilities setupBrowserCapabilities() {
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        if (!StringUtils.isEmpty(System.getProperty("screenResolution"))) {
+            LOG.info("Set screen resolution to " + System.getProperty("screenResolution"));
+            desiredCapabilities.setCapability("screenResolution", System.getProperty("screenResolution"));
+        }
+        if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER) == null || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("firefox") == 0
+                || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).isEmpty()) {
+            LOG.info("Debug OFF, using a RemoteWebDriver with Firefox capabilities");
+            desiredCapabilities = DesiredCapabilities.firefox();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("chrome") == 0) {
+            LOG.info("Debug OFF, using a RemoteWebDriver with Chrome capabilities");
+            // possible fix for https://code.google.com/p/chromedriver/issues/detail?id=799
+            desiredCapabilities = DesiredCapabilities.chrome();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("test-type");
+            if (SteviaContext.getParam("chromeExtensions") != null) {
+                List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
+                for (String path : extensionPaths) {
+                    LOG.info("Use chrome with extension: " + path);
+                    options.addExtensions(new File(path));
+                }
+            }
+            desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("iexplorer") == 0) {
+            LOG.info("Debug OFF, using a RemoteWebDriver with Internet Explorer capabilities");
+            desiredCapabilities = DesiredCapabilities.internetExplorer();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("safari") == 0) {
+            LOG.info("Debug OFF, using a RemoteWebDriver with Safari capabilities");
+            desiredCapabilities = DesiredCapabilities.safari();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("opera") == 0) {
+            LOG.info("Debug OFF, using a RemoteWebDriver with Opera capabilities");
+            desiredCapabilities = DesiredCapabilities.opera();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("phantomjs") == 0) {
+            LOG.info("Debug OFF, using phantomjs driver");
+            desiredCapabilities = DesiredCapabilities.phantomjs();
+        } else {
+            throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
+        }
+        return desiredCapabilities;
+    }
+
+    private WebDriver localSetup() {
+        WebDriver driver;
+        if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER) == null || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("firefox") == 0
+                || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).isEmpty()) {
+            driver = setUpFirefoxDriver();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("chrome") == 0) {
+            driver = setUpChromeDriver();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("iexplorer") == 0) {
+            LOG.info("Debug enabled, using InternetExplorerDriver");
+            driver = new InternetExplorerDriver();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("safari") == 0) {
+            LOG.info("Debug enabled, using SafariDriver");
+            driver = new SafariDriver();
+        } else if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("opera") == 0) {
+            LOG.info("Debug enabled, using OperaDriver");
+            driver = new OperaDriver();
+        } else {
+            throw new IllegalArgumentException(SteviaWebControllerFactory.WRONG_BROWSER_PARAMETER);
+        }
+        return driver;
     }
 
     private WebDriver getRemoteWebDriver(String rcHost, DesiredCapabilities desiredCapabilities) {
