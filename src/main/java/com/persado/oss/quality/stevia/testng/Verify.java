@@ -264,7 +264,7 @@ public class Verify extends WebComponent {
      */
     public void elementVisible(String locator) {
         try {
-            Assert.assertTrue(controller().isComponentVisible(locator));
+            Assert.assertTrue(controller().isComponentVisible(locator, SteviaContext.getWaitForElement()));
             highlightPass(locator);
             info(ELEMENT_LOCATOR + locator + IS_VISIBLE);
         } catch (AssertionError e) {
@@ -345,7 +345,7 @@ public class Verify extends WebComponent {
      */
     public void elementNotVisible(WebElement parent, String childLocator) {
         try {
-            Assert.assertTrue(controller().findAllChildElements(parent,childLocator).size() == 0 || !controller().findChildElement(parent,childLocator).isDisplayed());
+            Assert.assertTrue(controller().findAllChildElements(parent, childLocator).size() == 0 || !controller().findChildElement(parent, childLocator).isDisplayed());
             info("Child element with locator '" + childLocator + IS_NOT_VISIBLE);
         } catch (AssertionError e) {
             error("Child element with locator '" + childLocator + IS_VISIBLE);
