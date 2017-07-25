@@ -37,6 +37,7 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
  */
 
 
+import com.persado.oss.quality.stevia.network.http.HttpCookie;
 import com.persado.oss.quality.stevia.selenium.core.CustomExpectedCondition;
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
@@ -1622,6 +1623,28 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     @Override
     public int getNumberOfTotalColumns(String locator) {
         return waitForElement(locator).findElements(By.cssSelector("tbody tr:nth-child(1) td")).size();
+    }
+
+    /* (non-Javadoc)
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#getCookieByName(java.lang.String)
+     */
+    @Override
+    public HttpCookie getCookieByName(String name) {
+        return new HttpCookie(name, driver.manage().getCookieNamed(name).getValue());
+    }
+
+    /* (non-Javadoc)
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#getAllCookies()
+     */
+    @Override
+    public List<HttpCookie> getAllCookies() {
+        List<HttpCookie> allCookies = new ArrayList<HttpCookie>();
+        Iterator<Cookie> it = driver.manage().getCookies().iterator();
+        while (it.hasNext()) {
+            Cookie c = it.next();
+            allCookies.add(new HttpCookie(c.getName(), c.getValue()));
+        }
+        return allCookies;
     }
 
     @Override

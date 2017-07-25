@@ -36,6 +36,7 @@ package com.persado.oss.quality.stevia.selenium.core;
  * #L%
  */
 
+import com.persado.oss.quality.stevia.network.http.HttpCookie;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -778,6 +779,23 @@ public interface WebController {
      * @return the attribute value
      */
     String getAttributeValue(String locator, String attribute);
+
+
+    /**
+     * Gets the cookie by name.
+     *
+     * @param name the name
+     * @return an HttpCookie
+     */
+    HttpCookie getCookieByName(String name);
+
+
+    /**
+     * Gets the all cookies.
+     *
+     * @return the all cookies
+     */
+    List<HttpCookie> getAllCookies();
 
     /**
      * Drag and drop.

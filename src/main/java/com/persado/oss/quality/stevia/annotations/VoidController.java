@@ -36,6 +36,7 @@ package com.persado.oss.quality.stevia.annotations;
  * #L%
  */
 
+import com.persado.oss.quality.stevia.network.http.HttpCookie;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import org.openqa.selenium.Dimension;
@@ -578,6 +579,18 @@ class VoidController implements WebController {
 
     @Override
     public String getAttributeValue(String locator, String attribute) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public HttpCookie getCookieByName(String name) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<HttpCookie> getAllCookies() {
         // TODO Auto-generated method stub
         return null;
     }
