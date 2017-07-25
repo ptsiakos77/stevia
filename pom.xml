@@ -211,8 +211,14 @@
 		<!-- Jetty HTTP Client -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-io</artifactId>
+			<version>8.1.8.v20121106</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-client</artifactId>
-			<version>8.1.12.v20130726</version>
+			<version>8.1.8.v20121106</version>
 		</dependency>
 
 		<!-- Suite of Java SSH applications providing a Java SSH API, SSH Terminal, 
