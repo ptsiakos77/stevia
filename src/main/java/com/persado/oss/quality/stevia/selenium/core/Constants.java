@@ -156,4 +156,7 @@ public interface Constants {
 	/** Dismiss all iOS alerts automatically if they pop up. This includes privacy access permission alerts (e.g., location, contacts, photos). Default is false. Does not work on XCUITest-based tests. **/
 	public static final String AUTO_DISMISS_ALERTS = "autoDismissAlerts";
 
+	 /** Skip checking and signing of app with debug keys, will work only with UiAutomator and not with selendroid, default false **/
+	 public static final String NO_SIGN = "noSign";
+
 }

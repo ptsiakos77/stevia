@@ -193,6 +193,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.UIAUTOMATOR2_PORT))) {
             capabilities.setCapability(SteviaWebControllerFactory.UIAUTOMATOR2_PORT, SteviaContext.getParam(SteviaWebControllerFactory.UIAUTOMATOR2_PORT));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.NO_SIGN))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.NO_SIGN, SteviaContext.getParam(SteviaWebControllerFactory.NO_SIGN));
+        }
     }
 
     private void setupTestDroidParameters(DesiredCapabilities capabilities) {
