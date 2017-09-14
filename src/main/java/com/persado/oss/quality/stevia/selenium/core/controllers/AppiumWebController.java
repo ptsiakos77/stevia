@@ -1817,18 +1817,8 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     }
 
     @Override
-    public void tap(int fingers, String locator, int duration) {
-        driver.tap(fingers, waitForElement(locator), duration);
-    }
-
-    @Override
     public void tap(int x, int y) {
         new TouchAction(driver).tap(x, y).perform();
-    }
-
-    @Override
-    public void tap(int fingers, int x, int y, int duration) {
-        driver.tap(fingers, x, y, duration);
     }
 
     @Override
@@ -1852,11 +1842,12 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     @Override
     @Deprecated
     public void scrollToExact(String text) {
+
     }
 
     @Override
-    public void swipe(int startx, int starty, int endx, int endy, int duration) {
-        driver.swipe(startx, starty, endx, endy, duration);
+    public void swipe(int startX, int startY, int endX, int endY) {
+        new TouchAction(driver).press(startX, startY).moveTo(endX, endY).release().perform();
     }
 
     @Override

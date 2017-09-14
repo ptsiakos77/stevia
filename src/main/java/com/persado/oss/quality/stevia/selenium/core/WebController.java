@@ -1117,17 +1117,6 @@ public interface WebController {
      */
     void tap(String locator);
 
-
-    /**
-     * Perform tap event on a Web element identified by locator
-     *
-     * @param fingers
-     * @param locator
-     * @param duration
-     */
-    void tap(int fingers, String locator, int duration);
-
-
     /**
      * Perform tap on x,y coordinates
      *
@@ -1135,16 +1124,6 @@ public interface WebController {
      * @param y
      */
     void tap(int x, int y);
-
-    /**
-     * Perform tap on x,y coordinates
-     *
-     * @param fingers
-     * @param x
-     * @param y
-     */
-    void tap(int fingers, int x, int y, int duration);
-
 
     /**
      * Perform tap triggering javascript tap event. Locator must be a css locator
@@ -1171,13 +1150,12 @@ public interface WebController {
     /**
      * Perform swipe action
      *
-     * @param startx
-     * @param starty
-     * @param endx
-     * @param endy
-     * @param duration
+     * @param startX
+     * @param startY
+     * @param endX
+     * @param endY
      */
-    void swipe(int startx, int starty, int endx, int endy, int duration);
+    void swipe(int startX, int startY, int endX, int endY);
 
     /**
      * Finds an element based on childLocator that is child element of parent
