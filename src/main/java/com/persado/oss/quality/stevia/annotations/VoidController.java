@@ -813,18 +813,8 @@ class VoidController implements WebController {
     }
 
     @Override
-    public void tap(int fingers, String locator, int duration) {
-
-    }
-
-    @Override
     public void tap(int x, int y) {
         // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void tap(int fingers, int x, int y, int duration) {
-
     }
 
     @Override
@@ -843,7 +833,7 @@ class VoidController implements WebController {
     }
 
     @Override
-    public void swipe(int startx, int starty, int endx, int endy, int duration) {
+    public void swipe(int startX, int startY, int endX, int endY) {
         // TODO Auto-generated method stub
     }
 
