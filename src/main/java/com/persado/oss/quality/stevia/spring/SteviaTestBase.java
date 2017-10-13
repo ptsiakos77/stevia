@@ -139,11 +139,13 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
             STEVIA_TEST_BASE_LOG.info("suite initialisation via suiteInitialisation() override will not use a Stevia Context");
         }
 
+        // user code
+        suiteInitialisation(testContext);
+
         if (initContext) {
             initializeStevia(parameters);
         }
-        // user code
-        suiteInitialisation(testContext);
+
         if (initContext) {
             //stevia context clean
             SteviaContext.clean();
