@@ -196,6 +196,9 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.NO_SIGN))) {
             capabilities.setCapability(AndroidMobileCapabilityType.NO_SIGN, SteviaContext.getParam(SteviaWebControllerFactory.NO_SIGN));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.SKIP_UNLOCK))) {
+            capabilities.setCapability(SteviaWebControllerFactory.SKIP_UNLOCK, SteviaContext.getParam(SteviaWebControllerFactory.SKIP_UNLOCK));
+        }
     }
 
     private void setupTestDroidParameters(DesiredCapabilities capabilities) {

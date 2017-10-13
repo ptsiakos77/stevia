@@ -159,4 +159,7 @@ public interface Constants {
 	 /** Skip checking and signing of app with debug keys, will work only with UiAutomator and not with selendroid, default false **/
 	 public static final String NO_SIGN = "noSign";
 
+	/** Skip checking and signing of app with debug keys, will work only with UiAutomator and not with selendroid, default false **/
+	public static final String SKIP_UNLOCK = "skipUnlock";
+
 }
