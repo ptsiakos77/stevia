@@ -215,7 +215,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("test-type");
         //Added support for headless chrome mode
-        if (SteviaContext.getParam("headlessChrome").equals("true")) {
+        if (System.getProperty("headlessChrome") != null && System.getProperty("headlessChrome").equals("true")) {
             options.addArguments("--headless");
         }
         if (SteviaContext.getParam("chromeExtensions") != null) {
@@ -224,6 +224,12 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 LOG.info("Use chrome with extension: " + path);
                 options.addExtensions(new File(path));
             }
+        }
+
+        if (System.getProperty("windowSize") != null) {
+            options.addArguments("--window-size=" + System.getProperty("windowSize").replace("x", ","));
+        } else {
+            options.addArguments("--window-size=1920,1080");
         }
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         CompletableFuture<WebDriver> wd = CompletableFuture.supplyAsync(() -> getChromeDriver(capabilities));
