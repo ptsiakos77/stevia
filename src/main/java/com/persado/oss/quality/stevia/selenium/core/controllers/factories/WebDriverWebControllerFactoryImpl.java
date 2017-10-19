@@ -111,6 +111,13 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 desiredCapabilities = DesiredCapabilities.chrome();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("test-type");
+                //set window size
+                if (System.getProperty("windowSize") != null) {
+                     options.addArguments("--window-size=" + System.getProperty("windowSize").replace("x", ","));
+                } else {
+                        options.addArguments("--window-size=1920,1080");
+                    }
+                
                 if (SteviaContext.getParam("chromeExtensions") != null) {
                     List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
                     for (String path : extensionPaths) {
