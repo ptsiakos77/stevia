@@ -214,6 +214,10 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("test-type");
+        //Added support for headless chrome mode
+        if (SteviaContext.getParam("headlessChrome").equals("true")) {
+            options.addArguments("--headless");
+        }
         if (SteviaContext.getParam("chromeExtensions") != null) {
             List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
             for (String path : extensionPaths) {
