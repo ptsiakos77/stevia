@@ -113,11 +113,13 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 options.addArguments("test-type");
                 //set window size
                 if (System.getProperty("windowSize") != null) {
-                     options.addArguments("--window-size=" + System.getProperty("windowSize").replace("x", ","));
+                    options.addArguments("--window-size=" + System.getProperty("windowSize").replace("x", ","));
+                    LOG.info("Setting window size to "+System.getProperty("windowSize"));
                 } else {
-                        options.addArguments("--window-size=1920,1080");
-                    }
-                
+                    options.addArguments("--window-size=1920,1080");
+                    LOG.info("Setting window size to 1920x1080");
+                }
+
                 if (SteviaContext.getParam("chromeExtensions") != null) {
                     List<String> extensionPaths = Arrays.asList(SteviaContext.getParam("chromeExtensions").split(","));
                     for (String path : extensionPaths) {
