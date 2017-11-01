@@ -1754,6 +1754,11 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     }
 
     @Override
+    public void switchToFrameByLocator(String locator) {
+
+    }
+
+    @Override
     public Set<String> getWindowHandles() {
         return driver.getWindowHandles();
     }

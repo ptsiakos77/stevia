@@ -1782,6 +1782,12 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     }
 
     @Override
+    public void switchToFrameByLocator(String locator) {
+    
+    }
+
+
+    @Override
     public Set<String> getWindowHandles() {
         Set<String> windowHandles = new HashSet<String>();
         for (String id : selenium.getAllWindowIds()) {

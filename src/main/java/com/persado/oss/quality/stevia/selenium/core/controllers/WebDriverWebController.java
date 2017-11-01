@@ -1761,6 +1761,11 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     public void switchToFrame(String frameId) {
         driver.switchTo().frame(frameId);
     }
+    
+    @Override
+    public void switchToFrameByLocator(String locator) {
+        driver.switchTo().frame(findElements(locator).get(0));
+    }
 
     @Override
     public Set<String> getWindowHandles() {

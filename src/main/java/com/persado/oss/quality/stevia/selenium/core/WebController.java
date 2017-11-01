@@ -1029,6 +1029,13 @@ public interface WebController {
     void switchToFrame(String frameId);
 
     /**
+     * Select frame by a locator
+     *
+     * @param frameId the frame id
+     */
+    void switchToFrameByLocator(String frameId);
+
+    /**
      * Get all open windows id's
      *
      * @return a set containing the window id's
