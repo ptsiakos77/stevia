@@ -772,6 +772,11 @@ class VoidController implements WebController {
     }
 
     @Override
+    public void switchToFrameByLocator(String frameId) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
     public Set<String> getWindowHandles() {
         // TODO Auto-generated method stub
         return null;
