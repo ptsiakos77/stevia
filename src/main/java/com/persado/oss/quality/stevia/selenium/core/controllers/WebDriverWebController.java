@@ -43,9 +43,11 @@ import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import com.persado.oss.quality.stevia.selenium.core.controllers.webdriverapi.ByExtended;
+import com.persado.oss.quality.stevia.selenium.listeners.ReportingWebDriverEventListener;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -130,6 +132,27 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     public void setDriver(WebDriver driver) {
         this.driver = driver;
+    }
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * enableActionsLogging()
+     */
+    @Override
+    public void enableActionsLogging() {
+        this.setDriver(new EventFiringWebDriver(driver).register(new ReportingWebDriverEventListener()));
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * disableActionsLogging()
+     */
+    @Override
+    public void disableActionsLogging() {
+        this.setDriver(new EventFiringWebDriver(driver).unregister(new ReportingWebDriverEventListener()));
     }
 
     /*

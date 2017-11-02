@@ -55,6 +55,17 @@ import java.util.Set;
 public interface WebController {
 
     /**
+     * Enable actions logging.
+     */
+    void enableActionsLogging();
+
+    /**
+     * Disable logging messages in TestNG Reports.
+     * Applies only in WebDriver
+     */
+    void disableActionsLogging();
+
+    /**
      * Close the current window, quitting the browser if it's the last window currently open.
      */
 

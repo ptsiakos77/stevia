@@ -52,6 +52,18 @@ import java.util.Set;
 class VoidController implements WebController {
 
     @Override
+    public void enableActionsLogging() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void disableActionsLogging() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
     public void close() {
         // TODO Auto-generated method stub
 
