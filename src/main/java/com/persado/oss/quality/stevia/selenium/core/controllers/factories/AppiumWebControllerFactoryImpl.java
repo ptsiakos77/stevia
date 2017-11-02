@@ -199,6 +199,23 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.SKIP_UNLOCK))) {
             capabilities.setCapability(SteviaWebControllerFactory.SKIP_UNLOCK, SteviaContext.getParam(SteviaWebControllerFactory.SKIP_UNLOCK));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_KEYSTORE))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.USE_KEYSTORE, SteviaContext.getParam(SteviaWebControllerFactory.USE_KEYSTORE));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PATH))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEYSTORE_PATH, SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PATH));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PASSWORD))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEYSTORE_PASSWORD, SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PASSWORD));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEY_ALIAS))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEY_ALIAS, SteviaContext.getParam(SteviaWebControllerFactory.KEY_ALIAS));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEY_PASSWORD))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEY_PASSWORD, SteviaContext.getParam(SteviaWebControllerFactory.KEY_PASSWORD));
+        }
+
+
     }
 
     private void setupTestDroidParameters(DesiredCapabilities capabilities) {

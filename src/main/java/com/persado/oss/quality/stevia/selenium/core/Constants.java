@@ -162,4 +162,21 @@ public interface Constants {
 	/** Skip checking and signing of app with debug keys, will work only with UiAutomator and not with selendroid, default false **/
 	public static final String SKIP_UNLOCK = "skipUnlock";
 
+	/** Use a custome keystore to sign apps, default false **/
+	public static final String USE_KEYSTORE = "useKeystore";
+
+	/** Path to a custom keystore **/
+	public static final String KEYSTORE_PATH = "keystorePath";
+
+	/** Password for custom keystore **/
+	public static final String KEYSTORE_PASSWORD = "keystorePassword";
+
+	/** Alias for key **/
+	public static final String KEY_ALIAS = "keyAlias";
+
+	/** Password for key **/
+	public static final String KEY_PASSWORD = "keyPassword";
+
+
+
 }
