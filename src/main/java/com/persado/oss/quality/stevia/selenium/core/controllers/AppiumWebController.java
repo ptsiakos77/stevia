@@ -1317,6 +1317,16 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         return driver.getCurrentUrl();
     }
 
+    @Override
+    public void enableActionsLogging() {
+
+    }
+
+    @Override
+    public void disableActionsLogging() {
+
+    }
+
     /*
          * (non-Javadoc)
          *
