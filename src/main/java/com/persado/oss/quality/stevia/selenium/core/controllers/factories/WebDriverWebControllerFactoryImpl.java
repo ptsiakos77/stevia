@@ -286,18 +286,8 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
     }
 
     private WebDriver setUpFirefoxDriver() {
-        WebDriver driver;
-        String profileToUse = SteviaContext.getParam(SteviaWebControllerFactory.PROFILE);
-        if (profileToUse == null || profileToUse.isEmpty()) {
-            LOG.info("Debug enabled, using Firefox Driver");
-            driver = new FirefoxDriver();
-        } else {
-            LOG.info("Debug enabled, using a local Firefox profile {} with FirefoxDriver", profileToUse);
-            ProfilesIni allProfiles = new ProfilesIni();
-            FirefoxProfile ffProfile = allProfiles.getProfile(profileToUse);
-            driver = new FirefoxDriver(ffProfile);
-        }
-        return driver;
+        LOG.info("Debug enabled, using Firefox Driver");
+        return new FirefoxDriver();
     }
 
     private WebDriver setUpChromeDriver() {
