@@ -112,6 +112,10 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("test-type");
                 //set window size
+                if (SteviaContext.getParam("headlessChrome") != null && SteviaContext.getParam("headlessChrome").equals("true")) {
+                    options.addArguments("--headless");
+                    options.addArguments("--disable-gpu");
+                }
                 if (SteviaContext.getParam("windowSize") != null) {
                     options.addArguments("--window-size=" + SteviaContext.getParam("windowSize").replace("x", ","));
                     LOG.info("Setting window size to "+SteviaContext.getParam("windowSize"));
