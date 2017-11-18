@@ -97,9 +97,9 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
 
         } else { // debug=off
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-            if (!StringUtils.isEmpty(System.getProperty("screenResolution"))) {
-                LOG.info("Set screen resolution to " + System.getProperty("screenResolution"));
-                desiredCapabilities.setCapability("screenResolution", System.getProperty("screenResolution"));
+            if (!StringUtils.isEmpty(SteviaContext.getParam("screenResolution"))) {
+                LOG.info("Set screen resolution to " + SteviaContext.getParam("screenResolution"));
+                desiredCapabilities.setCapability("screenResolution", SteviaContext.getParam("screenResolution"));
             }
             if (SteviaContext.getParam(SteviaWebControllerFactory.BROWSER) == null || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).compareTo("firefox") == 0
                     || SteviaContext.getParam(SteviaWebControllerFactory.BROWSER).isEmpty()) {
@@ -112,9 +112,9 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("test-type");
                 //set window size
-                if (System.getProperty("windowSize") != null) {
-                    options.addArguments("--window-size=" + System.getProperty("windowSize").replace("x", ","));
-                    LOG.info("Setting window size to "+System.getProperty("windowSize"));
+                if (SteviaContext.getParam("windowSize") != null) {
+                    options.addArguments("--window-size=" + SteviaContext.getParam("windowSize").replace("x", ","));
+                    LOG.info("Setting window size to "+SteviaContext.getParam("windowSize"));
                 } else {
                     options.addArguments("--window-size=1920,1080");
                     LOG.info("Setting window size to 1920x1080");
@@ -224,13 +224,13 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("test-type");
         //Added support for headless chrome mode
-        if (System.getProperty("headlessChrome") != null && System.getProperty("headlessChrome").equals("true")) {
+        if (SteviaContext.getParam("headlessChrome") != null && SteviaContext.getParam("headlessChrome").equals("true")) {
             options.addArguments("--headless");
             options.addArguments("--disable-gpu");
         }
 
-        if (System.getProperty("windowSize") != null) {
-            options.addArguments("--window-size=" + System.getProperty("windowSize").replace("x", ","));
+        if (SteviaContext.getParam("windowSize") != null) {
+            options.addArguments("--window-size=" + SteviaContext.getParam("windowSize").replace("x", ","));
         } else {
             options.addArguments("--window-size=1920,1080");
         }
