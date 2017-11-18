@@ -58,6 +58,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -1824,7 +1825,12 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void swipe(int startX, int startY, int endX, int endY) {
-        new TouchAction(driver).press(startX, startY).moveTo(endX, endY).release().perform();
+        new TouchAction(driver).press(startX, startY).waitAction().moveTo(endX, endY).release().perform();
+    }
+
+    @Override
+    public void swipe(int startX, int startY, int endX, int endY, int duration) {
+        new TouchAction(driver).press(startX, startY).waitAction(Duration.ofMillis(duration)).moveTo(endX, endY).release().perform();
     }
 
     @Override
