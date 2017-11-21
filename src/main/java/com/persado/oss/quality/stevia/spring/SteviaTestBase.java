@@ -53,8 +53,9 @@ import org.testng.xml.XmlSuite;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -89,8 +90,8 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
 
     /**
      * Extends the TestNG method to prepare the Spring contexts for parallel tests.
-     * As seen at {@link http://goo.gl/g8QT2}
-     *
+     *     * As seen at {@link http://goo.gl/g8QT2}
+
      * @throws Exception the exception
      */
     @BeforeSuite(alwaysRun = true)
@@ -110,18 +111,13 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
      */
     @BeforeSuite(alwaysRun = true)
     protected final void configureSuiteSettings(ITestContext testContext) throws Exception {
-        Map<String, String> parameters = testContext.getSuite().getXmlSuite().getAllParameters();
+        Map<String, String> parameters = new HashMap<>();
+        Set<String> propNames = System.getProperties().stringPropertyNames();
+        parameters.putAll(testContext.getSuite().getXmlSuite().getAllParameters());
+        propNames.forEach(p ->
+                parameters.put(p, System.getProperty(p)));
 
-        //Overwrite a parameter if it is provided as command line arguent
-        Iterator<String> paramNames = parameters.keySet().iterator();
-        while (paramNames.hasNext()) {
-            String pName = paramNames.next();
-            if (System.getProperty(pName) != null) {
-                parameters.put(pName, System.getProperty(pName));
-            }
-        }
-
-        //if the suite needs RC server, we start it here
+        //if the suite needs RC server, we start it here 
         if (parameters.get("driverType").compareTo("webdriver") != 0 && parameters.get("debugging").compareTo(TRUE) == 0 && !isRCStarted) {
             startRCServer();
         }
@@ -419,7 +415,7 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
         pb.redirectOutput();
         try {
             pb.start().waitFor(20, TimeUnit.SECONDS);
-        }catch (Exception e){
+        } catch (Exception e) {
             STEVIA_TEST_BASE_LOG.error(e.getMessage());
         }
     }
