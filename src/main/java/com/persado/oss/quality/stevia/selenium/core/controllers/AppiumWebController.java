@@ -1825,7 +1825,7 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void swipe(int startX, int startY, int endX, int endY) {
-        new TouchAction(driver).press(startX, startY).waitAction().moveTo(endX, endY).release().perform();
+        new TouchAction(driver).press(startX, startY).moveTo(endX, endY).release().perform();
     }
 
     @Override
