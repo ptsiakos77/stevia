@@ -46,8 +46,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -118,7 +116,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
                 }
                 if (SteviaContext.getParam("windowSize") != null) {
                     options.addArguments("--window-size=" + SteviaContext.getParam("windowSize").replace("x", ","));
-                    LOG.info("Setting window size to "+SteviaContext.getParam("windowSize"));
+                    LOG.info("Setting window size to " + SteviaContext.getParam("windowSize"));
                 } else {
                     options.addArguments("--window-size=1920,1080");
                     LOG.info("Setting window size to 1920x1080");
@@ -206,18 +204,7 @@ public class WebDriverWebControllerFactoryImpl implements WebControllerFactory {
     }
 
     private WebDriver setUpFirefoxDriver() {
-        WebDriver driver;
-        String profileToUse = SteviaContext.getParam(SteviaWebControllerFactory.PROFILE);
-        if (profileToUse == null || profileToUse.isEmpty()) {
-            LOG.info("Debug enabled, using Firefox Driver");
-            driver = new FirefoxDriver();
-        } else {
-            LOG.info("Debug enabled, using a local Firefox profile {} with FirefoxDriver", profileToUse);
-            ProfilesIni allProfiles = new ProfilesIni();
-            FirefoxProfile ffProfile = allProfiles.getProfile(profileToUse);
-            driver = new FirefoxDriver(ffProfile);
-        }
-        return driver;
+        return new FirefoxDriver();
     }
 
     private WebDriver setUpChromeDriver() {

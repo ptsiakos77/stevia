@@ -175,7 +175,7 @@ public class HttpClient implements HttpConstants {
 	 * Adds the parameters.
 	 *
 	 * @param exchange that retains response content for later use.
-	 * @param  list of input data for the POST requests
+	 * @param data of input data for the POST requests
 	 */
 	private void addParameters(ContentExchange exchange, List<HttpPostData> data) {
 		StringBuffer content = new StringBuffer();

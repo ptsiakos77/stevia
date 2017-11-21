@@ -42,12 +42,10 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 
 // TODO: Auto-generated Javadoc
 
@@ -130,7 +128,7 @@ public interface WebController {
      * @return the web element
      */
     WebElement waitForElementPresence(String locator, long waitSeconds);
-    
+
     /**
      * Wait for element to stop moving.
      *
@@ -138,14 +136,14 @@ public interface WebController {
      * @param waitSeconds time to wait in seconds, for element to to stop moving
      */
     void waitForElementToStopMoving(String locator, long waitSeconds);
-    
+
     /**
      * Wait for element to stop moving.
      *
      * @param locator the element locator
      */
     void waitForElementToStopMoving(String locator);
-    
+
     /**
      * Find elements.
      *
@@ -1098,17 +1096,6 @@ public interface WebController {
      */
     void tap(String locator);
 
-
-    /**
-     * Perform tap event on a Web element identified by locator
-     *
-     * @param fingers
-     * @param locator
-     * @param duration
-     */
-    void tap(int fingers,String locator,int duration);
-
-
     /**
      * Perform tap on x,y coordinates
      *
@@ -1116,17 +1103,6 @@ public interface WebController {
      * @param y
      */
     void tap(int x, int y);
-
-    /**
-     * Perform tap on x,y coordinates
-     *
-     * @param fingers
-     * @param x
-     * @param y
-     */
-    void tap(int fingers,int x, int y,int duration);
-
-
 
     /**
      * Perform tap triggering javascript tap event. Locator must be a css locator
@@ -1138,40 +1114,55 @@ public interface WebController {
 
     /**
      * Scroll to an element which contains the given text.
+     *
      * @param text
      */
     void scrollTo(String text);
 
     /**
      * Scroll to an element with the given text.
+     *
      * @param text
      */
     void scrollToExact(String text);
 
     /**
      * Perform swipe action
-     * @param startx
-     * @param starty
-     * @param endx
-     * @param endy
+     *
+     * @param startX
+     * @param startY
+     * @param endX
+     * @param endY
+     */
+    void swipe(int startX, int startY, int endX, int endY);
+
+
+    /**
+     *
+     * @param startX
+     * @param startY
+     * @param endX
+     * @param endY
      * @param duration
      */
-    void swipe(int startx, int starty, int endx, int endy, int duration);
+    void swipe(int startX, int startY, int endX, int endY,int duration);
 
     /**
      * Finds an element based on childLocator that is child element of parent
+     *
      * @param parent
      * @param childLocator
      * @return
      */
-    WebElement findChildElement(WebElement parent,String childLocator);
+    WebElement findChildElement(WebElement parent, String childLocator);
 
     /**
      * Finds all elements based on childLocator that is child element of parent
+     *
      * @param parent
      * @param childLocator
      * @return
      */
-    List<WebElement> findAllChildElements(WebElement parent,String childLocator);
+    List<WebElement> findAllChildElements(WebElement parent, String childLocator);
 
 }

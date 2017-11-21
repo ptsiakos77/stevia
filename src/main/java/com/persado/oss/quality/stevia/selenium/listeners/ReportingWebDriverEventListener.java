@@ -7,21 +7,21 @@ package com.persado.oss.quality.stevia.selenium.listeners;
  * Copyright (C) 2013 - 2014 Persado
  * %%
  * Copyright (c) Persado Intellectual Property Limited. All rights reserved.
- *  
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *  
+ *
  * * Redistributions of source code must retain the above copyright notice, this
  * list of conditions and the following disclaimer.
- *  
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  * this list of conditions and the following disclaimer in the documentation
  * and/or other materials provided with the distribution.
- *  
+ *
  * * Neither the name of the Persado Intellectual Property Limited nor the names
  * of its contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- *  
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -75,9 +75,29 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener {
         Reporter.log(message + "<br>");
     }
 
+    @Override
+    public void beforeAlertAccept(WebDriver webDriver) {
+
+    }
+
+    @Override
+    public void afterAlertAccept(WebDriver webDriver) {
+
+    }
+
+    @Override
+    public void afterAlertDismiss(WebDriver webDriver) {
+
+    }
+
+    @Override
+    public void beforeAlertDismiss(WebDriver webDriver) {
+
+    }
+
     /* (non-Javadoc)
-     * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeNavigateTo(java.lang.String, org.openqa.selenium.WebDriver)
-     */
+         * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeNavigateTo(java.lang.String, org.openqa.selenium.WebDriver)
+         */
     public void beforeNavigateTo(String url, WebDriver driver) {
 
     }
@@ -119,6 +139,16 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener {
 
     }
 
+    @Override
+    public void beforeNavigateRefresh(WebDriver webDriver) {
+
+    }
+
+    @Override
+    public void afterNavigateRefresh(WebDriver webDriver) {
+
+    }
+
 
     /* (non-Javadoc)
      * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeFindBy(org.openqa.selenium.By, org.openqa.selenium.WebElement, org.openqa.selenium.WebDriver)
@@ -147,34 +177,26 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener {
      * @see org.openqa.selenium.support.events.WebDriverEventListener#afterClickOn(org.openqa.selenium.WebElement, org.openqa.selenium.WebDriver)
      */
     public void afterClickOn(WebElement element, WebDriver driver) {
-
         String locator = element.toString().substring(element.toString().indexOf(">") + 2, element.toString().lastIndexOf("]"));
         info("The element with locator '" + locator + "' was clicked");
     }
 
-
-    /* (non-Javadoc)
-     * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeChangeValueOf(org.openqa.selenium.WebElement, org.openqa.selenium.WebDriver)
-     */
-    public void beforeChangeValueOf(WebElement element, WebDriver driver) {
+    @Override
+    public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
         if (SteviaContext.getParam("highlight") != null && SteviaContext.getParam("highlight").equals("true")) {
-            ((WebDriverWebController) SteviaContext.getWebController()).highlight(element);
+            ((WebDriverWebController) SteviaContext.getWebController()).highlight(webElement);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.openqa.selenium.support.events.WebDriverEventListener#afterChangeValueOf(org.openqa.selenium.WebElement, org.openqa.selenium.WebDriver)
-     */
-    public void afterChangeValueOf(WebElement element, WebDriver driver) {
-
-        String value = element.getAttribute("value");
-        String locator = element.toString().substring(element.toString().indexOf(">") + 2, element.toString().lastIndexOf("]"));
+    @Override
+    public void afterChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
+        String value = webElement.getAttribute("value");
+        String locator = webElement.toString().substring(webElement.toString().indexOf(">") + 2, webElement.toString().lastIndexOf("]"));
 
         if (!value.isEmpty()) {
             info("Value '" + value + "' was typed in element with locator '" + locator + "'");
         }
     }
-
 
     /* (non-Javadoc)
      * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeScript(java.lang.String, org.openqa.selenium.WebDriver)

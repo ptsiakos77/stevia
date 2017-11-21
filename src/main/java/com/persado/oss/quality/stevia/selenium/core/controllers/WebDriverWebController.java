@@ -44,8 +44,6 @@ import com.persado.oss.quality.stevia.selenium.core.WebController;
 import com.persado.oss.quality.stevia.selenium.core.controllers.commonapi.KeyInfo;
 import com.persado.oss.quality.stevia.selenium.core.controllers.webdriverapi.ByExtended;
 import com.persado.oss.quality.stevia.selenium.listeners.ReportingWebDriverEventListener;
-import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -135,17 +133,6 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     public void setDriver(WebDriver driver) {
         this.driver = driver;
     }
-
-    /**
-     * Gets the selenium instance.
-     *
-     * @param baseUrl the base url
-     * @return the selenium instance
-     */
-    public Selenium getSeleniumInstance(String baseUrl) {
-        return new WebDriverBackedSelenium(driver, baseUrl);
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -319,7 +306,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      *
      * @see com.persado.oss.quality.stevia.selenium.core.WebController#
      * waitForElementInvisibility(java.lang.String)
-     */  
+     */
     @Override
     public void waitForElementToStopMoving(String locator) {
         waitForElementToStopMoving(locator, SteviaContext.getWaitForElement());
@@ -337,8 +324,8 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         WebElement element = waitForElement(locator);
         wait.until(CustomExpectedCondition.elementHasStoppedMoving(element));
     }
-    
-    
+
+
     /*
      * (non-Javadoc)
      *
@@ -1805,19 +1792,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     @Override
     @Deprecated
-    public void tap(int fingers, String locator, int duration) {
-
-    }
-
-    @Override
-    @Deprecated
     public void tap(int x, int y) {
-
-    }
-
-    @Override
-    @Deprecated
-    public void tap(int fingers, int x, int y, int duration) {
 
     }
 
@@ -1841,7 +1816,13 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     @Override
     @Deprecated
-    public void swipe(int startx, int starty, int endx, int endy, int duration) {
+    public void swipe(int startX, int startY, int endX, int endY) {
+    }
+
+    @Override
+    @Deprecated
+    public void swipe(int startX, int startY, int endX, int endY, int duration) {
+
     }
 
     @Override
