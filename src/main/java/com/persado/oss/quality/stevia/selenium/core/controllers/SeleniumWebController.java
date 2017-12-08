@@ -1,7 +1,7 @@
 package com.persado.oss.quality.stevia.selenium.core.controllers;
 
-/*
- * #%L
+        /*
+         * #%L
  * Stevia QA Framework - Core
  * %%
  * Copyright (C) 2013 - 2014 Persado
@@ -34,7 +34,7 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
- */
+         */
 
 
 import com.persado.oss.quality.stevia.network.http.HttpCookie;
@@ -139,6 +139,11 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
      */
     @Deprecated
     public void disableActionsLogging() {
+
+    }
+
+    @Override
+    public void clearStorage() {
 
     }
 
@@ -289,7 +294,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
     @Override
     @Deprecated
     public void waitForElementToStopMoving(String locator, long waitSeconds) {
-        
+
     }
 
     @Override
@@ -878,13 +883,13 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
         return !selenium.isChecked(locator);
     }
 
-	/*
+    /*
      * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.persado.oss.quality.stevia.selenium.core.WebController#clickOkInAlert
-	 * ()
-	 */
+     *
+     * @see
+     * com.persado.oss.quality.stevia.selenium.core.WebController#clickOkInAlert
+     * ()
+     */
 
     public void clickOkInAlert() {
         executeJavascript("window.confirm = function(msg) { return true; }");
@@ -1783,7 +1788,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
 
     @Override
     public void switchToFrameByLocator(String locator) {
-    
+
     }
 
 
@@ -1850,7 +1855,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
 
     @Override
     @Deprecated
-    public void tapWithJS(String locator,boolean waitForAjax) {
+    public void tapWithJS(String locator, boolean waitForAjax) {
 
     }
 
@@ -1868,7 +1873,7 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
 
     @Override
     @Deprecated
-    public void swipe(int startx, int starty, int endx, int endy, int duration){
+    public void swipe(int startx, int starty, int endx, int endy, int duration) {
     }
 
     @Override

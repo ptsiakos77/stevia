@@ -176,6 +176,11 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         waitForCondition(jscondition, SteviaContext.getWaitForElement());
     }
 
+    @Override
+    public void clearStorage() {
+    
+    }
+    
     /*
      * (non-Javadoc)
      *

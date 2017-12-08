@@ -68,6 +68,12 @@ public interface WebController {
     void disableActionsLogging();
 
     /**
+     * Clear local and session storage
+     * Applies only in WebDriverWebController
+     */
+    void clearStorage();
+
+    /**
      * Close the current window, quitting the browser if it's the last window currently open.
      */
 

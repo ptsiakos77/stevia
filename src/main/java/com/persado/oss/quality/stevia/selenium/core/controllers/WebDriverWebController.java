@@ -1,7 +1,7 @@
 package com.persado.oss.quality.stevia.selenium.core.controllers;
 
-/*
- * #%L
+        /*
+         * #%L
  * Stevia QA Framework - Core
  * %%
  * Copyright (C) 2013 - 2014 Persado
@@ -34,7 +34,7 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
- */
+         */
 
 
 import com.persado.oss.quality.stevia.network.http.HttpCookie;
@@ -91,7 +91,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     /**
      * The Constant THREAD_SLEEP.
      */
-    private static final long THREAD_SLEEP = 100;
+    private static final long THREAD_SLEEP = 50;
 
     /**
      * The Constant XPATH.
@@ -172,6 +172,17 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      * (non-Javadoc)
      *
      * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * clearStorage()
+     */
+    @Override
+    public void clearStorage() {
+        ((JavascriptExecutor) driver).executeScript("localStorage.clear();");
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
      * waitForPageLoading(java.lang.String)
      */
     @Override
@@ -200,13 +211,13 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         } while (!conditionResult && System.currentTimeMillis() - startTime <= waitSeconds * TO_MILLIS);
     }
 
-	/*
+    /*
      * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.persado.oss.quality.stevia.selenium.core.WebController#waitForElement
-	 * (org.openqa.selenium.String)
-	 */
+     *
+     * @see
+     * com.persado.oss.quality.stevia.selenium.core.WebController#waitForElement
+     * (org.openqa.selenium.String)
+     */
 
     /**
      * Find locator substring.
@@ -300,13 +311,13 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         return waitForElementPresence(locator, SteviaContext.getWaitForElement());
     }
 
-	/*
+    /*
      * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.persado.oss.quality.stevia.selenium.core.WebController#waitForElement
-	 * (java.lang.String)
-	 */
+     *
+     * @see
+     * com.persado.oss.quality.stevia.selenium.core.WebController#waitForElement
+     * (java.lang.String)
+     */
 
     public WebElement waitForElementPresence(String locator, long waitSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, waitSeconds, THREAD_SLEEP);
@@ -319,7 +330,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      *
      * @see com.persado.oss.quality.stevia.selenium.core.WebController#
      * waitForElementInvisibility(java.lang.String)
-     */  
+     */
     @Override
     public void waitForElementToStopMoving(String locator) {
         waitForElementToStopMoving(locator, SteviaContext.getWaitForElement());
@@ -337,8 +348,8 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         WebElement element = waitForElement(locator);
         wait.until(CustomExpectedCondition.elementHasStoppedMoving(element));
     }
-    
-    
+
+
     /*
      * (non-Javadoc)
      *
@@ -1761,7 +1772,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     public void switchToFrame(String frameId) {
         driver.switchTo().frame(frameId);
     }
-    
+
     @Override
     public void switchToFrameByLocator(String locator) {
         driver.switchTo().frame(findElements(locator).get(0));
