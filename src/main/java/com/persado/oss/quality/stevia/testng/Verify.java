@@ -45,6 +45,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.Reporter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import java.util.List;
 
@@ -136,6 +138,10 @@ public class Verify extends WebComponent {
     private static final String HAS_ATTRIBUTE = "' has the attribute '";
 
     private static final String HAS_NOT_ATTRIBUTE = "' has not the attribute '";
+
+    private static final String SATISFY_REGEX = "' satisfy the regEx '";
+
+    private static final String NOT_SATISFY_REGEX = "' does not satusfy the reg Ex '";
 
 
     /**
@@ -415,6 +421,30 @@ public class Verify extends WebComponent {
             throw e;
         }
     }
+
+    /**
+     * Check text in an element with regEx.
+     *
+     * @param locator  the locator of the element
+     * @param regEx the regular expression
+     */
+
+    public void textRegEx(String locator, String regEx) {
+
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(SteviaContext.getWebController().getText(locator));
+
+        try {
+            Assert.assertTrue(m.matches());
+            highlightPass(locator);
+            info(ELEMENT_LOCATOR + locator + SATISFY_REGEX + " : " + regEx + "'!");
+        } catch (AssertionError e) {
+            highlightFail(locator);
+            error(ELEMENT_LOCATOR + locator + NOT_SATISFY_REGEX + " : " + regEx + "'!");
+            throw e;
+        }
+    }
+
 
     /**
      * Check text in an element based on presence (not visibility) of the element
