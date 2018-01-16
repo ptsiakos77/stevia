@@ -828,7 +828,12 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     @Override
     public boolean isAlertPresent() {
-        WebDriverWait wait = new WebDriverWait(driver, 0);
+       return isAlertPresent(0);
+    }
+
+    @Override
+    public boolean isAlertPresent(long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, seconds);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             return true;
