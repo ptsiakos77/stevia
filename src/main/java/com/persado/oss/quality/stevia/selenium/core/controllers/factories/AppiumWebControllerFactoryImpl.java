@@ -77,7 +77,7 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         LOG.info("Appium Desired capabilities {}", new Object[]{capabilities});
 
 
-        if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("Android") == 0) {
+        if (SteviaContext.getParam(MobileCapabilityType.PLATFORM_NAME).compareTo("Android") == 0) {
             setupAndroidCapabilities(capabilities);
             try {
                 driver = new AndroidDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
@@ -85,7 +85,7 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
         }
-        if (SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME).compareTo("iOS") == 0) {
+        if (SteviaContext.getParam(MobileCapabilityType.PLATFORM_NAME).compareTo("iOS") == 0) {
             try {
                 setupIOSCapabilities(capabilities);
                 driver = new IOSDriver(new URL("http://" + SteviaContext.getParam(SteviaWebControllerFactory.RC_HOST) + ":" + SteviaContext.getParam(SteviaWebControllerFactory.RC_PORT) + "/wd/hub"), capabilities);
@@ -106,115 +106,120 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
 
     private void setupIOSCapabilities(DesiredCapabilities capabilities) {
         if (SteviaContext.getParam("runOnRealDevice").equals("true")) {
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.REAL_DEVICE_LOGGER))) {
-                capabilities.setCapability(SteviaWebControllerFactory.REAL_DEVICE_LOGGER, SteviaContext.getParam(SteviaWebControllerFactory.REAL_DEVICE_LOGGER));
+            if (!StringUtils.isEmpty(SteviaContext.getParam("realDeviceLogger"))) {
+                capabilities.setCapability("realDeviceLogger", SteviaContext.getParam("realDeviceLogger"));
             }
-            if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE))) {
-                capabilities.setCapability(SteviaWebControllerFactory.XCODE_CONFIG_FILE, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_CONFIG_FILE));
+            if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.XCODE_CONFIG_FILE))) {
+                capabilities.setCapability(IOSMobileCapabilityType.XCODE_CONFIG_FILE, SteviaContext.getParam(IOSMobileCapabilityType.XCODE_CONFIG_FILE));
             }
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA))) {
-            capabilities.setCapability(SteviaWebControllerFactory.USE_PREBUILT_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_PREBUILT_WDA));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.USE_PREBUILT_WDA))) {
+            capabilities.setCapability(IOSMobileCapabilityType.USE_PREBUILT_WDA, SteviaContext.getParam(IOSMobileCapabilityType.USE_PREBUILT_WDA));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT))) {
-            capabilities.setCapability(SteviaWebControllerFactory.WDA_LOCAL_PORT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_LOCAL_PORT));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.WDA_LOCAL_PORT))) {
+            capabilities.setCapability(IOSMobileCapabilityType.WDA_LOCAL_PORT, SteviaContext.getParam(IOSMobileCapabilityType.WDA_LOCAL_PORT));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT))) {
-            capabilities.setCapability(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT, SteviaContext.getParam(SteviaWebControllerFactory.WDA_CONNECTION_TIMEOUT));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.WDA_CONNECTION_TIMEOUT))) {
+            capabilities.setCapability(IOSMobileCapabilityType.WDA_CONNECTION_TIMEOUT, SteviaContext.getParam(IOSMobileCapabilityType.WDA_CONNECTION_TIMEOUT));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA))) {
-            capabilities.setCapability(SteviaWebControllerFactory.USE_NEW_WDA, SteviaContext.getParam(SteviaWebControllerFactory.USE_NEW_WDA));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.USE_NEW_WDA))) {
+            capabilities.setCapability(IOSMobileCapabilityType.USE_NEW_WDA, SteviaContext.getParam(IOSMobileCapabilityType.USE_NEW_WDA));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_ORG_ID))) {
-            capabilities.setCapability(SteviaWebControllerFactory.XCODE_ORG_ID, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_ORG_ID));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.XCODE_ORG_ID))) {
+            capabilities.setCapability(IOSMobileCapabilityType.XCODE_ORG_ID, SteviaContext.getParam(IOSMobileCapabilityType.XCODE_ORG_ID));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.XCODE_SIGNING_ID))) {
-            capabilities.setCapability(SteviaWebControllerFactory.XCODE_SIGNING_ID, SteviaContext.getParam(SteviaWebControllerFactory.XCODE_SIGNING_ID));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.XCODE_SIGNING_ID))) {
+            capabilities.setCapability(IOSMobileCapabilityType.XCODE_SIGNING_ID, SteviaContext.getParam(IOSMobileCapabilityType.XCODE_SIGNING_ID));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.SHOW_IOS_LOGS))) {
-            capabilities.setCapability(IOSMobileCapabilityType.SHOW_IOS_LOG, SteviaContext.getParam(SteviaWebControllerFactory.SHOW_IOS_LOGS));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.SHOW_IOS_LOG))) {
+            capabilities.setCapability(IOSMobileCapabilityType.SHOW_IOS_LOG, SteviaContext.getParam(IOSMobileCapabilityType.SHOW_IOS_LOG));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_ACCEPT_ALERTS))) {
-            capabilities.setCapability(IOSMobileCapabilityType.AUTO_ACCEPT_ALERTS, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_ACCEPT_ALERTS));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.AUTO_ACCEPT_ALERTS))) {
+            capabilities.setCapability(IOSMobileCapabilityType.AUTO_ACCEPT_ALERTS, SteviaContext.getParam(IOSMobileCapabilityType.AUTO_ACCEPT_ALERTS));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_DISMISS_ALERTS))) {
-            capabilities.setCapability(IOSMobileCapabilityType.AUTO_DISMISS_ALERTS, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_DISMISS_ALERTS));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.AUTO_DISMISS_ALERTS))) {
+            capabilities.setCapability(IOSMobileCapabilityType.AUTO_DISMISS_ALERTS, SteviaContext.getParam(IOSMobileCapabilityType.AUTO_DISMISS_ALERTS));
         }
     }
 
 
     private void setupCommonCapabilities(DesiredCapabilities capabilities) {
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_NAME))) {
-            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_NAME));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.DEVICE_NAME))) {
+            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, SteviaContext.getParam(MobileCapabilityType.DEVICE_NAME));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID))) {
-            capabilities.setCapability(MobileCapabilityType.UDID, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_DEVICE_UUID));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.UDID))) {
+            capabilities.setCapability(MobileCapabilityType.UDID, SteviaContext.getParam(MobileCapabilityType.UDID));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME))) {
-            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_NAME));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.PLATFORM_NAME))) {
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, SteviaContext.getParam(MobileCapabilityType.PLATFORM_NAME));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_VERSION))) {
-            capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_PLATFORM_VERSION));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.PLATFORM_VERSION))) {
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, SteviaContext.getParam(MobileCapabilityType.PLATFORM_VERSION));
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.BROWSER))) {
             capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, SteviaContext.getParam(SteviaWebControllerFactory.BROWSER));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP))) {
-            capabilities.setCapability(MobileCapabilityType.APP, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.APP))) {
+            capabilities.setCapability(MobileCapabilityType.APP, SteviaContext.getParam(MobileCapabilityType.APP));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW))) {
-            capabilities.setCapability(SteviaWebControllerFactory.AUTO_WEB_VIEW, SteviaContext.getParam(SteviaWebControllerFactory.AUTO_WEB_VIEW));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.AUTO_WEBVIEW))) {
+            capabilities.setCapability(MobileCapabilityType.AUTO_WEBVIEW, SteviaContext.getParam(MobileCapabilityType.AUTO_WEBVIEW));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT))) {
-            capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, Integer.parseInt(SteviaContext.getParam(SteviaWebControllerFactory.NEW_COMMAND_TIMEOUT)));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.NEW_COMMAND_TIMEOUT))) {
+            capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, Integer.parseInt(SteviaContext.getParam(MobileCapabilityType.NEW_COMMAND_TIMEOUT)));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME))) {
-            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_AUTOMATION_NAME));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.AUTOMATION_NAME))) {
+            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam(MobileCapabilityType.APPLICATION_NAME));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.NO_RESET))) {
-            capabilities.setCapability(MobileCapabilityType.NO_RESET, SteviaContext.getParam(SteviaWebControllerFactory.NO_RESET));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.NO_RESET))) {
+            capabilities.setCapability(MobileCapabilityType.NO_RESET, SteviaContext.getParam(MobileCapabilityType.NO_RESET));
         }
     }
 
     private void setupAndroidCapabilities(DesiredCapabilities capabilities) {
         capabilities.setCapability(AndroidMobileCapabilityType.RECREATE_CHROME_DRIVER_SESSIONS, true);
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_PACKAGE))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_PACKAGE));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.APP_PACKAGE))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, SteviaContext.getParam(AndroidMobileCapabilityType.APP_PACKAGE));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_ACTIVITY))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_ACTIVITY));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.APP_WAIT_PACKAGE))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_PACKAGE, SteviaContext.getParam(AndroidMobileCapabilityType.APP_WAIT_PACKAGE));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_WAIT_ACTIVITY))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, SteviaContext.getParam(SteviaWebControllerFactory.MOBILE_APP_WAIT_ACTIVITY));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.APP_ACTIVITY))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, SteviaContext.getParam(AndroidMobileCapabilityType.APP_ACTIVITY));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.ADB_PORT))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.ADB_PORT, SteviaContext.getParam(SteviaWebControllerFactory.ADB_PORT));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, SteviaContext.getParam(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.UIAUTOMATOR2_PORT))) {
-            capabilities.setCapability(SteviaWebControllerFactory.UIAUTOMATOR2_PORT, SteviaContext.getParam(SteviaWebControllerFactory.UIAUTOMATOR2_PORT));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.ADB_PORT))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.ADB_PORT, SteviaContext.getParam(AndroidMobileCapabilityType.ADB_PORT));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.NO_SIGN))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.NO_SIGN, SteviaContext.getParam(SteviaWebControllerFactory.NO_SIGN));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.SYSTEM_PORT))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.SYSTEM_PORT, SteviaContext.getParam(AndroidMobileCapabilityType.SYSTEM_PORT));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.SKIP_UNLOCK))) {
-            capabilities.setCapability(SteviaWebControllerFactory.SKIP_UNLOCK, SteviaContext.getParam(SteviaWebControllerFactory.SKIP_UNLOCK));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.NO_SIGN))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.NO_SIGN, SteviaContext.getParam(AndroidMobileCapabilityType.NO_SIGN));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.USE_KEYSTORE))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.USE_KEYSTORE, SteviaContext.getParam(SteviaWebControllerFactory.USE_KEYSTORE));
+        if (!StringUtils.isEmpty(SteviaContext.getParam("skipUnlock"))) {
+            capabilities.setCapability("skipUnlock", SteviaContext.getParam("skipUnlock"));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PATH))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.KEYSTORE_PATH, SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PATH));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.USE_KEYSTORE))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.USE_KEYSTORE, SteviaContext.getParam(AndroidMobileCapabilityType.USE_KEYSTORE));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PASSWORD))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.KEYSTORE_PASSWORD, SteviaContext.getParam(SteviaWebControllerFactory.KEYSTORE_PASSWORD));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.KEYSTORE_PATH))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEYSTORE_PATH, SteviaContext.getParam(AndroidMobileCapabilityType.KEYSTORE_PATH));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEY_ALIAS))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.KEY_ALIAS, SteviaContext.getParam(SteviaWebControllerFactory.KEY_ALIAS));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.KEYSTORE_PASSWORD))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEYSTORE_PASSWORD, SteviaContext.getParam(AndroidMobileCapabilityType.KEYSTORE_PASSWORD));
         }
-        if (!StringUtils.isEmpty(SteviaContext.getParam(SteviaWebControllerFactory.KEY_PASSWORD))) {
-            capabilities.setCapability(AndroidMobileCapabilityType.KEY_PASSWORD, SteviaContext.getParam(SteviaWebControllerFactory.KEY_PASSWORD));
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.KEY_ALIAS))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEY_ALIAS, SteviaContext.getParam(AndroidMobileCapabilityType.KEY_ALIAS));
         }
-
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.KEY_PASSWORD))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.KEY_PASSWORD, SteviaContext.getParam(AndroidMobileCapabilityType.KEY_PASSWORD));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(AndroidMobileCapabilityType.ANDROID_COVERAGE))) {
+            capabilities.setCapability(AndroidMobileCapabilityType.ANDROID_COVERAGE, SteviaContext.getParam(AndroidMobileCapabilityType.ANDROID_COVERAGE));
+        }
 
     }
 
