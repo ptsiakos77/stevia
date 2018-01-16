@@ -169,10 +169,13 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
             capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, Integer.parseInt(SteviaContext.getParam(MobileCapabilityType.NEW_COMMAND_TIMEOUT)));
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.AUTOMATION_NAME))) {
-            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam(MobileCapabilityType.APPLICATION_NAME));
+            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, SteviaContext.getParam(MobileCapabilityType.AUTOMATION_NAME));
         }
         if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.NO_RESET))) {
             capabilities.setCapability(MobileCapabilityType.NO_RESET, SteviaContext.getParam(MobileCapabilityType.NO_RESET));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(MobileCapabilityType.CLEAR_SYSTEM_FILES))) {
+            capabilities.setCapability(MobileCapabilityType.CLEAR_SYSTEM_FILES, SteviaContext.getParam(MobileCapabilityType.CLEAR_SYSTEM_FILES));
         }
     }
 
