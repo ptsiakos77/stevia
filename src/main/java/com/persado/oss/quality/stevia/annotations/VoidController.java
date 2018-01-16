@@ -310,6 +310,11 @@ class VoidController implements WebController {
     }
 
     @Override
+    public boolean isAlertPresent(long seconds) {
+        return false;
+    }
+
+    @Override
     public boolean isTextPresent(String value) {
         // TODO Auto-generated method stub
         return false;

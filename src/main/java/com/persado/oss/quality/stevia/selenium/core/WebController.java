@@ -402,6 +402,14 @@ public interface WebController {
     boolean isAlertPresent();
 
     /**
+     * Checks if is alert present.
+     *
+     * @param seconds, the maximum time waiting for alert visibility
+     * @return
+     */
+    boolean isAlertPresent(long seconds);
+
+    /**
      * Checks if text is present.
      *
      * @param value the text value you want to check for presence
