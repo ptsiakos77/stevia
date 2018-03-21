@@ -737,6 +737,17 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
      * (non-Javadoc)
      *
      * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * isComponentDisabled(java.lang.String)
+     */
+    @Override
+    public boolean isInputChecked(String locator) {
+        return (Boolean) executeJavascript("$(\"" + locator + "\").is(':checked')");
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
      * isComponentPresent(java.lang.String)
      */
     @Override

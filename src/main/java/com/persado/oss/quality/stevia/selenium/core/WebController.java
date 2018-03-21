@@ -136,7 +136,7 @@ public interface WebController {
      * @return the web element
      */
     WebElement waitForElementPresence(String locator, long waitSeconds);
-    
+
     /**
      * Wait for element to stop moving.
      *
@@ -144,14 +144,14 @@ public interface WebController {
      * @param waitSeconds time to wait in seconds, for element to to stop moving
      */
     void waitForElementToStopMoving(String locator, long waitSeconds);
-    
+
     /**
      * Wait for element to stop moving.
      *
      * @param locator the element locator
      */
     void waitForElementToStopMoving(String locator);
-    
+
     /**
      * Find elements.
      *
@@ -518,6 +518,14 @@ public interface WebController {
      * @return true, if the specified component is not selected
      */
     boolean isComponentNotSelected(String locator);
+
+    /**
+     * Checks if an input (of a toggle) is checked (selected).
+     *
+     * @param locator the locator of the element
+     * @return true, if the specified component is selected
+     */
+    boolean isInputChecked(String locator);
 
     /**
      * Press link name.

@@ -901,6 +901,17 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         return driver.findElements(determineLocator(locator)).size() != 0;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * isComponentPresent(org.openqa.selenium.String)
+     */
+    @Override
+    public boolean isInputChecked(String locator) {
+        return (Boolean) executeJavascript("return $(\"" + locator + "\").is(':checked')");
+    }
+
     /**
      * Switch to window.
      */

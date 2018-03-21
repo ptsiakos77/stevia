@@ -178,9 +178,9 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void clearStorage() {
-    
+
     }
-    
+
     /*
      * (non-Javadoc)
      *
@@ -863,6 +863,17 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     @Override
     public boolean isComponentDisabled(String locator) {
         return !waitForElement(locator).isEnabled();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * isComponentDisabled(org.openqa.selenium.String)
+     */
+    @Override
+    public boolean isInputChecked(String locator) {
+        return (Boolean) executeJavascript("$(\"" + locator + "\").is(':checked')");
     }
 
     /*

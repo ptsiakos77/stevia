@@ -62,7 +62,7 @@ class VoidController implements WebController {
         // TODO Auto-generated method stub
 
     }
-    
+
     @Override
     public void clearStorage() {
 
@@ -389,6 +389,12 @@ class VoidController implements WebController {
 
     @Override
     public boolean isComponentNotSelected(String locator) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isInputChecked(String locator) {
         // TODO Auto-generated method stub
         return false;
     }
