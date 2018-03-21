@@ -909,7 +909,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     @Override
     public boolean isInputChecked(String locator) {
-        return (Boolean) executeJavascript("return $(\"" + locator + "\").is(':checked')");
+        return (Boolean) executeJavascript("return $(\"" + locator.replace("css=","") + "\").is(':checked')");
     }
 
     /**
