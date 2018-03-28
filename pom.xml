@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.persado.oss.quality.stevia</groupId>
 	<artifactId>stevia-core</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.2.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Stevia QA Framework - Core</name>
@@ -422,8 +422,8 @@
 	<!-- Shared version number properties -->
 	<properties>
 		<org.springframework.version>4.2.1.RELEASE</org.springframework.version>
-		<selenium.version>3.5.3</selenium.version>
-		<appium.version>5.0.2</appium.version>
+		<selenium.version>3.7.1</selenium.version>
+		<appium.version>6.0.0-BETA2</appium.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
