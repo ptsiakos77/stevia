@@ -90,8 +90,8 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
 
     /**
      * Extends the TestNG method to prepare the Spring contexts for parallel tests.
-     *     * As seen at {@link http://goo.gl/g8QT2}
-
+     * * As seen at {@link http://goo.gl/g8QT2}
+     *
      * @throws Exception the exception
      */
     @BeforeSuite(alwaysRun = true)
@@ -189,6 +189,16 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
     }
 
     /**
+     * Get parameter to initialize Stevia with.
+     * By default it reads the parameters from the xml suite file
+     * @param testContext
+     * @return
+     */
+    protected Map<String, String> getTestParameters(ITestContext testContext) {
+        return testContext.getSuite().getXmlSuite().getAllParameters();
+    }
+
+    /**
      * Before test.
      *
      * @param testContext the test context
@@ -197,7 +207,7 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
     @BeforeTest(alwaysRun = true)
     protected final void contextInitBeforeTest(ITestContext testContext) throws Exception {
 
-        Map<String, String> parameters = testContext.getCurrentXmlTest().getParameters();
+        Map<String, String> parameters = getTestParameters(testContext);
         testContext.getCurrentXmlTest().setParallel(XmlSuite.ParallelMode.getValidParallel(parameters.get("parallelSetup")));
 
         // we check here **again** if the test needs the RC server and start it.
@@ -224,7 +234,7 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
     @BeforeClass(alwaysRun = true)
     protected final void contextInitBeforeClass(ITestContext testContext) throws Exception {
 
-        Map<String, String> parameters = testContext.getSuite().getXmlSuite().getAllParameters();
+        Map<String, String> parameters = getTestParameters(testContext);
 
         if (testContext.getSuite().getParallel().equalsIgnoreCase("classes")) {
 
@@ -244,7 +254,7 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
      */
     @BeforeMethod(alwaysRun = true)
     protected final void contextInitBeforeMethod(ITestContext testContext) throws Exception {
-        Map<String, String> parameters = testContext.getSuite().getXmlSuite().getAllParameters();
+        Map<String, String> parameters = getTestParameters(testContext);
 
         if (testContext.getSuite().getParallel().equalsIgnoreCase("methods")) {
 
