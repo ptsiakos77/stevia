@@ -43,6 +43,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -357,6 +358,13 @@ public interface WebController {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     void takeScreenShot() throws IOException;
+
+    /**
+     * Take screen shot.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    void takeScreenShot(File destDir, String desiredName) throws IOException;
 
 
     /**

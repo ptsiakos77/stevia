@@ -44,6 +44,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -276,6 +277,11 @@ class VoidController implements WebController {
     @Override
     public void takeScreenShot() throws IOException {
         // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void takeScreenShot(File destDir, String desiredName) throws IOException {
 
     }
 

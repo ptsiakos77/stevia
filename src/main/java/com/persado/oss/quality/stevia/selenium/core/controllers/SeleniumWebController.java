@@ -571,6 +571,24 @@ public class SeleniumWebController extends WebControllerBase implements WebContr
         }
     }
 
+    @Override
+    public void takeScreenShot(File destDir, String desiredName) throws IOException {
+        String base64Screenshot = selenium.captureEntirePageScreenshotToString("");
+        byte[] decodedScreenshot = Base64.decodeBase64(base64Screenshot.getBytes());
+        FileOutputStream fos = null;
+        File screenShotFname = createScreenshotFile(destDir, desiredName);
+        try {
+            fos = new FileOutputStream(screenShotFname);
+            fos.write(decodedScreenshot);
+        } finally {
+            if (null != fos) {
+                fos.close();
+            }
+
+            reportLogScreenshot(screenShotFname);
+        }
+    }
+
     /*
      * (non-Javadoc)
      *

@@ -37,18 +37,17 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
  */
 
 
-import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
+import com.persado.oss.quality.stevia.selenium.core.WebController;
+import com.persado.oss.quality.stevia.spring.SteviaTestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Reporter;
 
-import com.persado.oss.quality.stevia.selenium.core.WebController;
-import com.persado.oss.quality.stevia.spring.SteviaTestBase;
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -132,20 +131,27 @@ public abstract class WebControllerBase implements WebController {
 	 * @return the file
 	 */
 	protected File createScreenshotFile() {
-		if (SteviaTestBase.getSuiteOutputDir() != null) {
-			File outputDir = new File(new File(SteviaTestBase.getSuiteOutputDir()).getParent(), "screenshots");
-			try {
-				outputDir.mkdirs();
-			} catch (SecurityException e) {
-				WEB_CONTROLLER_BASE_LOG.error(e.getMessage());
-				return null;
-			}
-			return new File(outputDir, "screenshot-" + System.nanoTime() + ".png");
-		}
-		return new File("screenshot-" + System.nanoTime() + ".png");
+	    File destDir = new File(new File(SteviaTestBase.getSuiteOutputDir()).getParent(), "screenshots");
+	    String desiredName = "screenshot-" + System.nanoTime() + ".png";
+	    return createScreenshotFile(destDir, desiredName);
 	}
 
-	/**
+    protected File createScreenshotFile(File destDir, String desiredName) {
+
+        if (destDir != null) {
+            try {
+                destDir.mkdirs();
+            } catch (SecurityException e) {
+                WEB_CONTROLLER_BASE_LOG.error(e.getMessage());
+                return null;
+            }
+            return new File(destDir, desiredName);
+        }
+        return new File(desiredName);
+    }
+
+
+    /**
 	 * Make relative path.
 	 * 
 	 * @param file
