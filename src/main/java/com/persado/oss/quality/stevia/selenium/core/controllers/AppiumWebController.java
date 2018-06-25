@@ -720,6 +720,23 @@ public class AppiumWebController extends WebControllerBase implements WebControl
         }
     }
 
+    @Override
+    public void takeScreenShot(File destDir, String desiredName) throws IOException {
+        File scrFile = null;
+        try {
+            scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        } catch (Exception e) {
+            WEBDRIVER_LOG.error("Failed to generate screenshot, problem with driver: {} ", e.getMessage());
+        }
+
+        if (scrFile != null) {
+            File file = createScreenshotFile(destDir, desiredName);
+            FileUtils.copyFile(scrFile, file);
+
+            reportLogScreenshot(file);
+        }
+    }
+
     /*
      * (non-Javadoc)
      *
