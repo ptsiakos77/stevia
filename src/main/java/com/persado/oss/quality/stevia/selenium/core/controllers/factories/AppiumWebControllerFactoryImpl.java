@@ -142,6 +142,12 @@ public class AppiumWebControllerFactoryImpl implements WebControllerFactory {
         if (!StringUtils.isEmpty(SteviaContext.getParam("useJSONSource"))) {
             capabilities.setCapability("useJSONSource", SteviaContext.getParam("useJSONSource"));
         }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.WDA_LAUNCH_TIMEOUT))) {
+            capabilities.setCapability(IOSMobileCapabilityType.WDA_LAUNCH_TIMEOUT, SteviaContext.getParam(IOSMobileCapabilityType.WDA_LAUNCH_TIMEOUT));
+        }
+        if (!StringUtils.isEmpty(SteviaContext.getParam(IOSMobileCapabilityType.WDA_STARTUP_RETRIES))) {
+            capabilities.setCapability(IOSMobileCapabilityType.WDA_STARTUP_RETRIES, SteviaContext.getParam(IOSMobileCapabilityType.WDA_STARTUP_RETRIES));
+        }
     }
 
 
