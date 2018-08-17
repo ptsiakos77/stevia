@@ -195,7 +195,7 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
      * @return
      */
     protected Map<String, String> getTestParameters(ITestContext testContext) {
-        return testContext.getSuite().getXmlSuite().getAllParameters();
+        return testContext.getCurrentXmlTest().getAllParameters();
     }
 
     /**
@@ -204,7 +204,7 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
      * @param testContext the test context
      * @throws Exception the exception
      */
-    @BeforeTest(alwaysRun = true)
+    @BeforeTest(alwaysRun = true , dependsOnMethods = {"springTestContextPrepareTestInstance"})
     protected final void contextInitBeforeTest(ITestContext testContext) throws Exception {
 
         Map<String, String> parameters = getTestParameters(testContext);
@@ -233,10 +233,8 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
      */
     @BeforeClass(alwaysRun = true)
     protected final void contextInitBeforeClass(ITestContext testContext) throws Exception {
-
-        Map<String, String> parameters = getTestParameters(testContext);
-
         if (testContext.getSuite().getParallel().equalsIgnoreCase("classes")) {
+            Map<String, String> parameters = getTestParameters(testContext);
 
             STEVIA_TEST_BASE_LOG.warn("*************************************************************************************");
             STEVIA_TEST_BASE_LOG.warn("*** Driver initialisation phase, current parallel level is @BeforeClass**************");
@@ -254,9 +252,8 @@ public class SteviaTestBase extends AbstractTestNGSpringContextTests implements 
      */
     @BeforeMethod(alwaysRun = true)
     protected final void contextInitBeforeMethod(ITestContext testContext) throws Exception {
-        Map<String, String> parameters = getTestParameters(testContext);
-
         if (testContext.getSuite().getParallel().equalsIgnoreCase("methods")) {
+            Map<String, String> parameters = getTestParameters(testContext);
 
             STEVIA_TEST_BASE_LOG.warn("***************************************************************************************");
             STEVIA_TEST_BASE_LOG.warn("*** Driver initialisation phase, current parallel level is @BeforeMethod[PANICMODE] ***");
