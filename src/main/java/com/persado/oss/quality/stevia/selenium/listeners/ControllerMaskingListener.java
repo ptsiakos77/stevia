@@ -65,19 +65,21 @@ public class ControllerMaskingListener extends ListenerCommon implements IInvoke
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
-        Method rmethod = method.getTestMethod().getConstructorOrMethod().getMethod();
-        if (rmethod.getAnnotation(Test.class) != null ||
-                rmethod.getAnnotation(BeforeClass.class) != null ||
-                rmethod.getAnnotation(BeforeTest.class) != null) {
-            if (rmethod.getAnnotation(RunsWithController.class) != null ||
-                    rmethod.getDeclaringClass().getAnnotation(RunsWithController.class) != null) {
-                LOG.warn("Method or Class of {} asks Controller to be masked", rmethod.getName());
-                AnnotationsHelper p = SteviaContext.getSpringContext().getBean(AnnotationsHelper.class);
-                try {
-                    p.maskExistingController(rmethod);
-                    SteviaContext.getParams().put("mainWindowHandle",SteviaContext.getWebController().getWindowHandle());
-                } catch (Throwable e) {
-                    throw new IllegalStateException("failed to replace controller", e);
+        if(!Boolean.valueOf(System.getProperty("testng.mode.dryrun"))) {
+            Method rmethod = method.getTestMethod().getConstructorOrMethod().getMethod();
+            if (rmethod.getAnnotation(Test.class) != null ||
+                    rmethod.getAnnotation(BeforeClass.class) != null ||
+                    rmethod.getAnnotation(BeforeTest.class) != null) {
+                if (rmethod.getAnnotation(RunsWithController.class) != null ||
+                        rmethod.getDeclaringClass().getAnnotation(RunsWithController.class) != null) {
+                    LOG.warn("Method or Class of {} asks Controller to be masked", rmethod.getName());
+                    AnnotationsHelper p = SteviaContext.getSpringContext().getBean(AnnotationsHelper.class);
+                    try {
+                        p.maskExistingController(rmethod);
+                        SteviaContext.getParams().put("mainWindowHandle", SteviaContext.getWebController().getWindowHandle());
+                    } catch (Throwable e) {
+                        throw new IllegalStateException("failed to replace controller", e);
+                    }
                 }
             }
         }
@@ -85,17 +87,18 @@ public class ControllerMaskingListener extends ListenerCommon implements IInvoke
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
-        Method rmethod = method.getTestMethod().getConstructorOrMethod().getMethod();
-        if (rmethod.getAnnotation(RunsWithController.class) != null ||
-                rmethod.getDeclaringClass().getAnnotation(RunsWithController.class) != null) {
-            AnnotationsHelper p = SteviaContext.getSpringContext().getBean(AnnotationsHelper.class);
-            try {
-                p.controllerUnmask();
-                SteviaContext.getParams().put("mainWindowHandle",SteviaContext.getWebController().getWindowHandle());
-            } catch (Throwable e) {
-                throw new IllegalStateException("failed to replace masked controller", e);
+        if (!Boolean.valueOf(System.getProperty("testng.mode.dryrun"))) {
+            Method rmethod = method.getTestMethod().getConstructorOrMethod().getMethod();
+            if (rmethod.getAnnotation(RunsWithController.class) != null ||
+                    rmethod.getDeclaringClass().getAnnotation(RunsWithController.class) != null) {
+                AnnotationsHelper p = SteviaContext.getSpringContext().getBean(AnnotationsHelper.class);
+                try {
+                    p.controllerUnmask();
+                    SteviaContext.getParams().put("mainWindowHandle", SteviaContext.getWebController().getWindowHandle());
+                } catch (Throwable e) {
+                    throw new IllegalStateException("failed to replace masked controller", e);
+                }
             }
         }
     }
-
 }
