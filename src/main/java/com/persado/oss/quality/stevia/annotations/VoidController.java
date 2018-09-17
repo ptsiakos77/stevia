@@ -275,12 +275,11 @@ class VoidController implements WebController {
     @Override
     public void takeScreenShot() throws IOException {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void takeScreenShot(File destDir, String desiredName) throws IOException {
-
+        
     }
 
     @Override

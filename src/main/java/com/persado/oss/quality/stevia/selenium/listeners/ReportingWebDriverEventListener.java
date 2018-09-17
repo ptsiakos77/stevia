@@ -40,6 +40,7 @@ package com.persado.oss.quality.stevia.selenium.listeners;
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.controllers.WebDriverWebController;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -96,8 +97,8 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener {
     }
 
     /* (non-Javadoc)
-         * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeNavigateTo(java.lang.String, org.openqa.selenium.WebDriver)
-         */
+     * @see org.openqa.selenium.support.events.WebDriverEventListener#beforeNavigateTo(java.lang.String, org.openqa.selenium.WebDriver)
+     */
     public void beforeNavigateTo(String url, WebDriver driver) {
 
     }
@@ -177,8 +178,6 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener {
      * @see org.openqa.selenium.support.events.WebDriverEventListener#afterClickOn(org.openqa.selenium.WebElement, org.openqa.selenium.WebDriver)
      */
     public void afterClickOn(WebElement element, WebDriver driver) {
-        String locator = element.toString().substring(element.toString().indexOf(">") + 2, element.toString().lastIndexOf("]"));
-        info("The element with locator '" + locator + "' was clicked");
     }
 
     @Override
@@ -190,12 +189,6 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener {
 
     @Override
     public void afterChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
-        String value = webElement.getAttribute("value");
-        String locator = webElement.toString().substring(webElement.toString().indexOf(">") + 2, webElement.toString().lastIndexOf("]"));
-
-        if (!value.isEmpty()) {
-            info("Value '" + value + "' was typed in element with locator '" + locator + "'");
-        }
     }
 
     /* (non-Javadoc)

@@ -362,6 +362,9 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         WebElement element = waitForElement(locator);
         element.clear();
         element.sendKeys(value);
+        if (!value.isEmpty()) {
+            info("Value '" + value + "' was typed in element with locator '" + locator + "'");
+        }
     }
 
     /*
@@ -374,6 +377,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     @Override
     public void press(String locator) {
         waitForElement(locator).click();
+        info("The element with locator '" + locator + "' was clicked");
     }
 
     /*

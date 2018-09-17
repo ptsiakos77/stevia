@@ -80,7 +80,7 @@ public abstract class WebControllerBase implements WebController {
 	 */
 	public void info(String message) {
 		WEB_CONTROLLER_BASE_LOG.info(message);
-		Reporter.log("<p class=\"testOutput\" style=\"font-size:1em;\">" + message + "</p>");
+		Reporter.log("<p class=\"testOutput\" style=\"font-size:1em;\">" + message + "</p><br>");
 
 	}
 
@@ -92,7 +92,7 @@ public abstract class WebControllerBase implements WebController {
 	 */
 	public void warn(String message) {
 		WEB_CONTROLLER_BASE_LOG.warn(message);
-		Reporter.log("<p class=\"testOutput\" style=\"color:orange; font-size:1em;\">" + message + "</p>");
+		Reporter.log("<p class=\"testOutput\" style=\"color:orange; font-size:1em;\">" + message + "</p><br>");
 	}
 
 	/**
@@ -103,7 +103,7 @@ public abstract class WebControllerBase implements WebController {
 	 */
 	public void error(String message) {
 		WEB_CONTROLLER_BASE_LOG.error(message);
-		Reporter.log("<p class=\"testOutput\" style=\"color:red; font-size:1em;\">" + message + "</p>");
+		Reporter.log("<p class=\"testOutput\" style=\"color:red; font-size:1em;\">" + message + "</p><br>");
 	}
 
 	/*

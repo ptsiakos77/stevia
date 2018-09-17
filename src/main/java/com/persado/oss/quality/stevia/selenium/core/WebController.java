@@ -42,6 +42,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;

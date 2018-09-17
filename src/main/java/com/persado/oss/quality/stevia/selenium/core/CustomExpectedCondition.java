@@ -58,13 +58,13 @@ public class CustomExpectedCondition {
         return new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
-                Point initialLocation = ((Locatable) element).getCoordinates().inViewPort();
+                Point initialLocation = element.getLocation();
                 try {
                     Thread.sleep(50);
                 }catch (InterruptedException e){
                     conditionsLogger.error(e.getMessage());
                 }
-                Point finalLocation = ((Locatable) element).getCoordinates().inViewPort();
+                Point finalLocation = element.getLocation();
                 return initialLocation.equals(finalLocation);
             }
         };
