@@ -145,6 +145,14 @@ public interface WebController {
     void waitForElementToStopMoving(String locator, long waitSeconds);
 
     /**
+     * Wait for element to be clickable.
+     *
+     * @param locator     the locator
+     * @param waitSeconds time to wait in seconds, for element to to stop moving
+     */
+    void waitForElementToBeClickable(String locator, long waitSeconds);
+
+    /**
      * Wait for element to stop moving.
      *
      * @param locator the element locator

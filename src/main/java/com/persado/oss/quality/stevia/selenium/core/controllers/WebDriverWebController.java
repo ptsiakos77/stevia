@@ -330,6 +330,18 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      * waitForElementInvisibility(java.lang.String, long)
      */
     @Override
+    public void waitForElementToBeClickable(String locator, long waitSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, waitSeconds);
+        wait.until(ExpectedConditions.elementToBeClickable(determineLocator(locator)));
+    }
+
+ /*
+     * (non-Javadoc)
+     *
+     * @see com.persado.oss.quality.stevia.selenium.core.WebController#
+     * waitForElementInvisibility(java.lang.String, long)
+     */
+    @Override
     public void waitForElementToStopMoving(String locator, long waitSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, waitSeconds);
         WebElement element = waitForElement(locator);

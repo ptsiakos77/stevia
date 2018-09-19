@@ -331,6 +331,12 @@ public class AppiumWebController extends WebControllerBase implements WebControl
     }
 
     @Override
+    public void waitForElementToBeClickable(String locator, long waitSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, waitSeconds);
+        wait.until(ExpectedConditions.elementToBeClickable(determineLocator(locator)));
+    }
+
+    @Override
     public void waitForElementToStopMoving(String locator) {
         waitForElementToStopMoving(locator, SteviaContext.getWaitForElement());
     }
