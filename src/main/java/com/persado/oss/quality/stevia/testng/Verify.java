@@ -227,6 +227,23 @@ public class Verify extends WebComponent {
     }
 
     /**
+     * Here we verify the toggle
+     * @param locator
+     * @param expectedState
+     */
+    public void checkInputToggle(String locator, boolean expectedState){
+
+        try{
+            Assert.assertEquals(controller().isInputChecked(locator), expectedState);
+            info(ELEMENT_LOCATOR + locator + FOUND);
+        }catch (AssertionError e){
+            error(ELEMENT_LOCATOR + locator + FOUND);
+            throw e;
+        }
+
+    }
+
+    /**
      * Check that an Element is present for a specific timeframe.
      *
      * @param locator the locator Check that an Element is present

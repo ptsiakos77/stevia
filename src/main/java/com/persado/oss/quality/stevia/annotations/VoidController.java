@@ -413,6 +413,12 @@ class VoidController implements WebController {
     }
 
     @Override
+    public void selectInputToggle(String locator, boolean expectedState){
+        // TODO Auto-generated method stub
+    }
+
+
+    @Override
     public void pressLinkName(String linkName) {
         // TODO Auto-generated method stub
 

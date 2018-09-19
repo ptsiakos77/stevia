@@ -937,6 +937,20 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
     }
 
     /**
+     * If input toggle current state is different with the one that expect
+     * then press the button.e.g if we want to enable toggle and current state of checked is true then do nothing
+     * @param locator
+     * @param expectedState
+     */
+    @Override
+    public void selectInputToggle(String locator, boolean expectedState){
+        if (isInputChecked(locator) != expectedState){
+            press(locator);
+        }
+    }
+
+
+    /**
      * Switch to window.
      */
     public void switchToWindow() {

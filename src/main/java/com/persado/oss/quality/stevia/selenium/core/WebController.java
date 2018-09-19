@@ -550,6 +550,13 @@ public interface WebController {
     boolean isInputChecked(String locator);
 
     /**
+     * Here we select a toggle , check the current state and if it is different then press it
+     * @param locator
+     * @param expectedState
+     */
+    void selectInputToggle(String locator, boolean expectedState);
+
+    /**
      * Press link name.
      *
      * @param linkName the name of the link you want to press
@@ -1202,5 +1209,6 @@ public interface WebController {
      * @return
      */
     List<WebElement> findAllChildElements(WebElement parent, String childLocator);
+
 
 }
