@@ -64,6 +64,10 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<scm>
+		<developerConnection>scm:git:https://github.com/ptsiakos77/stevia.git</developerConnection>
+	</scm>
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -100,7 +104,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.5.3</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -419,6 +423,7 @@
 		<selenium.version>3.7.1</selenium.version>
 		<appium.version>6.0.0-BETA2</appium.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.scm.id>stevia</project.scm.id>
 	</properties>
 
 </project>
