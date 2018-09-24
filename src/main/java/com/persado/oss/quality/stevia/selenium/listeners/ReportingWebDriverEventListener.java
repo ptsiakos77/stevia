@@ -39,10 +39,7 @@ package com.persado.oss.quality.stevia.selenium.listeners;
 
 import com.persado.oss.quality.stevia.selenium.core.SteviaContext;
 import com.persado.oss.quality.stevia.selenium.core.controllers.WebDriverWebController;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -205,11 +202,31 @@ public class ReportingWebDriverEventListener implements WebDriverEventListener {
 
     }
 
+    @Override
+    public void beforeSwitchToWindow(String s, WebDriver webDriver) {
+
+    }
+
+    @Override
+    public void afterSwitchToWindow(String s, WebDriver webDriver) {
+
+    }
+
 
     /* (non-Javadoc)
      * @see org.openqa.selenium.support.events.WebDriverEventListener#onException(java.lang.Throwable, org.openqa.selenium.WebDriver)
      */
     public void onException(Throwable throwable, WebDriver driver) {
+
+    }
+
+    @Override
+    public <X> void beforeGetScreenshotAs(OutputType<X> outputType) {
+
+    }
+
+    @Override
+    public <X> void afterGetScreenshotAs(OutputType<X> outputType, X x) {
 
     }
 

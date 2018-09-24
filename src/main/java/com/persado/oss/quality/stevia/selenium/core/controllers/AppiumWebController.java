@@ -46,9 +46,15 @@ import com.persado.oss.quality.stevia.selenium.core.controllers.webdriverapi.ByE
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.TapOptions;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.ElementOption;
+import io.appium.java_client.touch.offset.PointOption;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.KeyInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -59,10 +65,7 @@ import org.springframework.util.Assert;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 // TODO: Auto-generated Javadoc
@@ -1800,7 +1803,6 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void switchToFrameByLocator(String locator) {
-
     }
 
     @Override
@@ -1835,12 +1837,17 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void tap(String locator) {
-        new TouchAction(driver).tap(waitForElement(locator)).perform();
+        new TouchAction(driver).tap(TapOptions.tapOptions().withElement(ElementOption.element(waitForElement(locator)))).perform();
     }
 
     @Override
     public void tap(int x, int y) {
-        new TouchAction(driver).tap(x, y).perform();
+        new TouchAction(driver).tap(TapOptions.tapOptions().withPosition(PointOption.point(x,y))).perform();
+    }
+
+    @Override
+    public void tap(WebElement el) {
+        new TouchAction(driver).tap(TapOptions.tapOptions().withElement(ElementOption.element(el))).perform();
     }
 
     @Override
@@ -1869,12 +1876,12 @@ public class AppiumWebController extends WebControllerBase implements WebControl
 
     @Override
     public void swipe(int startX, int startY, int endX, int endY) {
-        new TouchAction(driver).press(startX, startY).moveTo(endX, endY).release().perform();
+        new TouchAction(driver).press(PointOption.point(startX, startY)).moveTo(PointOption.point(endX, endY)).release().perform();
     }
 
     @Override
     public void swipe(int startX, int startY, int endX, int endY, int duration) {
-        new TouchAction(driver).press(startX, startY).waitAction(Duration.ofMillis(duration)).moveTo(endX, endY).release().perform();
+        new TouchAction(driver).press(PointOption.point(startX, startY)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(duration))).moveTo(PointOption.point(endX, endY)).release().perform();
     }
 
     @Override

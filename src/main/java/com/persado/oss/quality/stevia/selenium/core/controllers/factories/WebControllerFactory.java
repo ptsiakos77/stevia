@@ -50,12 +50,12 @@ public interface WebControllerFactory {
 	 * @param controller
 	 * @return the returned bean is the provided, augmented with additional functionality
 	 */
-	public WebController initialize(ApplicationContext context, WebController controller);
+	 WebController initialize(ApplicationContext context, WebController controller);
 	
 	/**
 	 * returns the name of bean as registered in the @id attribute in the stevia context <bean .../> construct.
 	 * @return
 	 */
-	public String getBeanName();
+	 String getBeanName();
 	
 }
