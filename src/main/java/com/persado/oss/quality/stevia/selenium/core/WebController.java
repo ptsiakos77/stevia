@@ -1143,6 +1143,13 @@ public interface WebController {
     void tap(int x, int y);
 
     /**
+     * Perform tap on element
+     *
+     * @param el
+     */
+    void tap(WebElement el);
+
+    /**
      * Perform tap triggering javascript tap event. Locator must be a css locator
      *
      * @param locator

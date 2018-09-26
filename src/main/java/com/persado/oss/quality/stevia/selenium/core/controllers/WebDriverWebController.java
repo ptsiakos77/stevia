@@ -1857,6 +1857,12 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
 
     @Override
     @Deprecated
+    public void tap(WebElement el) {
+
+    }
+
+    @Override
+    @Deprecated
     public void tapWithJS(String locator, boolean waitForAjax) {
 
     }

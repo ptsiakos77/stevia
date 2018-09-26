@@ -855,6 +855,11 @@ class VoidController implements WebController {
     }
 
     @Override
+    public void tap(WebElement el) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
     public void tapWithJS(String locator, boolean waitForAjax) {
         // TODO Auto-generated method stub
     }
