@@ -1,7 +1,7 @@
 package com.persado.oss.quality.stevia.selenium.core.controllers;
 
-        /*
-         * #%L
+/*
+ * #%L
  * Stevia QA Framework - Core
  * %%
  * Copyright (C) 2013 - 2014 Persado
@@ -34,7 +34,7 @@ package com.persado.oss.quality.stevia.selenium.core.controllers;
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
-         */
+ */
 
 
 import com.persado.oss.quality.stevia.network.http.HttpCookie;
@@ -335,7 +335,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
         wait.until(ExpectedConditions.elementToBeClickable(determineLocator(locator)));
     }
 
- /*
+    /*
      * (non-Javadoc)
      *
      * @see com.persado.oss.quality.stevia.selenium.core.WebController#
@@ -371,6 +371,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     @Override
     public void input(String locator, String value) {
+        moveToElement(locator);
         WebElement element = waitForElement(locator);
         element.clear();
         element.sendKeys(value);
@@ -388,6 +389,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     @Override
     public void press(String locator) {
+        moveToElement(locator);
         waitForElement(locator).click();
         info("The element with locator '" + locator + "' was clicked");
     }
@@ -844,7 +846,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     @Override
     public boolean isAlertPresent() {
-       return isAlertPresent(0);
+        return isAlertPresent(0);
     }
 
     @Override
