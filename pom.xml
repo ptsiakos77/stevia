@@ -9,7 +9,7 @@
 	<description>Stevia is a QA Framework unifying the Selenium-RC and Webdriver APIs under
 	a common uniform API that handles all differences. Using Stevia allows the QA Engineer
 	to seamlessly switch between Selenium-RC and Webdriver, enhance by adding custom webdrivers
-	and other artifacts. By design both drivers play under Selenium Grid and support extended 
+	and other artifacts. By design both drivers play under Selenium Grid and support extended
 	reporting functionality via ReportNG, including remote screenshots.</description>
 
 	<url>http://www.persado.com</url>
@@ -218,7 +218,7 @@
 			<version>0.3.0</version>
 		</dependency>
 
-	
+
 
 		<!-- Jetty HTTP Client -->
 		<dependency>
@@ -227,7 +227,7 @@
 			<version>8.1.8.v20121106</version>
 		</dependency>
 
-		<!-- Suite of Java SSH applications providing a Java SSH API, SSH Terminal, 
+		<!-- Suite of Java SSH applications providing a Java SSH API, SSH Terminal,
 			SSH secured VNC client, SFTP client and SSH Daemon -->
 		<dependency>
 			<groupId>sshtools</groupId>
@@ -242,8 +242,8 @@
 			<version>6.9.13.6</version>
 		</dependency>
 
-		<!-- ReportNG, a simple HTML reporting plug-in for the TestNG unit-testing 
-			framework Usually in our project newer TestNG version is used, so that ReportNG 
+		<!-- ReportNG, a simple HTML reporting plug-in for the TestNG unit-testing
+			framework Usually in our project newer TestNG version is used, so that ReportNG
 			dependency should be excluded -->
 		<dependency>
 			<groupId>org.uncommons</groupId>
@@ -324,7 +324,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core, 
+		<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core,
 			spring-beans) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -332,7 +332,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Application Context (depends on spring-core, spring-expression, spring-aop, 
+		<!-- Application Context (depends on spring-core, spring-expression, spring-aop,
 			spring-beans) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -340,7 +340,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Various Application Context utilities, including EhCache, JavaMail, 
+		<!-- Various Application Context utilities, including EhCache, JavaMail,
 			Quartz, and Freemarker integration -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -348,7 +348,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Transaction Management Abstraction (depends on spring-core, spring-beans, 
+		<!-- Transaction Management Abstraction (depends on spring-core, spring-beans,
 			spring-aop, spring-context) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -356,7 +356,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, 
+		<!-- JDBC Data Access Library (depends on spring-core, spring-beans, spring-context,
 			spring-tx) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -384,8 +384,8 @@
 
 
 
-		<!-- Support for testing Spring applications with tools such as JUnit and 
-			TestNG This artifact is generally always defined with a 'test' scope for 
+		<!-- Support for testing Spring applications with tools such as JUnit and
+			TestNG This artifact is generally always defined with a 'test' scope for
 			the integration testing framework and unit testing stubs -->
 		<dependency>
 			<groupId>org.springframework</groupId>

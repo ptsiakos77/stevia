@@ -371,6 +371,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     @Override
     public void input(String locator, String value) {
+        moveToElement(locator);
         WebElement element = waitForElement(locator);
         element.clear();
         element.sendKeys(value);
@@ -388,6 +389,7 @@ public class WebDriverWebController extends WebControllerBase implements WebCont
      */
     @Override
     public void press(String locator) {
+        moveToElement(locator);
         waitForElement(locator).click();
         info("The element with locator '" + locator + "' was clicked");
     }
